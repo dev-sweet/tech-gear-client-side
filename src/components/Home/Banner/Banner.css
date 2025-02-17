@@ -1,0 +1,24 @@
+.control-arrow.control-prev {
+  background-color: #00000029;
+  padding: 0px 30px !important;
+  height: 95%;
+}
+.control-arrow.control-next {
+  background-color: #00000029;
+  padding: 0px 30px !important;
+  /* color: black; */
+  height: 95%;
+}
+.slider .animated .slide.selected.banner-img {
+  /* width: 50%; */
+}
+
+.banner-bg-color {
+  background: linear-gradient(to top, #9453ff6b, #3dc6ec5c);
+  width: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -10;
+}
