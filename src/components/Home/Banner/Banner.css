@@ -15,10 +15,22 @@
 
 .banner-bg-color {
   background: linear-gradient(to top, #9453ff6b, #3dc6ec5c);
-  width: 50%;
+  width: 60%;
+  /* margin-right: -90px; */
   position: absolute;
   top: 0;
   right: 0;
+  bottom: 0;
+  z-index: -10;
+}
+
+.banner-bg-color-2 {
+  background: linear-gradient(to top, #9453ff6b, #3dc6ec5c);
+  width: 40%;
+  /* margin-right: -90px; */
+  position: absolute;
+  top: 0;
+  left: 0;
   bottom: 0;
   z-index: -10;
 }
