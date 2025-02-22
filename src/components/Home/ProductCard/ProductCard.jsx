@@ -1,8 +1,6 @@
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import img from "../../../assets/home/shop41-el-slide-product2.png";
 import { Rating } from "@mui/material";
@@ -13,18 +11,16 @@ const ProductCard = ({ product }) => {
   return (
     <Card
       sx={{
-        maxWidth: 345,
         boxShadow: "none",
         borderRadious: "none",
         height: "full",
-        display: "flex",
         flexDirection: "column",
       }}
     >
       <div className="bg-gray-100 p-5">
         <CardMedia component="img" alt="green iguana" image={img} />
       </div>
-      <CardContent sx={{ background: "#fcfcfc" }}>
+      <CardContent sx={{ background: "#fcfcfc", height: "100%" }}>
         <Typography
           gutterBottom
           variant="p"
@@ -37,7 +33,6 @@ const ProductCard = ({ product }) => {
 
         <Rating
           name="size-small"
-          //   name="half-rating-read"
           size="small"
           defaultValue={ratings}
           precision={0.5}

@@ -3,9 +3,9 @@ import "./Newsletter.css";
 import { MdOutlineMail } from "react-icons/md";
 const Newsletter = () => {
   return (
-    <div className="newsletter-bg flex items-center justify-center text-center py-24">
+    <div className="newsletter-bg flex items-center justify-center text-center lg:p-24 md-p-16 p-10">
       <div>
-        <h2 className="text-4xl">
+        <h2 className="lg:text-4xl md:text-4xl text-3xl">
           Get <span className="text-[#2b4190]">20%</span> Off Discount Coupon
         </h2>
         <p className="text-[#2b4190] text-xl mt-5">

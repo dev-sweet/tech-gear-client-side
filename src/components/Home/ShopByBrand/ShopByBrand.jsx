@@ -28,9 +28,9 @@ const ShopByBrand = () => {
     brand12,
   ];
   return (
-    <div className="px-20 py-5">
+    <div className="lg:px-20 px-10 py-5">
       <h2 className="text-2xl font-bold mb-5">Shop By Brand</h2>
-      <div className="grid grid-cols-6 gap-1  shadow-xsm">
+      <div className="grid lg:grid-cols-6 md:grid-cols-4 gap-1  shadow-xsm">
         {brands.map((brand) => (
           <Link key={brand} to="">
             <div className="p-10 border-1 border-gray-100 flex items-center justify-center h-full">

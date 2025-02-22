@@ -1,13 +1,12 @@
-import { Link } from "react-router-dom";
 import img1 from "../../../assets/home/porto43-banner-1.png";
 import img2 from "../../../assets/home/porto43-banner-2.png";
 import img3 from "../../../assets/home/porto43-banner-3.png";
 import img4 from "../../../assets/home/porto43-banner-4.png";
 const Selection = () => {
   return (
-    <div className="px-20 py-10">
-      <div className="grid grid-cols-2 gap-5">
-        <div className="bg-[#efedeb] min-h-[400px] p-10 flex items-center w-full justify-between">
+    <div className="lg:px-20 px-10 py-10">
+      <div className="grid lg:grid-cols-2 gap-5">
+        <div className="bg-[#efedeb] min-h-[400px] p-10 flex items-center justify-between">
           <div className="font-semibold">
             <h1 className="text-4xl">Mobile Devices</h1>
             <h3 className="text-3xl mt-3">Geek Selection</h3>
@@ -21,7 +20,9 @@ const Selection = () => {
         </div>
         <div>
           <div className="bg-[#f9e4dc] flex items-center justify-between p-10 mb-5">
-            <img src={img2} alt="" />
+            <div>
+              <img className="max-w-50" src={img2} alt="" />
+            </div>
             <div>
               <div className="font-semibold">
                 <h1 className="text-3xl">Smartphones</h1>
@@ -32,8 +33,8 @@ const Selection = () => {
               </button>
             </div>
           </div>
-          <div className="flex gap-5 justify-between">
-            <div className="bg-[#f9efd5] flex items-center justify-between w-[50%] p-10">
+          <div className="flex lg:flex-row md:flex-row flex-col  gap-5 justify-between">
+            <div className="bg-[#f9efd5] flex items-center justify-between w-full lg:w-[50%] md:w-[50%] p-10">
               <img src={img3} alt="" />
               <div>
                 <div className="font-semibold">
@@ -45,7 +46,7 @@ const Selection = () => {
                 </button>
               </div>
             </div>
-            <div className="bg-[#f1f1f1] flex items-center justify-between w-[50%] py-10 px-5">
+            <div className="bg-[#f1f1f1] flex items-center justify-between lg:w-[50%] md:w-[50%] py-10 px-5">
               <div>
                 <div className="font-semibold">
                   <h1 className="text-xl">Nespresso</h1>
@@ -55,7 +56,7 @@ const Selection = () => {
                   Shop Now
                 </button>
               </div>
-              <img src={img4} alt="" />
+              <img className="max-w-[50%]" src={img4} alt="" />
             </div>
           </div>
         </div>

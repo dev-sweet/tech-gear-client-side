@@ -9,7 +9,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <div className="px-20">
+    <div className="lg:px-20 px-10">
       <div>
         <div className="text-center py-5">
           <img className="w-28 mx-auto" src={logo} alt="" />
@@ -17,7 +17,7 @@ const Footer = () => {
         <Divider />
       </div>
 
-      <div className="grid grid-cols-4 gap-5 py-7">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 y gap-5 py-7">
         <div className="">
           <h3 className="text-l font-semibold pb-5">About Us</h3>
           <p className="text-gray-500">
@@ -72,8 +72,8 @@ const Footer = () => {
         </div>
       </div>
       <Divider />
-      <div className="flex items-center justify-between py-5">
-        <div className="flex items-center gap-4">
+      <div className="lg:flex items-center justify-between py-5">
+        <div className="flex md:flex-row flex-col items-center gap-4">
           <ul className="flex gap-4">
             <li>
               <Link to="/">

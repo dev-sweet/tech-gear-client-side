@@ -33,16 +33,19 @@ const Features = () => {
   ];
 
   return (
-    <div className="px-20">
-      <div className="border border-gray-300 p-8 mt-1">
-        <div className="flex items-center justify-between gap-4">
+    <div className="lg:px-20 px-10">
+      <div className="lg:border border-gray-300 py-10 mt-1 lg:px-8">
+        <div className="grid lg:grid-cols-5 md:grid-cols-2 gap-4">
           {items.map((item, i) => (
-            <div key={`banner-feature${i}`} className="flex items-center gap-5">
+            <div
+              key={`banner-feature${i}`}
+              className="lg:shadow-none md:shadow-0 shadow-sm lg:p-0 p-8 xs:p-5 flex items-center gap-5"
+            >
               <div className="text-5xl text-[#2b4190] font-bold">
                 {item.icon}
               </div>
               <div>
-                <h3 className="text-2xl">{item.title}</h3>
+                <h3 className="lg:text-2xl text-lg">{item.title}</h3>
                 <p className="text-gray-500">{item.desc}</p>
               </div>
             </div>
