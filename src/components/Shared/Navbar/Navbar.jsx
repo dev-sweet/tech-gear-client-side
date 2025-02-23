@@ -27,6 +27,9 @@ const Navbar = () => {
         <li className="mt-5">
           <Link to="/contact">Contact</Link>
         </li>
+        <li className="mt-5">
+          <Link to="/login">Login</Link>
+        </li>
       </ul>
     </Box>
   );
@@ -64,6 +67,9 @@ const Navbar = () => {
           </li>
           <li>
             <Link to="/contact">Contact</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
           </li>
         </ul>
       </div>
