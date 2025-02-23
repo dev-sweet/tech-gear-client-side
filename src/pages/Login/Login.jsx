@@ -3,6 +3,7 @@ import loginImg from "../../assets/login.jpg";
 import { Divider } from "@mui/material";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 const Login = () => {
   const {
     register,
@@ -11,6 +12,12 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => console.log(data);
+  const { loginWithGoogle } = useAuth();
+  const handleClick = () => {
+    loginWithGoogle()
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="flex items-center justify-center h-[90vh] gap-10">
       <img className="max-w-[500px]" src={loginImg} alt="" />
@@ -51,7 +58,10 @@ const Login = () => {
         </form>
         <div className="pt-5">
           <Divider>or</Divider>
-          <button className="border-1 border-[#2b4190] py-3 w-full text-[#2b4190] mt-5 cursor-pointer text-center">
+          <button
+            onClick={handleClick}
+            className="border-1 border-[#2b4190] py-3 w-full text-[#2b4190] mt-5 cursor-pointer text-center"
+          >
             <span className="flex items-center justify-center">
               <FcGoogle className="text-3xl " />
               <span>Login with</span>

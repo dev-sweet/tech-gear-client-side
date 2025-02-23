@@ -1,16 +1,43 @@
 import { useForm } from "react-hook-form";
 import loginImg from "../../assets/login.jpg";
 import { Divider } from "@mui/material";
-import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import GoogleLogin from "../../components/GoogelLogin/GoogleLogin";
 const Register = () => {
+  const { createUser } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (user) => {
+    createUser(user.email, user.password)
+      .then((data) => {
+        if (data.user.email) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "User created successfully.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((err) => {
+        if (err.message === "Firebase: Error (auth/email-already-in-use).") {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "This user is already exist!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+  };
   return (
     <div className="flex items-center justify-center py-10 gap-10">
       <img className="max-w-[500px]" src={loginImg} alt="" />
@@ -29,6 +56,9 @@ const Register = () => {
               {...register("name", { required: true })}
             />
           </div>
+          {errors.name && (
+            <d className="text-red-500 mt-5">Name is required!</d>
+          )}
           <div className="pt-3 flex flex-col justify-center gap-3">
             <label htmlFor="email"> Email *</label>
             <input
@@ -36,9 +66,18 @@ const Register = () => {
               type="email"
               defaultValue=""
               placeholder="Your Email"
-              {...register("email", { required: true })}
+              {...register("email", {
+                required: "Email is required!",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "Entered value does not match email format",
+                },
+              })}
             />
           </div>
+          {errors.email && (
+            <span className="text-red-500 mt-3">{errors.email.message}</span>
+          )}
           <div className="pt-3 flex flex-col justify-center gap-3">
             <label htmlFor="password"> Password *</label>
             <input
@@ -46,12 +85,18 @@ const Register = () => {
               defaultValue=""
               placeholder="Password"
               type="password"
-              {...register("password", { required: true })}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "min length is 6 charecters.",
+                },
+              })}
             />
           </div>
 
           {errors.password && (
-            <span className="text-red-500 mt-3">Password is required</span>
+            <span className="text-red-500 mt-3">{errors.password.message}</span>
           )}
 
           <input
@@ -61,12 +106,7 @@ const Register = () => {
         </form>
         <div className="pt-5">
           <Divider>or</Divider>
-          <button className="border-1 border-[#2b4190] py-3 w-full text-[#2b4190] mt-5 cursor-pointer text-center">
-            <span className="flex items-center justify-center">
-              <FcGoogle className="text-3xl " />
-              <span>Login with</span>
-            </span>
-          </button>
+          <GoogleLogin />
           <p className="pt-5">
             Already have an account?{" "}
             <Link className="text-blue-600 font-semibold" to="/login">
