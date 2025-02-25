@@ -3,3 +3,18 @@
 
   background-color: red;
 }
+
+.product-cart-btn {
+  background-color: #07174e;
+  color: rgba(255, 255, 255, 0.888);
+  padding: 8px 12px;
+  font-size: 14px;
+  box-shadow: 3px 3px 0px 0px #ffaa00;
+  border-radius: 2px;
+  transition: 0.4s;
+}
+.product-cart-btn:hover {
+  background-color: #020a24;
+  cursor: pointer;
+  box-shadow: 3px 4px 0px 0px #454545;
+}

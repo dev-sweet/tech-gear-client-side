@@ -68,7 +68,7 @@ const Navbar = () => {
     </Box>
   );
   return (
-    <div className="flex items-center justify-between bg-gray-200 lg:px-20 px-10">
+    <div className="flex items-center justify-between bg-[#dfe0ff] lg:px-20 px-10">
       {
         <Drawer open={open} onClose={toggleDrawer(false)}>
           {DrawerList}

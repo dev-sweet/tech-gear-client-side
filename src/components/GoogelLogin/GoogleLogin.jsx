@@ -1,9 +1,12 @@
 import { FcGoogle } from "react-icons/fc";
 import { useAuth } from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
-const GoogleLogin = () => {
+const GoogleLogin = ({ from }) => {
+  const navigate = useNavigate();
   const { loginWithGoogle } = useAuth();
+  const location = from || "/";
   const handleClick = () => {
     loginWithGoogle()
       .then((data) => {
@@ -15,6 +18,7 @@ const GoogleLogin = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          navigate(location, { replace: true });
         }
       })
       .catch((err) => console.log(err));

@@ -1,12 +1,16 @@
 import { useForm } from "react-hook-form";
 import loginImg from "../../assets/login.jpg";
 import { Divider } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import GoogleLogin from "../../components/GoogelLogin/GoogleLogin";
 import { useAuth } from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 const Login = () => {
   const { loginUser } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const {
     register,
     handleSubmit,
@@ -24,6 +28,8 @@ const Login = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+
+          navigate(from, { replace: true });
         }
       })
       .catch((err) => {
@@ -79,7 +85,7 @@ const Login = () => {
         </form>
         <div className="pt-5">
           <Divider>or</Divider>
-          <GoogleLogin />
+          <GoogleLogin from={from} />
           <p className="pt-5">
             Didn't registered yet?{" "}
             <Link className="text-blue-600 font-semibold" to="/register">

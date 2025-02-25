@@ -1,12 +1,14 @@
 import { useForm } from "react-hook-form";
 import loginImg from "../../assets/login.jpg";
 import { Divider } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import GoogleLogin from "../../components/GoogelLogin/GoogleLogin";
 const Register = () => {
   const { createUser } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,6 +26,8 @@ const Register = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+
+          navigate("/");
         }
       })
       .catch((err) => {
