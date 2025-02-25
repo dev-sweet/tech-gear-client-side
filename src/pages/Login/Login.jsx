@@ -1,26 +1,47 @@
 import { useForm } from "react-hook-form";
 import loginImg from "../../assets/login.jpg";
 import { Divider } from "@mui/material";
-import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import GoogleLogin from "../../components/GoogelLogin/GoogleLogin";
 import { useAuth } from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 const Login = () => {
+  const { loginUser } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
-  const { loginWithGoogle } = useAuth();
-  const handleClick = () => {
-    loginWithGoogle()
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+  const onSubmit = (user) => {
+    loginUser(user.email, user.password)
+      .then((data) => {
+        if (data.user.email) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login successfully!.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((err) => {
+        if (err) {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Something went wrong!.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
   };
+
   return (
-    <div className="flex items-center justify-center h-[90vh] gap-10">
-      <img className="max-w-[500px]" src={loginImg} alt="" />
+    <div className="lg:px-20 px-10 lg:flex md:flex items-center justify-center h-[90vh] gap-10">
+      <img className="lg:max-w-[500px]" src={loginImg} alt="" />
 
       <div className="min-w-[400px] p-10 shadow shadow-lg">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,15 +79,7 @@ const Login = () => {
         </form>
         <div className="pt-5">
           <Divider>or</Divider>
-          <button
-            onClick={handleClick}
-            className="border-1 border-[#2b4190] py-3 w-full text-[#2b4190] mt-5 cursor-pointer text-center"
-          >
-            <span className="flex items-center justify-center">
-              <FcGoogle className="text-3xl " />
-              <span>Login with</span>
-            </span>
-          </button>
+          <GoogleLogin />
           <p className="pt-5">
             Didn't registered yet?{" "}
             <Link className="text-blue-600 font-semibold" to="/register">

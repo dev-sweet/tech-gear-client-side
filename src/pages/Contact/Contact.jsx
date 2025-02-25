@@ -25,8 +25,8 @@ const Contact = () => {
               possible.
             </p>
 
-            <div className="flex items-center justify-between py-10 gap-5">
-              <div className="bg-[#FFEAE5] p-10 text-center min-w-[50%]">
+            <div className="lg:flex md:flex items-center justify-between py-10 gap-5">
+              <div className="bg-[#FFEAE5] p-10 text-center min-w-[50%] my-5">
                 <div className="flex items-center justify-center">
                   <span className="h-[50px] w-[50px] border border-[#2b4190] flex items-center justify-center text-3xl rounded rounded-full text-[#2b4190]">
                     <LiaPhoneVolumeSolid className="font-bold" />
@@ -35,7 +35,7 @@ const Contact = () => {
                 <p>+(323) 9847 3847 383</p>
                 <p>+(434) 5466 5467 443</p>
               </div>
-              <div className="bg-[#D3EFFF] p-10 text-center min-w-[50%]">
+              <div className="bg-[#D3EFFF] p-10 text-center min-w-[50%] my-5">
                 <div className="flex items-center justify-center">
                   <span className="h-[50px] w-[50px] border border-[#2b4190] flex items-center justify-center text-3xl rounded rounded-full text-[#2b4190]">
                     <MdOutlineEmail />

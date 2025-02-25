@@ -39,8 +39,8 @@ const Register = () => {
       });
   };
   return (
-    <div className="flex items-center justify-center py-10 gap-10">
-      <img className="max-w-[500px]" src={loginImg} alt="" />
+    <div className="lg:px-20 px-10 lg:flex md:flex items-center justify-center py-10 gap-10">
+      <img className="lg:max-w-[500px]" src={loginImg} alt="" />
 
       <div className="min-w-[400px] p-8 shadow shadow-lg">
         <form onSubmit={handleSubmit(onSubmit)}>

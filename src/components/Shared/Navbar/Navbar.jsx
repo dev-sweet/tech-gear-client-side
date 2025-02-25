@@ -1,16 +1,32 @@
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.png";
-import { IoBagOutline } from "react-icons/io5";
-import { CiHeart } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { IoMdMenu } from "react-icons/io";
 import { useState } from "react";
-import { Box, Drawer } from "@mui/material";
+import { Badge, Box, Drawer } from "@mui/material";
+import { FaRegHeart } from "react-icons/fa";
+import { RiShoppingBagLine } from "react-icons/ri";
+import { useAuth } from "../../../hooks/useAuth";
+import { PiSignOutBold } from "react-icons/pi";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { user, logOut } = useAuth();
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
+  };
+
+  const handleLogOut = () => {
+    logOut().then(() => {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "User logout successfully.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    });
   };
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
@@ -27,9 +43,27 @@ const Navbar = () => {
         <li className="mt-5">
           <Link to="/contact">Contact</Link>
         </li>
-        <li className="mt-5">
-          <Link to="/login">Login</Link>
-        </li>
+        {user ? (
+          <>
+            <li className="mt-5">
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+            <li className="mt-5">
+              <button
+                onClick={handleLogOut}
+                className="flex items-center gap-1 font-smibold cursor-pointer"
+              >
+                <PiSignOutBold />
+
+                <span>Logout</span>
+              </button>
+            </li>
+          </>
+        ) : (
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        )}
       </ul>
     </Box>
   );
@@ -68,18 +102,40 @@ const Navbar = () => {
           <li>
             <Link to="/contact">Contact</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
+          {user ? (
+            <>
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <button
+                  onClick={handleLogOut}
+                  className="flex items-center gap-1 font-smibold cursor-pointer"
+                >
+                  <PiSignOutBold />
+
+                  <span>Logout</span>
+                </button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          )}
         </ul>
       </div>
       <div className="flex items-center gap-5 text-2xl font-bold">
-        <Link to="/wishlist">
-          <CiHeart />
-        </Link>
-        <Link to="/cart">
-          <IoBagOutline />
-        </Link>
+        <button className="cursor-pointer">
+          <Badge badgeContent={4} color="primary">
+            <FaRegHeart />
+          </Badge>
+        </button>
+        <button className="cursor-pointer">
+          <Badge badgeContent={4} color="primary">
+            <RiShoppingBagLine />
+          </Badge>
+        </button>
         <Link to="/profile">
           <CiUser />
         </Link>

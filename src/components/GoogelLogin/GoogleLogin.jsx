@@ -1,11 +1,22 @@
 import { FcGoogle } from "react-icons/fc";
 import { useAuth } from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const GoogleLogin = () => {
   const { loginWithGoogle } = useAuth();
   const handleClick = () => {
     loginWithGoogle()
-      .then((data) => console.log(data))
+      .then((data) => {
+        if (data.user.email) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login successfully!.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
       .catch((err) => console.log(err));
   };
   return (
