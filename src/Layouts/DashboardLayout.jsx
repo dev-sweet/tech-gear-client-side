@@ -37,7 +37,7 @@ function DashboardLayout() {
 
   const drawer = (
     <div>
-      {/* <Toolbar /> */}
+      <Toolbar />
       <Divider />
       <List>
         <ListItem disablePadding>
