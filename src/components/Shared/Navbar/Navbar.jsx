@@ -9,10 +9,12 @@ import { RiShoppingBagLine } from "react-icons/ri";
 import { useAuth } from "../../../hooks/useAuth";
 import { PiSignOutBold } from "react-icons/pi";
 import Swal from "sweetalert2";
+import useCart from "../../../hooks/useCart";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, logOut } = useAuth();
+  const [cart] = useCart();
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -127,12 +129,12 @@ const Navbar = () => {
       </div>
       <div className="flex items-center gap-5 text-2xl font-bold">
         <button className="cursor-pointer">
-          <Badge badgeContent={4} color="primary">
+          <Badge badgeContent={3} color="primary">
             <FaRegHeart />
           </Badge>
         </button>
         <button className="cursor-pointer">
-          <Badge badgeContent={4} color="primary">
+          <Badge badgeContent={cart?.length} color="primary">
             <RiShoppingBagLine />
           </Badge>
         </button>

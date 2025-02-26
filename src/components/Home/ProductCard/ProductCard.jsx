@@ -8,14 +8,16 @@ import "./ProductCard.css";
 import { useAuth } from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAxiosSecure, { axiosSecure } from "../../../hooks/useAxiosSecure";
-import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useCart from "../../../hooks/useCart";
+
 const ProductCard = ({ product }) => {
   const { _id, name, price, image, ratings, discountPrice } = product;
   const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const [, , refetch] = useCart();
   const handleClick = () => {
     if (user && user.email) {
       const cartItem = {
@@ -35,6 +37,8 @@ const ProductCard = ({ product }) => {
             showConfirmButton: false,
             timer: 1500,
           });
+
+          refetch();
         }
       });
     } else {
