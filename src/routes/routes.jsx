@@ -10,6 +10,7 @@ import AllProducts from "../pages/AllProducts/AllProducts";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import Cart from "../pages/Dashboard/Cart/Cart";
+import ManageUsers from "../pages/Dashboard/ManageUses/ManageUsers";
 export const routes = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +47,10 @@ export const routes = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "manageUsers",
+        element: <ManageUsers />,
       },
     ],
   },

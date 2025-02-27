@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form";
 import loginImg from "../../assets/login.jpg";
 import { Divider } from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import GoogleLogin from "../../components/GoogelLogin/GoogleLogin";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 const Register = () => {
-  const { createUser } = useAuth();
-  const location = useLocation();
+  const { createUser, updateUser } = useAuth();
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   const {
     register,
@@ -19,15 +20,26 @@ const Register = () => {
     createUser(user.email, user.password)
       .then((data) => {
         if (data.user.email) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "User created successfully.",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          updateUser(user.name).then(() => {
+            axiosPublic
+              .post("/users", {
+                userName: user.name,
+                email: user.email,
+              })
+              .then((res) => {
+                if (res.data.insertedId) {
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "User created successfully.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
 
-          navigate("/");
+                  navigate("/");
+                }
+              });
+          });
         }
       })
       .catch((err) => {

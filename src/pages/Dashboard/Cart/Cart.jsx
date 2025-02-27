@@ -12,7 +12,7 @@ import useCart from "../../../hooks/useCart";
 import { MdOutlineDelete } from "react-icons/md";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-
+import PageTitle from "../../../components/Shared/PageTitle/PageTitle";
 const Cart = () => {
   const [cart, , refetch] = useCart();
   const axiosSecure = useAxiosSecure();
@@ -50,6 +50,7 @@ const Cart = () => {
     },
   }));
 
+  // styled table row
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
       backgroundColor: theme.palette.action.hover,
@@ -62,6 +63,7 @@ const Cart = () => {
 
   return (
     <div>
+      <PageTitle />
       <div className="flex items-center justify-between py-5">
         <h3 className="text-3xl">My cart: {cart.length}</h3>
         <h3 className="text-3xl">Total Prices: ${}</h3>

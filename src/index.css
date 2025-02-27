@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+/* dashboard layout */
+.MuiPaper-root.MuiPaper-elevation {
+  background-color: rgb(255, 255, 255);
+}
