@@ -22,7 +22,7 @@ const Login = () => {
       .then((data) => {
         if (data.user.email) {
           Swal.fire({
-            position: "top-end",
+            // position: "top-end",
             icon: "success",
             title: "Login successfully!.",
             showConfirmButton: false,
@@ -35,7 +35,7 @@ const Login = () => {
       .catch((err) => {
         if (err) {
           Swal.fire({
-            position: "top-end",
+            // position: "top-end",
             icon: "error",
             title: "Something went wrong!.",
             showConfirmButton: false,

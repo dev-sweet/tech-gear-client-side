@@ -22,7 +22,7 @@ const Navbar = () => {
   const handleLogOut = () => {
     logOut().then(() => {
       Swal.fire({
-        position: "top-end",
+        // position: "top-end",
         icon: "success",
         title: "User logout successfully.",
         showConfirmButton: false,
@@ -128,16 +128,16 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="flex items-center gap-5 text-2xl font-bold">
-        <button className="cursor-pointer">
+        <Link to="/dashboard/wishlist" className="cursor-pointer">
           <Badge badgeContent={3} color="primary">
             <FaRegHeart />
           </Badge>
-        </button>
-        <button className="cursor-pointer">
+        </Link>
+        <Link to="/dashboard/cart" className="cursor-pointer">
           <Badge badgeContent={cart?.length} color="primary">
             <RiShoppingBagLine />
           </Badge>
-        </button>
+        </Link>
         <Link to="/profile">
           <CiUser />
         </Link>

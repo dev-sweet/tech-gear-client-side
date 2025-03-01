@@ -12,7 +12,6 @@ import useCart from "../../../hooks/useCart";
 import { MdOutlineDelete } from "react-icons/md";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import PageTitle from "../../../components/Shared/PageTitle/PageTitle";
 const Cart = () => {
   const [cart, , refetch] = useCart();
   const axiosSecure = useAxiosSecure();
@@ -65,8 +64,7 @@ const Cart = () => {
 
   return (
     <div>
-      <PageTitle />
-      <div className="bg-[#07174e] flex items-center justify-between pb-5 text-white px-20 mb-5">
+      <div className="bg-[#07174e] flex items-center justify-between py-8 text-white px-20 mb-5">
         <h3 className="text-3xl">My cart: {cart.length}</h3>
         <h3 className="text-3xl">Total Prices: ${}</h3>
         <button className="bg-yellow-800 text-white font-bold p-3 rounded cursor-pointer">

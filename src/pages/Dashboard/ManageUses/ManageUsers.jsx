@@ -14,6 +14,7 @@ import {
 import { MdOutlineDelete } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useAdmin from "../../../hooks/useAdmin";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -25,15 +26,17 @@ const ManageUsers = () => {
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
+
       return res.data;
     },
   });
-
+  const [isAdmin] = useAdmin();
+  console.log(isAdmin);
   //   handle make admin
   const handleMakeAdmin = (id, name) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `${name} will be admin now!`,
+      text: `Do you want to make ${name} as admin ?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -44,9 +47,10 @@ const ManageUsers = () => {
         axiosSecure.patch(`/users/admin/${id}`).then((res) => {
           if (res.data.modifiedCount > 0) {
             Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
+              title: "Succesfully updated!",
+              text: `${name} is admin now`,
               icon: "success",
+              timer: 1500,
             });
           }
         });
@@ -55,7 +59,7 @@ const ManageUsers = () => {
   };
   const handleDeleteUser = (id) => {
     Swal.fire({
-      title: "Are you sure you want to delete this user?",
+      title: "Are you sure you?",
       text: "You won't be able to revert this user!",
       icon: "warning",
       showCancelButton: true,
@@ -71,6 +75,7 @@ const ManageUsers = () => {
             text: "User has been deleted.",
             icon: "success",
             showConfirmButton: false,
+            timer: 1500,
           });
           refetch();
         }
@@ -126,12 +131,21 @@ const ManageUsers = () => {
                 <StyledTableCell align="left">{user.userName}</StyledTableCell>
                 <StyledTableCell align="left">{user.email}</StyledTableCell>
                 <StyledTableCell align="left">
-                  <button
-                    className="text-2xl bg-yellow-700 text-white p-2 cursor-pointer rounded"
-                    onClick={() => handleMakeAdmin(user._id, user.userName)}
-                  >
-                    <FaUsers className="text-xl" />
-                  </button>
+                  {user.role === "admin" ? (
+                    <button
+                      className="text-2xl bg-gray-300 text-black p-2"
+                      disabled
+                    >
+                      <FaUsers className="text-xl" />
+                    </button>
+                  ) : (
+                    <button
+                      className="text-2xl bg-[#07174e] text-white p-2 cursor-pointer rounded"
+                      onClick={() => handleMakeAdmin(user._id, user.userName)}
+                    >
+                      <FaUsers className="text-xl" />
+                    </button>
+                  )}
                 </StyledTableCell>
                 <StyledTableCell align="left">
                   <button

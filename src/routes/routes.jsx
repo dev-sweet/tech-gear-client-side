@@ -11,6 +11,8 @@ import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import Cart from "../pages/Dashboard/Cart/Cart";
 import ManageUsers from "../pages/Dashboard/ManageUses/ManageUsers";
+import ManageProducts from "../pages/Dashboard/ManageProducts/ManageProducts";
+import AdminRoute from "./AdminRoute";
 export const routes = createBrowserRouter([
   {
     path: "/",
@@ -47,6 +49,14 @@ export const routes = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "manageProducts",
+        element: (
+          <AdminRoute>
+            <ManageProducts />
+          </AdminRoute>
+        ),
       },
       {
         path: "manageUsers",

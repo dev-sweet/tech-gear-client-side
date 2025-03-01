@@ -20,7 +20,7 @@ const GoogleLogin = ({ from }) => {
             })
             .then((res) => {
               Swal.fire({
-                position: "top-end",
+                // position: "top-end",
                 icon: "success",
                 title: res.data.message,
                 showConfirmButton: false,

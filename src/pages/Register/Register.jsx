@@ -27,11 +27,11 @@ const Register = () => {
                 email: user.email,
               })
               .then((res) => {
-                if (res.data.insertedId) {
+                console.log(res.data.data);
+                if (res.data?.data?.insertedId) {
                   Swal.fire({
-                    position: "top-end",
                     icon: "success",
-                    title: "User created successfully.",
+                    title: res.data.message,
                     showConfirmButton: false,
                     timer: 1500,
                   });
