@@ -22,7 +22,7 @@ const Cart = () => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#07174e",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
@@ -31,8 +31,10 @@ const Cart = () => {
         if (res.data.deletedCount > 0) {
           Swal.fire({
             title: "Deleted!",
-            text: "Your file has been deleted.",
+            text: "Your cart has been deleted.",
             icon: "success",
+            timer: "1500",
+            showConfirmButton: false,
           });
           refetch();
         }
@@ -42,7 +44,7 @@ const Cart = () => {
   //   styled tablecell for cart
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "#07174e",
+      backgroundColor: "black",
       color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
@@ -64,15 +66,18 @@ const Cart = () => {
   return (
     <div>
       <PageTitle />
-      <div className="flex items-center justify-between py-5">
+      <div className="bg-[#07174e] flex items-center justify-between pb-5 text-white px-20 mb-5">
         <h3 className="text-3xl">My cart: {cart.length}</h3>
         <h3 className="text-3xl">Total Prices: ${}</h3>
-        <button className="bg-[#07174e] text-white font-bold p-3 rounded cursor-pointer">
+        <button className="bg-yellow-800 text-white font-bold p-3 rounded cursor-pointer">
           Checkout
         </button>
       </div>
       <TableContainer component={"Paper"}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <Table
+          sx={{ minWidth: 700, overflowX: "scroll" }}
+          aria-label="customized table"
+        >
           <TableHead>
             <TableRow>
               <StyledTableCell></StyledTableCell>

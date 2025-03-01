@@ -11,6 +11,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 // create an auth context
 export const AuthContext = createContext(null);
@@ -22,7 +23,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const provider = new GoogleAuthProvider();
-
+  const axiosPublic = useAxiosPublic();
   //   create user with email and password
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -49,10 +50,24 @@ const AuthProvider = ({ children }) => {
   const logOut = () => {
     return signOut(auth);
   };
+
+  // auth state notation
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setIsLoading(false);
+      if (currentUser) {
+        const user = {
+          email: currentUser.email,
+        };
+        axiosPublic.post("/jwt", user).then((res) => {
+          if (res.data?.token) {
+            localStorage.setItem("access-token", res.data.token);
+          }
+        });
+      } else {
+        setIsLoading(false);
+      }
     });
 
     return () => {

@@ -13,10 +13,15 @@ import {
 // import PageTitle from "../../../components/Shared/PageTitle/PageTitle";
 import { MdOutlineDelete } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: users = [], isLoading } = useQuery({
+  const {
+    data: users = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
@@ -25,8 +30,52 @@ const ManageUsers = () => {
   });
 
   //   handle make admin
-  const handleMakeAdmin = (id) => {
-    console.log(id);
+  const handleMakeAdmin = (id, name) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `${name} will be admin now!`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Make Admin!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.patch(`/users/admin/${id}`).then((res) => {
+          if (res.data.modifiedCount > 0) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
+  const handleDeleteUser = (id) => {
+    Swal.fire({
+      title: "Are you sure you want to delete this user?",
+      text: "You won't be able to revert this user!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#07174e",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axiosSecure.delete(`/users/${id}`);
+        if (res.data.deletedCount > 0) {
+          Swal.fire({
+            title: "Deleted!",
+            text: "User has been deleted.",
+            icon: "success",
+            showConfirmButton: false,
+          });
+          refetch();
+        }
+      }
+    });
   };
   //   styled tablecell for cart
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -79,7 +128,7 @@ const ManageUsers = () => {
                 <StyledTableCell align="left">
                   <button
                     className="text-2xl bg-yellow-700 text-white p-2 cursor-pointer rounded"
-                    onClick={() => handleMakeAdmin(user._id)}
+                    onClick={() => handleMakeAdmin(user._id, user.userName)}
                   >
                     <FaUsers className="text-xl" />
                   </button>
@@ -87,9 +136,9 @@ const ManageUsers = () => {
                 <StyledTableCell align="left">
                   <button
                     className="text-2xl bg-red-700 text-white p-2 cursor-pointer rounded"
-                    onClick={() => handleMakeAdmin(user._id)}
+                    onClick={() => handleDeleteUser(user._id)}
                   >
-                    <FaUsers className="text-xl" />
+                    <MdOutlineDelete className="text-xl" />
                   </button>
                 </StyledTableCell>
               </StyledTableRow>

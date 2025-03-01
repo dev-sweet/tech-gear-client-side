@@ -1,6 +1,6 @@
 const PageTitle = ({ pageName }) => {
   return (
-    <div className="lg:px-20 px-10 py-15 bg-[#2b4190] text-white">
+    <div className="lg:px-20 px-10 py-15 bg-[#07174e] text-white">
       <p>{`Home / ${pageName}`}</p>
       <h3 className="text-center text-3xl font-semibold">{pageName}</h3>
     </div>
