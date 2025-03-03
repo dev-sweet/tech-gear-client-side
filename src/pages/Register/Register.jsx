@@ -27,7 +27,6 @@ const Register = () => {
                 email: user.email,
               })
               .then((res) => {
-                console.log(res.data.data);
                 if (res.data?.data?.insertedId) {
                   Swal.fire({
                     icon: "success",

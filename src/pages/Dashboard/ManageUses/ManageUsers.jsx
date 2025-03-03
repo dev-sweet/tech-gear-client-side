@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 // import PageTitle from "../../../components/Shared/PageTitle/PageTitle";
 import { MdOutlineDelete } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
+import { FaUserCheck, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAdmin from "../../../hooks/useAdmin";
 
@@ -52,6 +52,7 @@ const ManageUsers = () => {
               icon: "success",
               timer: 1500,
             });
+            refetch();
           }
         });
       }
@@ -136,7 +137,7 @@ const ManageUsers = () => {
                       className="text-2xl bg-gray-300 text-black p-2"
                       disabled
                     >
-                      <FaUsers className="text-xl" />
+                      <FaUserCheck className="text-xl" />
                     </button>
                   ) : (
                     <button

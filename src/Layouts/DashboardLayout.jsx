@@ -60,10 +60,10 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 mb-3" to="/dashboard/addProducts">
+            <Link className="w-full px-5 mb-3" to="/dashboard/addProduct">
               <div className="flex items-center gap-3">
                 <IoMdAdd className="text-xl" />
-                <ListItemText>Add Products</ListItemText>
+                <ListItemText>Add Product</ListItemText>
               </div>
             </Link>
           </ListItem>

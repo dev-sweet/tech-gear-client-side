@@ -2,6 +2,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import useProducts from "../../../hooks/useProducts";
 import { FaRegEdit } from "react-icons/fa";
 import {
+  NativeSelect,
   styled,
   Table,
   TableBody,
@@ -11,6 +12,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -38,6 +40,7 @@ const ManageProducts = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const res = await axiosSecure.delete(`/products/${id}`);
+        console.log(res.data);
         if (res.data.deletedCount > 0) {
           Swal.fire({
             title: "Deleted!",
@@ -76,8 +79,17 @@ const ManageProducts = () => {
     <div>
       {/* <PageTitle /> */}
       <div className="flex items-center justify-between py-5">
-        <h3 className="text-3xl">Total Products: {products?.length}</h3>
-        <h3 className="text-3xl">Admins: {4}</h3>
+        <h3 className="text-3xl">All Products: {products?.length}</h3>
+        <div className="text-xl flex items-center gap-3">
+          <label htmlFor="">Category:</label>
+
+          <NativeSelect defaultValue={30}>
+            <option value="laptop">Laptop</option>
+            <option value="phone">Phone</option>
+            <option value="music">Music</option>
+            <option value="gaming">Gaming</option>
+          </NativeSelect>
+        </div>
       </div>
       <TableContainer component={"Paper"}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
