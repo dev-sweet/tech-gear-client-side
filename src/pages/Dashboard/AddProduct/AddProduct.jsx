@@ -1,5 +1,10 @@
 import { useForm } from "react-hook-form";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
+const img_hosting_key = import.meta.env.VITE_IMG_UPLOAD_KEY;
+const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
 const AddProduct = () => {
   const {
     register,
@@ -7,9 +12,33 @@ const AddProduct = () => {
     formState: { errors },
   } = useForm();
 
-  console.log(errors);
-  const onSubmit = (data) => {
-    console.log(data);
+  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+  const onSubmit = async (data) => {
+    const imgFile = { image: data.image[0] };
+    const res = await axiosPublic.post(img_hosting_api, imgFile, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    if (res.data.success) {
+      const product = {
+        ...data,
+        image: res.data.data.display_url,
+      };
+
+      const productRes = await axiosSecure.post("/products", product);
+      if (productRes.data.insertedId) {
+        Swal.fire({
+          title: "Product added successfully!",
+          text: "Product has been added.",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    }
   };
   return (
     <div className="lg:px-20">

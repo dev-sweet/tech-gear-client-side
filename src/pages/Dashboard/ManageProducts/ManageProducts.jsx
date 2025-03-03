@@ -111,9 +111,7 @@ const ManageProducts = () => {
                 <StyledTableCell align="left">
                   <img
                     className="w-[50px] h-[50px]"
-                    src={
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL6_CFHvfQ-ejBLt7AJLrlaUzR44ASJe8rog&s"
-                    }
+                    src={product.image}
                     alt=""
                   />
                 </StyledTableCell>

@@ -149,7 +149,7 @@ function DashboardLayout() {
       <br />
       <List>
         <ListItem disablePadding>
-          <Link className="w-full px-5 mb-3" to="/dashboard/cart">
+          <Link className="w-full px-5 mb-3" to="/">
             <div className="flex items-center gap-3">
               <IoHomeOutline className="text-xl" />
 
@@ -158,7 +158,7 @@ function DashboardLayout() {
           </Link>
         </ListItem>{" "}
         <ListItem disablePadding>
-          <Link className="w-full px-5 mb-3" to="/dashboard/cart">
+          <Link className="w-full px-5 mb-3" to="/products">
             <div className="flex items-center gap-3">
               <IoIosMenu className="text-xl" />
 
@@ -167,7 +167,7 @@ function DashboardLayout() {
           </Link>
         </ListItem>
         <ListItem disablePadding>
-          <Link className="w-full px-5 mb-3" to="/dashboard/cart">
+          <Link className="w-full px-5 mb-3" to="/products">
             <div className="flex items-center gap-3">
               <AiFillProduct />
 
@@ -176,7 +176,7 @@ function DashboardLayout() {
           </Link>
         </ListItem>
         <ListItem disablePadding>
-          <Link className="w-full px-5" to="/dashboard/cart">
+          <Link className="w-full px-5" to="/contact">
             <div className="flex items-center gap-3">
               <FaRegEnvelope className="text-xl" />
 
