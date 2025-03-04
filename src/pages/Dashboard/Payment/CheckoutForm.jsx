@@ -15,7 +15,7 @@ const CheckoutForm = () => {
   const [cart] = useCart();
   const { user } = useAuth();
   const price = cart?.reduce((total, item) => total + item.price, 0);
-
+  console.log(price);
   // create a payment intent
   useEffect(() => {
     if (price) {
@@ -70,6 +70,7 @@ const CheckoutForm = () => {
         text: confirmError?.message,
         icon: "error",
         showConfirmButton: false,
+        timer: 1500,
       });
     }
     if (paymentIntent) {
@@ -82,13 +83,18 @@ const CheckoutForm = () => {
         menuIds: cart.map((item) => item.id),
         date: new Date(),
         price,
-        transactionId,
+        transactionId: paymentIntent.id,
         status: "pending",
       };
 
       axiosSecure.post("/payments", paymentInfo).then((res) => {
         console.log(res.data);
-        if (res.data) {
+        console.log("inserted id", res.data.result.insertedId);
+        console.log("deletedCount", res.data.deleteResult.deletedCount);
+        if (
+          res.data?.result?.insertedId &&
+          res.data?.deleteResult?.deletedCount > 0
+        ) {
           // console.log(data);
           Swal.fire({
             title: "Payment Success !",
@@ -102,7 +108,6 @@ const CheckoutForm = () => {
     }
   };
 
-  console.log("transactionId", transactionId);
   return (
     <form onSubmit={handleSubmit}>
       <div className="border border-[#07174e] p-4 ">
@@ -139,6 +144,10 @@ const CheckoutForm = () => {
         >
           Pay
         </button>
+      )}
+
+      {transactionId && (
+        <p className="text-[#07174e]">Your transaction id is:{transactionId}</p>
       )}
     </form>
   );

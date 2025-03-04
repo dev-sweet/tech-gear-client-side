@@ -18,6 +18,7 @@ import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
 import EditProduct from "../pages/Dashboard/EditProduct/EditProduct";
 import axios from "axios";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 
 export const routes = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ export const routes = createBrowserRouter([
       {
         path: "checkout",
         element: <Payment />,
+      },
+      {
+        path: "paymentHistory",
+        element: <PaymentHistory />,
       },
       // admin routes
       {
