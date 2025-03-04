@@ -10,10 +10,14 @@ import AllProducts from "../pages/AllProducts/AllProducts";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import Cart from "../pages/Dashboard/Cart/Cart";
-import ManageUsers from "../pages/Dashboard/ManageUses/ManageUsers";
+import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 import ManageProducts from "../pages/Dashboard/ManageProducts/ManageProducts";
 import AdminRoute from "./AdminRoute";
 import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
+
+import EditProduct from "../pages/Dashboard/EditProduct/EditProduct";
+import axios from "axios";
+
 export const routes = createBrowserRouter([
   {
     path: "/",
@@ -68,6 +72,20 @@ export const routes = createBrowserRouter([
             <ManageProducts />
           </AdminRoute>
         ),
+      },
+      {
+        path: "manageProducts/edit/:id",
+        element: (
+          <AdminRoute>
+            <EditProduct />
+          </AdminRoute>
+        ),
+
+        loader: async ({ params }) => {
+          const { id } = params;
+          const res = await axios.get(`http://localhost:5050/products/${id}`);
+          return res.data;
+        },
       },
       {
         path: "manageUsers",

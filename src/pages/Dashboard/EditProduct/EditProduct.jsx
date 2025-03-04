@@ -2,60 +2,73 @@ import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useState } from "react";
+import { useLoaderData } from "react-router-dom";
 
 const img_hosting_key = import.meta.env.VITE_IMG_UPLOAD_KEY;
 const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
-const AddProduct = () => {
+const EditProduct = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const product = useLoaderData();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
+  console.log("product", product);
+  const { name, price, image, category, description } = product;
+  const [newProduct, setNewProduct] = useState({
+    name,
+    price,
+    category,
+    description,
+    image,
+  });
+  //   handle submit form
   const onSubmit = async (data) => {
     const imgFile = { image: data.image[0] };
-    const res = await axiosPublic.post(img_hosting_api, imgFile, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
 
-    if (res.data.success) {
-      const price = parseFloat(data.price);
-      console.log(price);
-      const product = {
-        ...data,
-        price,
-        image: res.data.data.display_url,
-      };
-
-      console.log(product);
-      const productRes = await axiosSecure.post("/products", product);
-      if (productRes.data.insertedId) {
-        Swal.fire({
-          title: "Product added successfully!",
-          text: "Product has been added.",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+    if (!imgFile.image) {
+      setNewProduct({ ...data, image: product.image });
+    } else {
+      const res = await axiosPublic.post(img_hosting_api, imgFile, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (res.data.success) {
+        setNewProduct({ ...data, image: res.data.data.display_url });
       }
     }
+
+    const productRes = await axiosSecure.put("/products", newProduct);
+    console.log("productRes", productRes);
+
+    if (productRes.data.insertedId) {
+      Swal.fire({
+        title: "Modified successfully!",
+        text: "Product has been modified.",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
+
   return (
     <div className="lg:px-20">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="text-3xl text-center font-semibold">Add a Product </h1>
+        <h1 className="text-3xl text-center font-semibold">Edit a Product </h1>
 
         <div className="pt-3 flex flex-col justify-center gap-3">
           <label htmlFor="name">Product Name *</label>
           <input
             className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5"
             type="text"
-            defaultValue=""
             placeholder="Product Name"
+            defaultValue={name}
             {...register("name", { required: true })}
           />
         </div>
@@ -72,7 +85,7 @@ const AddProduct = () => {
               <select
                 {...register("category", { required: true })}
                 className="select border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-4 px-5 focus:border-2"
-                defaultValue=""
+                defaultValue={category}
               >
                 <option value="" disabled>
                   Choolse a categroy
@@ -92,7 +105,7 @@ const AddProduct = () => {
               <label htmlFor="price"> Price *</label>
               <input
                 className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5 focus:border-2"
-                defaultValue=""
+                defaultValue={`${price}`}
                 placeholder="Base Price"
                 type="text"
                 {...register("price", { required: true })}
@@ -122,7 +135,7 @@ const AddProduct = () => {
           <textarea
             className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5"
             type="text"
-            defaultValue=""
+            defaultValue={description}
             placeholder="Product Name"
             {...register("description", { required: true })}
           />
@@ -134,15 +147,15 @@ const AddProduct = () => {
         >
           Description is required!
         </label>
-
+        <img height="100" width="100" src={image} alt="" />
         <div>
-          <label htmlFor="image">Product Image *</label>
-          <div className="flex flex-col items-start mt-3">
+          <label htmlFor="image mb-">Product Image</label>
+          <div className="flex flex-col items-start">
             <label className="block border border-gray-500 p-2">
-              <span className="sr-only"> Choose file </span>
+              <span className="sr-only"> Change Photo </span>
               <input
                 type="file"
-                {...register("image", { required: true })}
+                {...register("image")}
                 className="block w-full text-sm text-gray-500
                      file:mr-4 file:py-2 file:px-4
                      file:rounded-lg file:border-0
@@ -150,15 +163,6 @@ const AddProduct = () => {
                      file:bg-blue-50 file:text-blue-600
                      hover:file:bg-blue-100 cursor-pointer"
               />
-            </label>
-
-            <label
-              className={`${
-                errors.image ? "text-[#ff0000d6]" : "text-[#ff000000]"
-              }`}
-              htmlFor="image"
-            >
-              Product image is required!
             </label>
           </div>
         </div>
@@ -173,4 +177,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

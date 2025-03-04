@@ -40,7 +40,6 @@ const ManageProducts = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const res = await axiosSecure.delete(`/products/${id}`);
-        console.log(res.data);
         if (res.data.deletedCount > 0) {
           Swal.fire({
             title: "Deleted!",
