@@ -17,6 +17,7 @@ import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
 
 import EditProduct from "../pages/Dashboard/EditProduct/EditProduct";
 import axios from "axios";
+import Payment from "../pages/Dashboard/Payment/Payment";
 
 export const routes = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ export const routes = createBrowserRouter([
         element: <Cart />,
       },
 
+      {
+        path: "checkout",
+        element: <Payment />,
+      },
       // admin routes
       {
         path: "addProduct",

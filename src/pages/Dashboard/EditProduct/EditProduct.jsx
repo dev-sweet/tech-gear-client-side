@@ -48,8 +48,8 @@ const EditProduct = () => {
 
     if (productRes.data.insertedId) {
       Swal.fire({
-        title: "Modified successfully!",
-        text: "Product has been modified.",
+        title: "Updated successfully!",
+        text: "Product has been updated.",
         icon: "success",
         showConfirmButton: false,
         timer: 1500,
@@ -147,11 +147,11 @@ const EditProduct = () => {
         >
           Description is required!
         </label>
-        <img height="100" width="100" src={image} alt="" />
+        {/* <img height="100" width="100" src={image} alt="" /> */}
         <div>
           <label htmlFor="image mb-">Product Image</label>
           <div className="flex flex-col items-start">
-            <label className="block border border-gray-500 p-2">
+            <label className="block border border-[#2b4190] p-2">
               <span className="sr-only"> Change Photo </span>
               <input
                 type="file"
@@ -160,8 +160,8 @@ const EditProduct = () => {
                      file:mr-4 file:py-2 file:px-4
                      file:rounded-lg file:border-0
                      file:text-sm file:font-semibold
-                     file:bg-blue-50 file:text-blue-600
-                     hover:file:bg-blue-100 cursor-pointer"
+                     file:bg-blue-200 file:text-[#2b4190]
+                     hover:file:bg-[#2b4190] cursor-pointer"
               />
             </label>
           </div>

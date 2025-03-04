@@ -10,8 +10,13 @@ import {
 } from "@mui/material";
 import useCart from "../../../hooks/useCart";
 import { MdOutlineDelete } from "react-icons/md";
+import { IoArrowForwardOutline } from "react-icons/io5";
+import { FaArrowRight } from "react-icons/fa6";
+
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+
 const Cart = () => {
   const [cart, , refetch] = useCart();
   const axiosSecure = useAxiosSecure();
@@ -67,9 +72,15 @@ const Cart = () => {
       <div className="bg-[#07174e] flex items-center justify-between py-8 text-white px-20 mb-5">
         <h3 className="text-3xl">My cart: {cart.length}</h3>
         <h3 className="text-3xl">Total Prices: ${}</h3>
-        <button className="bg-yellow-800 text-white font-bold p-3 rounded cursor-pointer">
-          Checkout
-        </button>
+        <Link
+          to="/dashboard/checkout"
+          className="bg-yellow-600 text-white font-bold p-3 rounded cursor-pointer "
+        >
+          <div className="flex items-center gap-4">
+            <span>Checkout</span>
+            <FaArrowRight />
+          </div>
+        </Link>
       </div>
       <TableContainer component={"Paper"}>
         <Table
