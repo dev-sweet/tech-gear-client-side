@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import useCart from "../../../hooks/useCart";
 import { MdOutlineDelete } from "react-icons/md";
-import { IoArrowForwardOutline } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa6";
 
 import useAxiosSecure from "../../../hooks/useAxiosSecure";

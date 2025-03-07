@@ -1,8 +1,8 @@
-import loadingImg from "../../../assets/spinner.gif";
+import "./Loading.css";
 const Loading = () => {
   return (
     <div className="h-[100vh] flex items-center justify-center">
-      <img src={loadingImg} alt="" />
+      <span className="loader">L &nbsp; ading</span>
     </div>
   );
 };

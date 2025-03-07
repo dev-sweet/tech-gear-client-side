@@ -28,11 +28,12 @@ const ProductCard = ({ product }) => {
         price,
       };
 
+      console.log(cartItem);
       axiosSecure.post("/carts", cartItem).then((res) => {
         if (res.data.insertedId) {
           Swal.fire({
             icon: "success",
-            title: `${name} added to cart.`,
+            title: `${name} added to cartItem.`,
             showConfirmButton: false,
             timer: 1500,
           });
@@ -43,7 +44,7 @@ const ProductCard = ({ product }) => {
     } else {
       Swal.fire({
         title: "Are you are not logged in!",
-        text: "Please login first and then add to cart.",
+        text: "Please login first and then add to cartItem.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#07174e",
@@ -99,8 +100,8 @@ const ProductCard = ({ product }) => {
             </h2>
           </div>
           <div className="text-center lg:absolute top-28 left-0 right-0">
-            <button onClick={handleClick} className="product-cart-btn ">
-              Add to cart
+            <button onClick={handleClick} className="product-cartItem-btn ">
+              Add to cartItem
             </button>
           </div>
         </div>

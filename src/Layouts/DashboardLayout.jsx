@@ -52,7 +52,7 @@ function DashboardLayout() {
       {isAdmin ? (
         <List>
           <ListItem disablePadding>
-            <Link className="w-full px-5 mb-3" to="/dashboard">
+            <Link className="w-full px-5 mb-3" to="/dashboard/adminHome">
               <div className="flex items-center gap-3">
                 <IoHomeOutline className="text-xl" />
                 <ListItemText>Admin Home</ListItemText>
@@ -98,7 +98,7 @@ function DashboardLayout() {
       ) : (
         <List>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/cart">
+            <Link className="w-full px-5 my-1" to="/dashboard/userHome">
               <div className="flex items-center gap-3">
                 <IoHomeOutline className="text-xl" />
                 <ListItemText>User Home</ListItemText>
@@ -124,7 +124,7 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/cart">
+            <Link className="w-full px-5 my-1" to="/dashboard/paymentHistory">
               <div className="flex items-center gap-3">
                 <AiOutlineShoppingCart className="text-xl" />
 

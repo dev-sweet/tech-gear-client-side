@@ -4,18 +4,21 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCart from "../../../hooks/useCart";
 import Swal from "sweetalert2";
 import { useAuth } from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
   const [error, setError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [transactionId, setTransactionId] = useState(null);
+  const [cart] = useCart();
+  const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
-  const [cart] = useCart();
-  const { user } = useAuth();
+
+  const navigate = useNavigate();
   const price = cart?.reduce((total, item) => total + item.price, 0);
-  console.log(price);
+
   // create a payment intent
   useEffect(() => {
     if (price) {
@@ -44,7 +47,6 @@ const CheckoutForm = () => {
     });
 
     if (error) {
-      console.log(error);
       setError(error.message);
     } else {
       console.log("paymentMethod", paymentMethod);
@@ -64,7 +66,6 @@ const CheckoutForm = () => {
       });
 
     if (confirmError) {
-      console.log(confirmError);
       Swal.fire({
         title: confirmError?.type || "Something went wrong!",
         text: confirmError?.message,
@@ -79,23 +80,24 @@ const CheckoutForm = () => {
         name: user?.displayName,
         email: user?.email,
         phone: "",
-        cartIds: cart.map((item) => item._id),
-        menuIds: cart.map((item) => item.id),
+        cartIds: cart?.map((item) => item._id),
+        productIds: cart?.map((item) => item.id),
         date: new Date(),
         price,
         transactionId: paymentIntent.id,
         status: "pending",
       };
 
+      console.log("paymentInfo", paymentInfo);
       axiosSecure.post("/payments", paymentInfo).then((res) => {
-        console.log(res.data);
-        console.log("inserted id", res.data.result.insertedId);
-        console.log("deletedCount", res.data.deleteResult.deletedCount);
+        // console.log(res.data);
+        // console.log("inserted id", res.data.result.insertedId);
+        // console.log("deletedCount", res.data.deleteResult.deletedCount);
         if (
           res.data?.result?.insertedId &&
           res.data?.deleteResult?.deletedCount > 0
         ) {
-          // console.log(data);
+          navigate("/dashboard/paymentHistory");
           Swal.fire({
             title: "Payment Success !",
             text: "Your payment is successfull!",

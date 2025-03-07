@@ -19,6 +19,8 @@ import EditProduct from "../pages/Dashboard/EditProduct/EditProduct";
 import axios from "axios";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
+import UserHome from "../pages/Dashboard/UserHome/UserHome";
 
 export const routes = createBrowserRouter([
   {
@@ -54,6 +56,10 @@ export const routes = createBrowserRouter([
     ),
     children: [
       {
+        path: "userHome",
+        element: <UserHome />,
+      },
+      {
         path: "cart",
         element: <Cart />,
       },
@@ -67,6 +73,14 @@ export const routes = createBrowserRouter([
         element: <PaymentHistory />,
       },
       // admin routes
+      {
+        path: "adminHome",
+        element: (
+          <AdminRoute>
+            <AdminHome />
+          </AdminRoute>
+        ),
+      },
       {
         path: "addProduct",
         element: (

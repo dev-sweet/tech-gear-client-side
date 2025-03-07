@@ -5,6 +5,7 @@ import { useAuth } from "./useAuth";
 const useCart = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+
   const {
     data: cart = [],
     isLoading,
