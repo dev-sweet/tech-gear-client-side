@@ -22,12 +22,17 @@ import {
 import { ImList } from "react-icons/im";
 import { useState } from "react";
 import logo from "../assets/logo.png";
+import useAdmin from "../hooks/useAdmin";
+import { useAuth } from "../hooks/useAuth";
 const drawerWidth = 240;
 
 function DashboardLayout() {
+  const [isAdmin] = useAdmin();
+
+  const { user } = useAuth();
+  console.log(user);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(true);
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
@@ -52,7 +57,7 @@ function DashboardLayout() {
       {isAdmin ? (
         <List>
           <ListItem disablePadding>
-            <Link className="w-full px-5 mb-3" to="/dashboard/adminHome">
+            <Link className="w-full px-5 mb-3" to="/dashboard">
               <div className="flex items-center gap-3">
                 <IoHomeOutline className="text-xl" />
                 <ListItemText>Admin Home</ListItemText>
@@ -98,7 +103,7 @@ function DashboardLayout() {
       ) : (
         <List>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/userHome">
+            <Link className="w-full px-5 my-1" to="/dashboard">
               <div className="flex items-center gap-3">
                 <IoHomeOutline className="text-xl" />
                 <ListItemText>User Home</ListItemText>

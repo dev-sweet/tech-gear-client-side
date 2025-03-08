@@ -21,6 +21,7 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
 import UserHome from "../pages/Dashboard/UserHome/UserHome";
+import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 
 export const routes = createBrowserRouter([
   {
@@ -56,8 +57,8 @@ export const routes = createBrowserRouter([
     ),
     children: [
       {
-        path: "userHome",
-        element: <UserHome />,
+        path: "",
+        element: <DashboardHome />,
       },
       {
         path: "cart",

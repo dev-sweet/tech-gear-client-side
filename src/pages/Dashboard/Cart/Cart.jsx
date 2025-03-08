@@ -17,8 +17,12 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const [cart, , refetch] = useCart();
   const axiosSecure = useAxiosSecure();
+  const [cart, , refetch] = useCart();
+  const totalPrice = cart.reduce(
+    (total, currentItem) => total + currentItem.price,
+    0
+  );
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -66,11 +70,11 @@ const Cart = () => {
     },
   }));
 
-  return (
+  return cart.length > 0 ? (
     <div>
       <div className="bg-[#07174e] flex items-center justify-between py-8 text-white px-20 mb-5">
         <h3 className="text-3xl">My cart: {cart.length}</h3>
-        <h3 className="text-3xl">Total Prices: ${}</h3>
+        <h3 className="text-3xl">Total Prices: ${totalPrice}</h3>
         <Link
           to="/dashboard/checkout"
           className="bg-yellow-600 text-white font-bold p-3 rounded cursor-pointer "
@@ -125,6 +129,28 @@ const Cart = () => {
           </TableBody>
         </Table>
       </TableContainer>
+    </div>
+  ) : (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/102/102661.png"
+        alt="Empty Cart"
+        className="w-40 h-40"
+      />
+
+      <h2 className="text-2xl font-semibold text-gray-700 mt-4">
+        Your Cart is Empty
+      </h2>
+      <p className="text-gray-500 mt-2">
+        Looks like you haven't added anything yet.
+      </p>
+
+      <Link
+        to="/products"
+        className="mt-6 px-6 py-3 bg-[#07174e] text-white text-lg font-medium rounded-lg cursor-pointer hover:bg-[#242283]"
+      >
+        Continue Shopping
+      </Link>
     </div>
   );
 };

@@ -9,7 +9,8 @@ const Banner = () => {
       autoPlay={true}
       showThumbs={false}
       infiniteLoop={true}
-      interval={3000}
+      interval={3500}
+      transitionTime={1000}
       showArrows={true}
       stopOnHover={false}
       autoFocus={true}

@@ -135,10 +135,10 @@ const AdminHome = () => {
           </div>
         </div>
       </div>
-      <div className="flex iems-center mt-10 lg:flex-row flex-col">
-        <div className="lg:w-1/2">
+      <div className="flex items-center justify-evenly mt-10 lg:flex-row flex-col gap-5">
+        <div className="">
           <BarChart
-            width={600}
+            width={500}
             height={400}
             data={chartData}
             margin={{
@@ -163,9 +163,10 @@ const AdminHome = () => {
             </Bar>
           </BarChart>
         </div>
-        <div className="lg:w-1/2">
+        <div className="">
           {/* <ResponsiveContainer width="100%" height="100%"> */}
           <PieChart width={400} height={400}>
+            <Legend> </Legend>
             <Pie
               data={pieChartdata}
               cx="50%"
@@ -183,7 +184,6 @@ const AdminHome = () => {
                 />
               ))}
             </Pie>
-            <Legend> </Legend>
           </PieChart>
         </div>
       </div>

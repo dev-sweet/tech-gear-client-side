@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../ProductCard/ProductCard";
+import axios from "axios";
+
 const tabs = [
   { id: "all", label: "All" },
   { id: "laptop", label: "Laptop" },
@@ -12,17 +14,21 @@ const tabs = [
 ];
 const Products = () => {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const [query, setQuery] = useState({ category: "laptop" });
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:5050/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, []);
-  const handleClick = (id) => {
-    setActiveTab(id);
-    // setProducts("");
+  const handleClick = async (id) => {
+    setQuery({ category: id });
   };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5050/products", {
+        params: query,
+      })
+      .then((res) => setProducts(res.data));
+  }, [query]);
+
   return (
     <div className="mx-auto lg:px-20 px-10 mt-5">
       <div className="flex lg:space-x-2">
@@ -43,7 +49,7 @@ const Products = () => {
 
       <div className="mt-4 p-2">
         <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-5 h-full">
-          {products.map((product) => (
+          {products?.map((product) => (
             <ProductCard
               className="h-full "
               key={product._id}

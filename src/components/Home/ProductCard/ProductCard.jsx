@@ -28,7 +28,6 @@ const ProductCard = ({ product }) => {
         price,
       };
 
-      console.log(cartItem);
       axiosSecure.post("/carts", cartItem).then((res) => {
         if (res.data.insertedId) {
           Swal.fire({
@@ -61,7 +60,7 @@ const ProductCard = ({ product }) => {
     <Card
       sx={{
         boxShadow: "none",
-        borderRadious: "none",
+        borderRadious: 0,
         height: "full",
         flexDirection: "column",
       }}
@@ -100,8 +99,8 @@ const ProductCard = ({ product }) => {
             </h2>
           </div>
           <div className="text-center lg:absolute top-28 left-0 right-0">
-            <button onClick={handleClick} className="product-cartItem-btn ">
-              Add to cartItem
+            <button onClick={handleClick} className="product-cart-btn ">
+              Add to cart
             </button>
           </div>
         </div>
