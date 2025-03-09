@@ -93,11 +93,14 @@ const EditProduct = () => {
 
                 <option value="laptop">Laptop</option>
                 <option value="phone">Phone</option>
-                <option value="smartphone">Smartphone</option>
+                <option value="earbuds">Earbuds</option>
                 <option value="music">Music</option>
                 <option value="gaming">Gaming</option>
                 <option value="camera">Camera</option>
-                <option value="home&theatre">Home & Theatre</option>
+                <option value="smartwatch">Smartwatch</option>
+                <option value="tablet">Tablet</option>
+                <option value="drone">Drone</option>
+                <option value="speaker">Speaker</option>
               </select>
             </div>
 
@@ -161,7 +164,7 @@ const EditProduct = () => {
                      file:rounded-lg file:border-0
                      file:text-sm file:font-semibold
                      file:bg-blue-200 file:text-[#2b4190]
-                     hover:file:bg-[#2b4190] cursor-pointer"
+                     hover:file:bg-[#] cursor-pointer"
               />
             </label>
           </div>

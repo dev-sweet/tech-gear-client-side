@@ -1,6 +1,38 @@
 import { FaChevronRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import FeaturedBlog from "./FeaturedBlog";
+import blog1 from "../../../assets/home/porto45-blog-22.jpg";
+import blog2 from "../../../assets/home/porto45-blog-42.jpg";
+import blog3 from "../../../assets/home/porto45-blog-32.jpg";
+import blog4 from "../../../assets/home/porto45-blog-12.jpg";
+const blogs = [
+  {
+    name: "smartwatches",
+    title: "Smartwatches in 2025",
+    img: blog1,
+    description:
+      "Explore the future of smartwatches with AI and better battery life.",
+  },
+  {
+    name: "gaming-devices",
+    title: "Gaming Laptop vs Desktop",
+    img: blog2,
+    description:
+      "Which one suits your gaming needs? Find out the pros and cons.",
+  },
+  {
+    name: "wireless-earbuds",
+    title: "Best Wireless Earbuds",
+    img: blog3,
+    description: "Key factors to consider when choosing the perfect earbuds.",
+  },
+  {
+    name: "tech-accessories",
+    img: blog4,
+    title: "Must-Have Tech Accessories",
+    description: "Boost productivity with the latest tech essentials.",
+  },
+];
 
 const FeaturedBlogs = () => {
   return (
@@ -22,10 +54,9 @@ const FeaturedBlogs = () => {
           </div>
         </div>
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-5">
-          <FeaturedBlog />
-          <FeaturedBlog />
-          <FeaturedBlog />
-          <FeaturedBlog />
+          {blogs?.map((blogItem) => (
+            <FeaturedBlog key={blogItem.name} blogItem={blogItem} />
+          ))}
         </div>
       </div>
     </div>

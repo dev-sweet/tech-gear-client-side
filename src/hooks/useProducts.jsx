@@ -12,6 +12,7 @@ const useProducts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await axiosPublic.get("/products");
+      console.log(res.data);
       return res.data;
     },
   });

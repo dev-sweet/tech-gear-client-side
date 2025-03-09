@@ -2,7 +2,6 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import img from "../../../assets/home/shop41-el-slide-product2.png";
 import { Rating } from "@mui/material";
 import "./ProductCard.css";
 import { useAuth } from "../../../hooks/useAuth";
@@ -66,7 +65,12 @@ const ProductCard = ({ product }) => {
       }}
     >
       <div className="bg-gray-100 p-5">
-        <CardMedia component="img" alt="green iguana" image={img} />
+        <CardMedia
+          className="h-50 "
+          component="img"
+          alt="green iguana"
+          image={image}
+        />
       </div>
       <CardContent sx={{ background: "#dfe0ff", height: "100%" }}>
         <div className="relative lg:pb-10">
@@ -84,7 +88,7 @@ const ProductCard = ({ product }) => {
             <Rating
               name="size-small"
               size="small"
-              defaultValue={ratings}
+              defaultValue="3"
               precision={0.5}
               readOnly
             />
@@ -98,7 +102,7 @@ const ProductCard = ({ product }) => {
               <span className="text-lg font-bold text-gray-700">${price}</span>
             </h2>
           </div>
-          <div className="text-center lg:absolute top-28 left-0 right-0">
+          <div className="text-center lg:absolute bottom-0 left-0 right-0">
             <button onClick={handleClick} className="product-cart-btn ">
               Add to cart
             </button>

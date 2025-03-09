@@ -9,6 +9,7 @@ const AddProduct = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -34,6 +35,7 @@ const AddProduct = () => {
       console.log(product);
       const productRes = await axiosSecure.post("/products", product);
       if (productRes.data.insertedId) {
+        reset();
         Swal.fire({
           title: "Product added successfully!",
           text: "Product has been added.",
@@ -79,13 +81,15 @@ const AddProduct = () => {
                 </option>
 
                 <option value="laptop">Laptop</option>
-                <option value="phone">Phone</option>
+                <option value="phone">phone</option>
                 <option value="earbuds">Earbuds</option>
-                <option value="smartphone">Smartphone</option>
                 <option value="music">Music</option>
                 <option value="gaming">Gaming</option>
                 <option value="camera">Camera</option>
-                <option value="home&theatre">Home & Theatre</option>
+                <option value="smartwatch">Smartwatch</option>
+                <option value="tablet">Tablet</option>
+                <option value="drone">Drone</option>
+                <option value="speaker">Speaker</option>
               </select>
             </div>
 

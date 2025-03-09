@@ -3,7 +3,7 @@ import ProductCard from "../ProductCard/ProductCard";
 import axios from "axios";
 
 const tabs = [
-  { id: "all", label: "All" },
+  { id: "", label: "All" },
   { id: "laptop", label: "Laptop" },
   {
     id: "phone",
@@ -14,16 +14,16 @@ const tabs = [
 ];
 const Products = () => {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
-  const [query, setQuery] = useState({ category: "laptop" });
+  const [query, setQuery] = useState({ category: "", limit: 12 });
   const [products, setProducts] = useState([]);
 
   const handleClick = async (id) => {
-    setQuery({ category: id });
+    setQuery({ ...query, category: id });
   };
 
   useEffect(() => {
     axios
-      .get("http://localhost:5050/products", {
+      .get("https://tech-gear-server.onrender.com/products", {
         params: query,
       })
       .then((res) => setProducts(res.data));

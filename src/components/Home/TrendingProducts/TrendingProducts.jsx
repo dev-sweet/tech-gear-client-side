@@ -2,39 +2,12 @@ import { Link } from "react-router-dom";
 import banner from "../../../assets/home/porto43-banner-5.png";
 import { FaChevronRight } from "react-icons/fa";
 import ProductCard from "../ProductCard/ProductCard";
+import useProducts from "../../../hooks/useProducts";
+import { useState } from "react";
 const TrendingProducts = () => {
-  const products = [
-    {
-      id: 1,
-      name: "Apple iPhone 15 Pro Max",
-      image: "https://example.com/iphone15pro.jpg",
-      price: 1199,
-      discountPrice: 1050,
-      ratings: 4.9,
-    },
-    {
-      id: 2,
-      name: "Sony WH-1000XM5 Headphones",
-      image: "https://example.com/sony-wh1000xm5.jpg",
-      price: 399,
-      discountPrice: 308,
-      ratings: 4.7,
-    },
-    {
-      id: 3,
-      name: "Dell XPS 15 Laptop",
-      image: "https://example.com/dell-xps15.jpg",
-      price: 1699,
-      ratings: 4.8,
-    },
-    {
-      id: 4,
-      name: 'Samsung 65" QLED 4K Smart TV',
-      image: "https://example.com/samsung-qled65.jpg",
-      price: 1299,
-      ratings: 4.6,
-    },
-  ];
+  const [products] = useProducts();
+  console.log(products);
+  const diplayProducts = products?.slice(0, 4);
   return (
     <div className="lg:p-20 p-10">
       <div className="lg:flex">
@@ -63,7 +36,7 @@ const TrendingProducts = () => {
             </div>
           </div>
           <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-3 mt-5">
-            {products.map((product) => (
+            {diplayProducts?.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

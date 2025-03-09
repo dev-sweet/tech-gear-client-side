@@ -22,6 +22,8 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
 import UserHome from "../pages/Dashboard/UserHome/UserHome";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import Wishlist from "../pages/Dashboard/WishList/Wishlist";
+import AddReview from "../pages/Dashboard/AddReview/AddReview";
 
 export const routes = createBrowserRouter([
   {
@@ -63,6 +65,14 @@ export const routes = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "wishlist",
+        element: <Wishlist />,
+      },
+      {
+        path: "addReview",
+        element: <AddReview />,
       },
 
       {

@@ -10,12 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 
-import blog1 from "../../../assets/home/porto45-blog-22.jpg";
-// import blog2 from "../../../assets/home/porto45-blog-42.jpg";
-// import blog3 from "../../../assets/home/porto45-blog-32.jpg";
-// import blog4 from "../../../assets/home/porto45-blog-12.jpg";
-
-const FeaturedBlog = () => {
+const FeaturedBlog = ({ blogItem }) => {
+  console.log(blogItem);
+  const { name, title, img, description } = blogItem;
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
@@ -30,15 +27,10 @@ const FeaturedBlog = () => {
               {/* <MoreVertIcon /> */}
             </IconButton>
           }
-          title="Shrimp and Chorizo Paella"
+          title={name}
           subheader="September 14, 2016"
         />
-        <CardMedia
-          component="img"
-          height="194"
-          image={blog1}
-          alt="Paella dish"
-        />
+        <CardMedia component="img" height="194" image={img} alt="Paella dish" />
         <CardContent>
           <Typography
             gutterBottom
@@ -47,7 +39,7 @@ const FeaturedBlog = () => {
             Word of the Day
           </Typography>
           <Typography variant="body2">
-            well meaning and kindly.
+            {title}
             <br />
             {'"a benevolent smile"'}
           </Typography>

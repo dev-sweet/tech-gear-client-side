@@ -20,10 +20,10 @@ const Banner = () => {
         <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between min-h-full">
           <div className="lg:pl-20 pl-10 text-left lg:w-[40%] w-full flex flex-col md:items-start items-center">
             <h1 className="lg:text-5xl md:text-4xl text-2xl lg:text-left md:text-left text-center font-semibold">
-              Porto Touch Laptop <br className="" /> Pro Edition 2
+              Unleash Power with the <br className="" /> New MacBook!
             </h1>
             <button className="md:mt-5 mt-3 lg:text-xl  border-b-1 border-gray-500 text-gray-500 font-semibold hover:border-gray-700 hover:text-gray-700 transition cursor-pointer flex-start">
-              Shop Electronics
+              Shop Now
             </button>
           </div>
           <div className="relative py-12 lg:pr-20 pr-10">

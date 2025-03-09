@@ -120,7 +120,7 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/cart">
+            <Link className="w-full px-5 my-1" to="/dashboard/wishlist">
               <div className="flex items-center gap-3">
                 <MdChecklistRtl className="text-xl" />
 
@@ -138,7 +138,7 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/cart">
+            <Link className="w-full px-5 my-1" to="/dashboard/addReview">
               <div className="flex items-center gap-3">
                 <MdOutlineRateReview className="text-xl" />
 

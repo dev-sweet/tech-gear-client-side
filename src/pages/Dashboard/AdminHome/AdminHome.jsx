@@ -12,7 +12,6 @@ import {
   Legend,
   Pie,
   PieChart,
-  ResponsiveContainer,
   XAxis,
   YAxis,
 } from "recharts";
@@ -73,7 +72,7 @@ const AdminHome = () => {
     innerRadius,
     outerRadius,
     percent,
-    index,
+    // index,
   }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
