@@ -7,7 +7,7 @@
 
 ## 🎯 Overview
 
-Tech Gear is a high-performance e-commerce website built with **Next.js, React.js, and Tailwind CSS**. It offers a smooth shopping experience with cart, wishlist, payments, and user dashboards.
+Tech Gear is a high-performance e-commerce website built with **Tanstack Query,Axios,React.js,Node.js,Express.js,Mongodb, Tailwind CSS, and Material UI**. It offers a smooth shopping experience with cart, wishlist, payments, and user dashboards.
 
 📦 **Fully Responsive** | ⚡ **Fast & SEO-friendly** | 🛒 **Full E-commerce Features**
 
@@ -16,6 +16,7 @@ Tech Gear is a high-performance e-commerce website built with **Next.js, React.j
 ## 🔥 Features
 
 ✅ **User-Friendly Interface** – Clean & modern design  
+✅ **Responsive Devices** – Fully responsive for different sizes  
 ✅ **Authentication & Authorization** – Secure login system  
 ✅ **Add to Cart & Wishlist** – Save favorite products  
 ✅ **Product Details & Filtering** – Search & browse easily  
@@ -27,11 +28,11 @@ Tech Gear is a high-performance e-commerce website built with **Next.js, React.j
 
 ## 🛠 Tech Stack
 
-| Frontend             | Backend (API)         | UI/UX            |
-| -------------------- | --------------------- | ---------------- |
-| ⚛️ React.js          | 🛢 MongoDB             | Material UI      |
-| 🌍 Axios             | 🔐 JWT Authentication | 🔥 Framer Motion |
-| ⚡ Tanstack Query.js | 🚀 Node.js + Express  | 🎨 Tailwind CSS  |
+| 🚀 Frontend                                             | 🖥️ Backend (API)                  | 🎨 UI/UX            |
+| ------------------------------------------------------- | --------------------------------- | ------------------- |
+| ⚛️ **React.js**, 🏦 **Stripe**                          | 🛢️ **MongoDB**, ⚙️ **Express.js** | 🎨 **Material UI**  |
+| 🌍 **Axios**                                            | 🔐 **JWT Authentication**         | 🔥 **Sweet Alert**  |
+| ⚡ **TanStack Query**, 📊 **Recharts**, 🔥 **Firebase** | 🚀 **Node.js + Express**          | 🎨 **Tailwind CSS** |
 
 ---
 
@@ -40,7 +41,7 @@ Tech Gear is a high-performance e-commerce website built with **Next.js, React.j
 ### 1️⃣ Clone the Repository
 
 ```sh
-git clone https://github.com/your-username/tech-gear-client.git
+git clone https://github.com/dev-sweet/tech-gear-client.git
 cd tech-gear-client
 ```
 
