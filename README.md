@@ -27,11 +27,11 @@ Tech Gear is a high-performance e-commerce website built with **Next.js, React.j
 
 ## 🛠 Tech Stack
 
-| Frontend    | Backend (API)         | UI/UX            |
-| ----------- | --------------------- | ---------------- |
-| ⚡ Next.js  | 🚀 Node.js + Express  | 🎨 Tailwind CSS  |
-| ⚛️ React.js | 🛢 MongoDB             | 🔄 Redux Toolkit |
-| 🌍 Axios    | 🔐 JWT Authentication | 🔥 Framer Motion |
+| Frontend             | Backend (API)         | UI/UX            |
+| -------------------- | --------------------- | ---------------- |
+| ⚛️ React.js          | 🛢 MongoDB             | Material UI      |
+| 🌍 Axios             | 🔐 JWT Authentication | 🔥 Framer Motion |
+| ⚡ Tanstack Query.js | 🚀 Node.js + Express  | 🎨 Tailwind CSS  |
 
 ---
 
@@ -43,3 +43,34 @@ Tech Gear is a high-performance e-commerce website built with **Next.js, React.j
 git clone https://github.com/your-username/tech-gear-client.git
 cd tech-gear-client
 ```
+
+### 2️⃣ Install Dependencies
+
+```sh
+npm install
+
+```
+
+### 3️⃣ Setup Environment Variables
+
+Create a .env.local file in the root directory and add:
+
+```env
+VITE_APP_apiKey=//add your apiKey (firebase)
+VITE_APP_authDomain=//add your authDomain (firebase)
+VITE_APP_projectId=//add your projectId (firebase)
+VITE_APP_storageBucket=//add your storageBucket (firebase)
+VITE_APP_messagingSenderId=//add your messagingSenderid (firebase)
+VITE_APP_appId=//add your apiKey ()
+VITE_IMG_UPLOAD_KEY=//Img updload key ()
+VITE_APP_Payment_Gateway_PK=//payment gateway (stripe)
+```
+
+### 4️⃣ Run the Development Server
+
+```sh
+npm run dev
+
+```
+
+📌 The project will be live at http://localhost:3000
