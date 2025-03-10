@@ -1,51 +1,16 @@
 .control-arrow.control-prev {
   background-color: #00000029;
-  padding: 0px 30px !important;
-  height: 95%;
+  padding: 0px 15px !important;
+  /* height: 100%; */
 }
 .control-arrow.control-next {
   background-color: #00000029;
-  padding: 0px 30px !important;
-  height: 95%;
+  padding: 0px 15px !important;
 }
-
-.banner-bg-color {
-  background: linear-gradient(to top, #9453ff6b, #3dc6ec5c);
-  width: 60%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -10;
+.banner-bg {
+  background: linear-gradient(135deg, #111827, #374151);
 }
-
-.banner-bg-color-2 {
-  background: linear-gradient(to top, #9453ff6b, #3dc6ec5c);
-  width: 40%;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  z-index: -10;
-}
-@media only screen and (max-width: 768px) {
-  .banner-bg-color {
-    display: none;
-  }
-  .banner-full {
-    background: linear-gradient(to top, #9453ff6b, #3dc6ec5c);
-  }
-  .banner-bg-color-2 {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 992px) {
-  .banner-bg-color {
-    width: 55%;
-  }
-  .banner-bg-color-2 {
-    width: 55%;
-  }
+.banner-bg2 {
+  background: linear-gradient(135deg, #1e3a8a, #4c4d4f);
+  /* background: linear-gradient(135deg, #1f2848, #4a515f); */
 }
