@@ -2,7 +2,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Rating } from "@mui/material";
+import { Avatar, Box, Rating, Skeleton } from "@mui/material";
 import "./ProductCard.css";
 import { useAuth } from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCart from "../../../hooks/useCart";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, loading }) => {
   const { _id, name, price, image, ratings, discountPrice } = product;
   const { user } = useAuth();
   const location = useLocation();
@@ -55,6 +55,22 @@ const ProductCard = ({ product }) => {
       });
     }
   };
+
+  if (loading) {
+    return (
+      <Box>
+        <Skeleton
+          animation="wave"
+          variant="rectangular"
+          width="full"
+          height={180}
+        />
+        <Skeleton height={50} animation="wave" />
+        <Skeleton height={40} width={200} animation="wave" />
+        <Skeleton height={30} width={150} animation="wave" />
+      </Box>
+    );
+  }
   return (
     <Card
       sx={{
@@ -72,7 +88,7 @@ const ProductCard = ({ product }) => {
           image={image}
         />
       </div>
-      <CardContent sx={{ background: "#dfe0ff", height: "100%" }}>
+      <CardContent sx={{ background: "", height: "100%" }}>
         <div className="relative lg:pb-10">
           <div>
             <Typography

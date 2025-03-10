@@ -33,8 +33,8 @@ const Features = () => {
   ];
 
   return (
-    <div className="lg:px-20 px-10">
-      <div className="lg:border border-gray-300 py-10 mt-1 lg:px-8">
+    <div className="lg:px-20 px-10 py-8">
+      <div className="lg:border border-gray-300 shadow-lg py-10 mt-1 lg:px-8">
         <div className="grid lg:grid-cols-5 md:grid-cols-2 gap-4">
           {items.map((item, i) => (
             <div

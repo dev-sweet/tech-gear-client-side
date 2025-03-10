@@ -3,7 +3,7 @@ import banner from "../../../assets/home/porto43-banner-5.png";
 import { FaChevronRight } from "react-icons/fa";
 import ProductCard from "../ProductCard/ProductCard";
 import useProducts from "../../../hooks/useProducts";
-import { useState } from "react";
+
 const TrendingProducts = () => {
   const [products] = useProducts();
   console.log(products);

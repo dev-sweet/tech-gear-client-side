@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import { CiUser } from "react-icons/ci";
 import { IoMdMenu } from "react-icons/io";
@@ -19,6 +19,9 @@ const Navbar = () => {
     setOpen(newOpen);
   };
 
+  const location = useLocation();
+  const path = location.pathname;
+
   const handleLogOut = () => {
     logOut().then(() => {
       Swal.fire({
@@ -31,29 +34,72 @@ const Navbar = () => {
     });
   };
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-      <ul className="p-10">
-        <li className="mt-2">
-          <Link to="/">Home</Link>
+    <Box
+      className="bg-gray-300 h-full shadow shadow-lg"
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+    >
+      <ul className="mt-1 px-5 text-center">
+        <li>
+          <Link className="text-right" to="/">
+            <img className="w-24" src={logo} alt="" />
+          </Link>
         </li>
-        <li className="mt-5">
-          <Link to="/products">Products</Link>
+        <li>
+          <Link
+            className={`mt-2 w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
+              path === "/" && "bg-[#07174e] text-gray-100"
+            }`}
+            to="/"
+          >
+            Home
+          </Link>
         </li>
-        <li className="mt-5">
-          <Link to="/about">About</Link>
+        <li>
+          <Link
+            className={`w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
+              path === "/products" && "bg-[#07174e] text-gray-100"
+            }`}
+            to="/products"
+          >
+            Products
+          </Link>
         </li>
-        <li className="mt-5">
-          <Link to="/contact">Contact</Link>
+        <li>
+          <Link
+            className={`w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
+              path === "/about" && "bg-[#07174e] text-gray-100"
+            }`}
+            to="/about"
+          >
+            About
+          </Link>
+        </li>
+        <li>
+          <Link
+            className={`w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
+              path === "/contact" && "bg-[#07174e] text-gray-100"
+            }`}
+            to="/contact"
+          >
+            Contact
+          </Link>
         </li>
         {user ? (
           <>
-            <li className="mt-5">
-              <Link to="/dashboard">Dashboard</Link>
+            <li>
+              <Link
+                className={`w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100`}
+                to="/dashboard"
+              >
+                Dashboard
+              </Link>
             </li>
-            <li className="mt-5">
+            <li>
               <button
                 onClick={handleLogOut}
-                className="flex items-center gap-1 font-smibold cursor-pointer"
+                className="w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 flex items-center gap-1 font-smibold cursor-pointer"
               >
                 <PiSignOutBold />
 
@@ -91,18 +137,50 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="hidden lg:block">
-        <ul className="flex gap-5">
+        <ul className="flex gap-5 font-semibold text-gray-600">
           <li>
-            <Link to="/">Home</Link>
+            <Link
+              className={`hover:text hover:border-b-2 hover:border-[#0027af] hover:text-[#0027af] ${
+                path === "/" &&
+                "border-b-2 border-[#0027af] text-[#0027af] font-bold"
+              }`}
+              to="/"
+            >
+              Home
+            </Link>
           </li>
           <li>
-            <Link to="/products">Products</Link>
+            <Link
+              className={`hover:text hover:border-b-2 hover:border-[#0027af] hover:text-[#0027af] ${
+                path === "/products" &&
+                "border-b-2 border-[#0027af] text-[#0027af] font-bold"
+              }`}
+              to="/products"
+            >
+              Products
+            </Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link
+              className={`hover:text hover:border-b-2 hover:border-[#0027af] hover:text-[#0027af] ${
+                path === "/about" &&
+                "border-b-2 border-[#0027af] text-[#0027af] font-bold"
+              }`}
+              to="/about"
+            >
+              About
+            </Link>
           </li>
           <li>
-            <Link to="/contact">Contact</Link>
+            <Link
+              className={`hover:text hover:border-b-2 hover:border-[#0027af] hover:text-[#0027af] ${
+                path === "/contact" &&
+                "border-b-2 border-[#0027af] text-[#0027af] font-bold"
+              }`}
+              to="/contact"
+            >
+              Contact
+            </Link>
           </li>
           {user ? (
             <>

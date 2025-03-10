@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import axios from "axios";
+import { Box, Skeleton } from "@mui/material";
 
 const tabs = [
   { id: "", label: "All" },
@@ -16,17 +17,23 @@ const Products = () => {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const [query, setQuery] = useState({ category: "", limit: 12 });
   const [products, setProducts] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   const handleClick = async (id) => {
     setQuery({ ...query, category: id });
+    setActiveTab(id);
   };
 
   useEffect(() => {
+    setLoading(true);
+
     axios
       .get("https://tech-gear-server.onrender.com/products", {
         params: query,
       })
-      .then((res) => setProducts(res.data));
+      .then((res) => {
+        setProducts(res.data);
+        setLoading(false);
+      });
   }, [query]);
 
   return (
@@ -51,6 +58,7 @@ const Products = () => {
         <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-5 h-full">
           {products?.map((product) => (
             <ProductCard
+              loading={loading}
               className="h-full "
               key={product._id}
               product={product}
