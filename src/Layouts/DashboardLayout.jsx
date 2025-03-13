@@ -17,6 +17,8 @@ import { FaRegEnvelope, FaUsers } from "react-icons/fa";
 import {
   MdChecklistRtl,
   MdEditNote,
+  MdMovieEdit,
+  MdOutlineCreate,
   MdOutlineRateReview,
 } from "react-icons/md";
 import { ImList } from "react-icons/im";
@@ -65,6 +67,15 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
+            <Link className="w-full px-5 mb-3" to="/dashboard/manageOrders">
+              <div className="flex items-center gap-3">
+                <ImList className="text-lg" />
+
+                <ListItemText>Manage Orders</ListItemText>
+              </div>
+            </Link>
+          </ListItem>
+          <ListItem disablePadding>
             <Link className="w-full px-5 mb-3" to="/dashboard/addProduct">
               <div className="flex items-center gap-3">
                 <IoMdAdd className="text-xl" />
@@ -81,21 +92,31 @@ function DashboardLayout() {
               </div>
             </Link>
           </ListItem>
-          <ListItem disablePadding>
-            <Link className="w-full px-5 mb-3" to="/dashboard/manageOrders">
-              <div className="flex items-center gap-3">
-                <ImList className="text-lg" />
 
-                <ListItemText>Manage Orders</ListItemText>
-              </div>
-            </Link>
-          </ListItem>
           <ListItem disablePadding>
             <Link className="w-full px-5 my-1" to="/dashboard/manageUsers">
               <div className="flex items-center gap-3">
                 <FaUsers className="text-xl" />
 
-                <ListItemText>Manage Users</ListItemText>
+                <ListItemText>Manage Users(10)</ListItemText>
+              </div>
+            </Link>
+          </ListItem>
+          <ListItem disablePadding>
+            <Link className="w-full px-5 my-1" to="/dashboard/createBlog">
+              <div className="flex items-center gap-3">
+                <MdOutlineCreate className="text-xl" />
+
+                <ListItemText>Create A Blog</ListItemText>
+              </div>
+            </Link>
+          </ListItem>
+          <ListItem disablePadding>
+            <Link className="w-full px-5 my-1" to="/dashboard/manageBlogs">
+              <div className="flex items-center gap-3">
+                <MdMovieEdit className="text-xl" />
+
+                <ListItemText>Manage Blogs</ListItemText>
               </div>
             </Link>
           </ListItem>

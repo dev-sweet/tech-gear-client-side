@@ -171,7 +171,7 @@ const EditProduct = () => {
         </div>
         <div className="text-center">
           <input
-            className="bg-[#2b4190] py-3 w-[200px] text-white mt-5 cursor-pointer mx-auto"
+            className="bg-[#07174e] py-3 w-[200px] text-white mt-5 cursor-pointer mx-auto"
             type="submit"
           />
         </div>

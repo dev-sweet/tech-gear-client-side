@@ -1,70 +1,59 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import Swal from "sweetalert2";
 
-const img_hosting_key = import.meta.env.VITE_IMG_UPLOAD_KEY;
-const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
-const AddProduct = () => {
+const AddBlog = () => {
+  const [tags, setTags] = useState([]);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+  const onSubmit = (data) => {
+    const blogItem = { ...data, tags };
+    console.log(blogItem);
+    reset();
+    setTags([]);
+  };
 
-  const axiosPublic = useAxiosPublic();
-  const axiosSecure = useAxiosSecure();
-  const onSubmit = async (data) => {
-    const imgFile = { image: data.image[0] };
-    const res = await axiosPublic.post(img_hosting_api, imgFile, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    if (res.data.success) {
-      const price = parseFloat(data.price);
-      console.log(price);
-      const product = {
-        ...data,
-        price,
-        image: res.data.data.display_url,
-      };
-
-      console.log(product);
-      const productRes = await axiosSecure.post("/products", product);
-      if (productRes.data.insertedId) {
-        reset();
-        Swal.fire({
-          title: "Product added successfully!",
-          text: "Product has been added.",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+  const handleTagInput = (e) => {
+    const value = e.target.value.trim();
+    if (value.includes(",")) {
+      const newTag = value.replace(",", "").trim();
+      if (newTag && !tags.includes(newTag)) {
+        setTags([...tags, newTag]);
       }
+      e.target.value = "";
     }
+  };
+
+  const removeTag = (tagToRemove) => {
+    setTags(tags.filter((tag) => tag !== tagToRemove));
   };
   return (
     <div className="lg:px-20">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="text-3xl text-center font-semibold">Add a Product </h1>
+        <h1 className="text-3xl text-center font-semibold">
+          Create A Blog Post
+        </h1>
 
         <div className="pt-3 flex flex-col justify-center gap-3">
-          <label htmlFor="name">Product Name *</label>
+          <label htmlFor="name">Blog Title *</label>
           <input
             className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5"
             type="text"
             defaultValue=""
-            placeholder="Product Name"
-            {...register("name", { required: true })}
+            placeholder="Title"
+            {...register("title", { required: true })}
           />
         </div>
         <span
-          className={`${errors.name ? "text-[#ff0000d6]" : "text-[#ff000000]"}`}
+          className={`${
+            errors.title ? "text-[#ff0000d6]" : "text-[#ff000000]"
+          }`}
         >
-          Product name is required!
+          Blog title is required!
         </span>
 
         <div>
@@ -80,28 +69,44 @@ const AddProduct = () => {
                   Choolse a categroy
                 </option>
 
-                <option value="laptop">Laptop</option>
-                <option value="phone">phone</option>
-                <option value="earbuds">Earbuds</option>
-                <option value="music">Music</option>
-                <option value="gaming">Gaming</option>
-                <option value="camera">Camera</option>
-                <option value="smartwatch">Smartwatch</option>
-                <option value="tablet">Tablet</option>
-                <option value="drone">Drone</option>
-                <option value="speaker">Speaker</option>
+                <option value="Technology">Technology</option>
+                <option value="Business & Finance">Business & Finance</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Education & Learning">
+                  Education & Learning
+                </option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Personal Grouth">Personal Grouth</option>
               </select>
             </div>
 
-            <div className="pt-5 gap-3  lg:w-[50%]">
-              <label htmlFor="price"> Price *</label>
+            <div className="relative pt-5 gap-3  lg:w-[50%]">
+              <label htmlFor="tags"> Tags (Optional)</label>
               <input
-                className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5 focus:border-2"
-                defaultValue=""
-                placeholder="Base Price"
                 type="text"
-                {...register("price", { required: true })}
+                placeholder="Add tags (comma separated)"
+                onKeyUp={handleTagInput}
+                className="relative border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5 focus:border-2"
               />
+              <div className="absolute left-0 top-28">
+                <div className="flex gap-2">
+                  {tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="bg-gray-500 text-white px-3 py-1  flex items-center"
+                    >
+                      {tag}{" "}
+                      <button
+                        type="button"
+                        onClick={() => removeTag(tag)}
+                        className="ml-2 text-white cursor-pointer"
+                      >
+                        ✖
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
           <div className="lg:flex justify-betweeen ">
@@ -112,23 +117,16 @@ const AddProduct = () => {
             >
               Select a category
             </label>
-            <label
-              className={`lg:w-[50%] ${
-                errors.price ? "text-[#ff0000d6]" : "text-[#ff000000]"
-              }`}
-            >
-              Price is required!
-            </label>
           </div>
         </div>
 
         <div className="pt-1 flex flex-col justify-center gap-3">
-          <label htmlFor="name">Product Details *</label>
+          <label htmlFor="name">Blog Description *</label>
           <textarea
-            className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5"
+            className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-2 px-5"
             type="text"
             defaultValue=""
-            placeholder="Product Name"
+            placeholder="Write your blog here..."
             {...register("description", { required: true })}
           />
         </div>
@@ -140,8 +138,8 @@ const AddProduct = () => {
           Description is required!
         </label>
 
-        <div>
-          <label htmlFor="image">Product Image *</label>
+        <div className="">
+          <label htmlFor="image">Blog Image *</label>
           <div className="flex flex-col items-start mt-3">
             <label className="block border border-gray-500 p-2">
               <span className="sr-only"> Choose file </span>
@@ -163,7 +161,7 @@ const AddProduct = () => {
               }`}
               htmlFor="image"
             >
-              Product image is required!
+              Blog image is required!
             </label>
           </div>
         </div>
@@ -178,4 +176,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default AddBlog;

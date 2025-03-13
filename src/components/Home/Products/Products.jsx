@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import axios from "axios";
-import { Box, Skeleton } from "@mui/material";
 
 const tabs = [
   { id: "", label: "All" },

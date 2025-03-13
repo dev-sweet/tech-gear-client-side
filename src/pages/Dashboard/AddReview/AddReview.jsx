@@ -1,41 +1,72 @@
+import { Rating } from "@mui/material";
 import { useState } from "react";
-
+import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useAuth } from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
 const AddReview = () => {
-  const [name, setName] = useState("");
-  const [rating, setRating] = useState(1);
-  const [review, setReview] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [rating, setRating] = useState(3.5);
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can send the data to your backend or store it in your state
-    console.log({ name, rating, review });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-    // Show success message
-    setSuccessMessage("Thank you for your review!");
-
-    // Reset the form
-    setName("");
-    setRating(1);
-    setReview("");
+  const handleChange = (event, newValue) => {
+    setRating(newValue);
   };
-  return (
-    <div className="container mx-auto p-28">
-      <h1 className="text-2xl font-bold mb-4">Add Your Review</h1>
+  const onSubmit = async (data) => {
+    const reviewItem = {
+      ...data,
+      rating,
+      userEmail: user?.email,
+      userName: user?.displayName,
+      userPhoto: user?.photoURL,
+    };
+    const res = await axiosSecure.post("/reviews", reviewItem);
+    if (res.data.insertedId) {
+      Swal.fire({
+        icon: "success",
+        title: "Review added successfully!.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
 
-      <form onSubmit={handleSubmit} className="bg-white p-10 rounded shadow-lg">
-        <h2 className="text-2xl text-center text-semibold">RATE US</h2>
-        <div className="mb-4">
+      reset();
+    }
+  };
+
+  return (
+    <div className="container mx-auto lg:px-20 mt-5">
+      <h1 className="text-3xl font-bold mb-10">Add Your Review</h1>
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="bg-gray-50 p-10 rounded shadow-lg"
+      >
+        <h2 className="text-2xl text-center text-semibold mb-5">RATE US</h2>
+        <div className="text-center text-4xl">
+          <Rating
+            name="half-rating"
+            defaultValue={rating}
+            onChange={handleChange}
+            size="large"
+            precision={0.5}
+            sx={{ fontSize: "35px" }}
+          />
+        </div>
+        <div className="mb-4 mt-5">
           <label htmlFor="name" className="block text-sm font-semibold mb-2">
             Do you have any suggetion for us?
           </label>
           <input
             type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
+            className="w-full  p-3 border-2 border-gray-400 focus:border-[#2b4190] rounded outline-0"
+            {...register("suggetion", { required: true })}
           />
         </div>
 
@@ -44,26 +75,30 @@ const AddReview = () => {
             Kindly express your experience with us.
           </label>
           <textarea
-            id="review"
-            value={review}
-            onChange={(e) => setReview(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border-2 border-gray-400 focus:border-[#2b4190] outline-0 rounded"
             rows="4"
-            required
+            {...register("review", { required: true })}
           />
+
+          <label
+            className={`${
+              errors.review ? "text-[#ff0000d6]" : "text-[#ff000000]"
+            }`}
+            htmlFor="image"
+          >
+            Please write a review!
+          </label>
         </div>
 
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-500 text-white rounded"
-        >
-          Submit Review
-        </button>
+        <div className="text-center">
+          <button
+            type="submit"
+            className="px-10 py-3 bg-[#07174e] text-white rounded cursor-pointer hover:bg-gray-500"
+          >
+            Submit Review
+          </button>
+        </div>
       </form>
-
-      {successMessage && (
-        <p className="mt-4 text-green-500">{successMessage}</p>
-      )}
     </div>
   );
 };

@@ -20,11 +20,13 @@ import axios from "axios";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
-import UserHome from "../pages/Dashboard/UserHome/UserHome";
+// import UserHome from "../pages/Dashboard/UserHome/UserHome";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import Wishlist from "../pages/Dashboard/WishList/Wishlist";
 import AddReview from "../pages/Dashboard/AddReview/AddReview";
-
+import ProductsDetails from "../pages/ProductDetails/ProductsDetails";
+import AddBlog from "../pages/Dashboard/AddBlog/AddBlog";
+import ManageBlogs from "../pages/Dashboard/ManageBlogs/ManageBlogs";
 export const routes = createBrowserRouter([
   {
     path: "/",
@@ -47,6 +49,16 @@ export const routes = createBrowserRouter([
       {
         path: "/products",
         element: <AllProducts />,
+      },
+
+      {
+        path: "/products/:id",
+        element: <ProductsDetails />,
+        loader: async (params) => {
+          const res = await axios.get(`/products/${params.id}`);
+          console.log(res.data);
+          return res.data;
+        },
       },
     ],
   },
@@ -93,6 +105,14 @@ export const routes = createBrowserRouter([
         ),
       },
       {
+        path: "manageOrders",
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
         path: "addProduct",
         element: (
           <AdminRoute>
@@ -122,11 +142,28 @@ export const routes = createBrowserRouter([
           return res.data;
         },
       },
+
       {
         path: "manageUsers",
         element: (
           <AdminRoute>
             <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "createBlog",
+        element: (
+          <AdminRoute>
+            <AddBlog />,
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manageBlogs",
+        element: (
+          <AdminRoute>
+            <ManageBlogs />
           </AdminRoute>
         ),
       },

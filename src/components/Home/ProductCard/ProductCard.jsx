@@ -2,11 +2,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Avatar, Box, Rating, Skeleton } from "@mui/material";
+import { Box, Rating, Skeleton } from "@mui/material";
 import "./ProductCard.css";
 import { useAuth } from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCart from "../../../hooks/useCart";
 
@@ -72,60 +72,70 @@ const ProductCard = ({ product, loading }) => {
     );
   }
   return (
-    <Card
-      sx={{
-        boxShadow: "none",
-        borderRadious: 0,
-        height: "full",
-        flexDirection: "column",
-      }}
-    >
-      <div className="bg-gray-100 p-5">
-        <CardMedia
-          className="h-50 "
-          component="img"
-          alt="green iguana"
-          image={image}
-        />
-      </div>
-      <CardContent sx={{ background: "", height: "100%" }}>
-        <div className="relative lg:pb-10">
-          <div>
-            <Typography
-              gutterBottom
-              variant="p"
-              className="font-semibold"
-              component="div"
-              sx={{ textOverflow: "ellipsis", display: "block" }}
-            >
-              {name}
-            </Typography>
+    <div className="product-card">
+      <Card
+        sx={{
+          boxShadow: "none",
+          borderRadious: 0,
+          height: "full",
+          flexDirection: "column",
+          borderRadius: "5px",
+        }}
+      >
+        <div className="relative overflow-none img-container">
+          <CardMedia
+            className="h-50 p-5 "
+            component="img"
+            alt="green iguana"
+            image={image}
+          />
 
-            <Rating
-              name="size-small"
-              size="small"
-              defaultValue="3"
-              precision={0.5}
-              readOnly
-            />
-            <h2 className="flex items-center gap-2 text-center">
-              {" "}
-              {discountPrice && (
-                <del className="text-md font-semibold text-gray-500">
-                  ${discountPrice}
-                </del>
-              )}
-              <span className="text-lg font-bold text-gray-700">${price}</span>
-            </h2>
-          </div>
-          <div className="text-center lg:absolute bottom-0 left-0 right-0">
-            <button onClick={handleClick} className="product-cart-btn ">
-              Add to cart
-            </button>
-          </div>
+          <Link className="see-details-btn" to={`/products/${_id}`}>
+            Vew Details
+          </Link>
         </div>
-      </CardContent>
-    </Card>
+        {/*  background: "rgb(245, 245, 245)",  */}
+        <CardContent sx={{ background: "rgb(245, 245, 245)", height: "100%" }}>
+          <div className="relative lg:pb-10">
+            <div>
+              <Typography
+                gutterBottom
+                variant="p"
+                className="font-semibold"
+                component="div"
+                sx={{ textOverflow: "ellipsis", display: "block" }}
+              >
+                {name}
+              </Typography>
+
+              <Rating
+                name="size-small"
+                size="small"
+                defaultValue="3"
+                precision={0.5}
+                readOnly
+              />
+              <h2 className="flex items-center gap-2 text-center">
+                {" "}
+                {discountPrice && (
+                  <del className="text-md font-semibold text-gray-500">
+                    ${discountPrice}
+                  </del>
+                )}
+                <span className="text-lg font-bold text-gray-700">
+                  ${price}
+                </span>
+              </h2>
+            </div>
+            <div className="text-center lg:absolute bottom-0 left-0 right-0">
+              <button onClick={handleClick} className="product-cart-btn ">
+                Add to cart
+              </button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
