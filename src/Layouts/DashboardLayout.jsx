@@ -55,6 +55,7 @@ function DashboardLayout() {
       {/* <Toolbar /> */}
       <div className="text-right">
         <img className="h-[100px] w-[100px] ml-2" src={logo} alt="" />
+        <Divider className="bg-gray-500"></Divider>
       </div>
       {isAdmin ? (
         <List>

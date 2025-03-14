@@ -27,6 +27,7 @@ import AddReview from "../pages/Dashboard/AddReview/AddReview";
 import ProductsDetails from "../pages/ProductDetails/ProductsDetails";
 import AddBlog from "../pages/Dashboard/AddBlog/AddBlog";
 import ManageBlogs from "../pages/Dashboard/ManageBlogs/ManageBlogs";
+import EditBlog from "../pages/Dashboard/EditBlog/EditBlog";
 export const routes = createBrowserRouter([
   {
     path: "/",
@@ -138,7 +139,9 @@ export const routes = createBrowserRouter([
 
         loader: async ({ params }) => {
           const { id } = params;
-          const res = await axios.get(`http://localhost:5050/products/${id}`);
+          const res = await axios.get(
+            `https://tech-gear-server.onrender.com/products/${id}`
+          );
           return res.data;
         },
       },
@@ -166,6 +169,21 @@ export const routes = createBrowserRouter([
             <ManageBlogs />
           </AdminRoute>
         ),
+      },
+      {
+        path: "manageBlogs/edit/:id",
+        element: (
+          <AdminRoute>
+            <EditBlog />
+          </AdminRoute>
+        ),
+        loader: async ({ params }) => {
+          const { id } = params;
+          const res = await axios.get(
+            `https://tech-gear-server.onrender.com/blogs/${id}`
+          );
+          return res.data;
+        },
       },
     ],
   },

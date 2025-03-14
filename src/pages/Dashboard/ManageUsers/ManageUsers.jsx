@@ -107,12 +107,13 @@ const ManageUsers = () => {
 
   return (
     <div>
-      {/* <PageTitle /> */}
-      <div className="flex items-center justify-between py-5">
+      <div className="w-full flex items-center justify-between py-5">
         <h3 className="text-3xl">Total Users: {users.length}</h3>
         <h3 className="text-3xl">Admins: {4}</h3>
       </div>
+
       <TableContainer component={"Paper"}>
+        Hello
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>

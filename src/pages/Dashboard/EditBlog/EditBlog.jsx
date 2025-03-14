@@ -3,53 +3,56 @@ import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import { useAuth } from "../../../hooks/useAuth";
+import { useLoaderData } from "react-router-dom";
 
 const img_hosting_key = import.meta.env.VITE_IMG_UPLOAD_KEY;
 const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
-const AddBlog = () => {
-  const [tags, setTags] = useState([]);
+const EditBlog = () => {
+  const blog = useLoaderData();
+  const { _id, title, category, description } = blog;
+  const [tags, setTags] = useState(blog.tags);
+
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+
+  //   handle submit form
   const onSubmit = async (data) => {
-    console.log(data);
+    const newBlog = { ...data, tags };
     const imgFile = { image: data.image[0] };
 
-    const res = await axiosPublic.post(img_hosting_api, imgFile, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    if (res.data.success) {
-      const blogItem = {
-        ...data,
-        tags,
-        image: res.data.data.display_url,
-        date: new Date(),
-        createdBy: user?.email,
-      };
-
-      console.log(blogItem);
-      const blogRes = await axiosSecure.post("/blogs", blogItem);
-      if (blogRes.data.insertedId) {
-        reset();
-        setTags([]);
-        Swal.fire({
-          title: "Blog created successfully!",
-          text: "Blog has been created.",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+    if (!imgFile.image) {
+      newBlog.image = blog.image;
+    } else {
+      const res = await axiosPublic.post(img_hosting_api, imgFile, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (res.data.success) {
+        newBlog.image = res.data.data.display_url;
       }
+    }
+
+    console.log(newBlog);
+    const blogRes = await axiosSecure.patch(`/blogs/${_id}`, newBlog);
+    console.log("productRes", blogRes.data);
+
+    if (blogRes.data.modifiedCount > 0) {
+      reset();
+      setTags([]);
+      Swal.fire({
+        title: "Updated successfully!",
+        text: "Blog has been updated.",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
@@ -70,16 +73,14 @@ const AddBlog = () => {
   return (
     <div className="lg:px-20">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="text-3xl text-center font-semibold">
-          Create A Blog Post
-        </h1>
+        <h1 className="text-3xl text-center font-semibold">Edit Blog Post</h1>
 
         <div className="pt-3 flex flex-col justify-center gap-3">
           <label htmlFor="name">Blog Title *</label>
           <input
             className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5"
             type="text"
-            defaultValue=""
+            defaultValue={title}
             placeholder="Title"
             {...register("title", { required: true })}
           />
@@ -99,7 +100,7 @@ const AddBlog = () => {
               <select
                 {...register("category", { required: true })}
                 className="select border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-4 px-5 focus:border-2"
-                defaultValue=""
+                defaultValue={category}
               >
                 <option value="" disabled>
                   Choolse a categroy
@@ -161,8 +162,8 @@ const AddBlog = () => {
           <textarea
             className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-2 px-5"
             type="text"
-            defaultValue=""
             rows={5}
+            defaultValue={description}
             placeholder="Write your blog here..."
             {...register("description", { required: true })}
           />
@@ -182,23 +183,14 @@ const AddBlog = () => {
               <span className="sr-only"> Choose file </span>
               <input
                 type="file"
-                {...register("image", { required: true })}
+                {...register("image")}
                 className="block w-full text-sm text-gray-500
-                     file:mr-4 file:py-2 file:px-4
-                     file:rounded-lg file:border-0
-                     file:text-sm file:font-semibold
-                     file:bg-blue-50 file:text-blue-600
-                     hover:file:bg-blue-100 cursor-pointer"
+                       file:mr-4 file:py-2 file:px-4
+                       file:rounded-lg file:border-0
+                       file:text-sm file:font-semibold
+                       file:bg-blue-50 file:text-blue-600
+                       hover:file:bg-blue-100 cursor-pointer"
               />
-            </label>
-
-            <label
-              className={`${
-                errors.image ? "text-[#ff0000d6]" : "text-[#ff000000]"
-              }`}
-              htmlFor="image"
-            >
-              Blog image is required!
             </label>
           </div>
         </div>
@@ -213,4 +205,4 @@ const AddBlog = () => {
   );
 };
 
-export default AddBlog;
+export default EditBlog;

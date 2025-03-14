@@ -3,6 +3,7 @@ import { useAuth } from "./useAuth";
 import { useNavigate } from "react-router-dom";
 
 const axiosSecure = axios.create({
+  // baseURL: "https://http://localhost:5050/",
   baseURL: "https://tech-gear-server.onrender.com",
 });
 const useAxiosSecure = () => {

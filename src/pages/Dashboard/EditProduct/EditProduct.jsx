@@ -2,51 +2,56 @@ import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 
 const img_hosting_key = import.meta.env.VITE_IMG_UPLOAD_KEY;
 const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
 const EditProduct = () => {
+  const product = useLoaderData();
+  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+  const { _id, name, price, category, description } = product;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-
-  const product = useLoaderData();
-  const axiosPublic = useAxiosPublic();
-  const axiosSecure = useAxiosSecure();
-  console.log("product", product);
-  const { name, price, image, category, description } = product;
-  const [newProduct, setNewProduct] = useState({
-    name,
-    price,
-    category,
-    description,
-    image,
+  } = useForm({
+    defaultValues: {
+      name,
+      price,
+      category,
+      description,
+    },
   });
+
   //   handle submit form
   const onSubmit = async (data) => {
+    const newProduct = { ...data };
     const imgFile = { image: data.image[0] };
 
     if (!imgFile.image) {
-      setNewProduct({ ...data, image: product.image });
+      newProduct.image = product.image;
+
+      console.log(30, newProduct);
     } else {
       const res = await axiosPublic.post(img_hosting_api, imgFile, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      console.log("res", res);
       if (res.data.success) {
-        setNewProduct({ ...data, image: res.data.data.display_url });
+        newProduct.image = res.data.data.display_url;
+        console.log(46, newProduct);
       }
     }
 
-    const productRes = await axiosSecure.put("/products", newProduct);
-    console.log("productRes", productRes);
-
-    if (productRes.data.insertedId) {
+    console.log("newProduct", newProduct);
+    const productRes = await axiosSecure.patch(`products/${_id}`, newProduct);
+    console.log(productRes);
+    if (productRes.data.modifiedCount > 0) {
       Swal.fire({
         title: "Updated successfully!",
         text: "Product has been updated.",
@@ -60,7 +65,7 @@ const EditProduct = () => {
   return (
     <div className="lg:px-20">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="text-3xl text-center font-semibold">Edit a Product </h1>
+        <h1 className="text-3xl text-center font-semibold">Edit Product </h1>
 
         <div className="pt-3 flex flex-col justify-center gap-3">
           <label htmlFor="name">Product Name *</label>
@@ -68,7 +73,7 @@ const EditProduct = () => {
             className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5"
             type="text"
             placeholder="Product Name"
-            defaultValue={name}
+            // defaultValue={name}
             {...register("name", { required: true })}
           />
         </div>
@@ -85,7 +90,7 @@ const EditProduct = () => {
               <select
                 {...register("category", { required: true })}
                 className="select border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-4 px-5 focus:border-2"
-                defaultValue={category}
+                // defaultValue={category}
               >
                 <option value="" disabled>
                   Choolse a categroy
@@ -108,7 +113,7 @@ const EditProduct = () => {
               <label htmlFor="price"> Price *</label>
               <input
                 className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5 focus:border-2"
-                defaultValue={`${price}`}
+                // defaultValue={`${price}`}
                 placeholder="Base Price"
                 type="text"
                 {...register("price", { required: true })}
@@ -138,7 +143,7 @@ const EditProduct = () => {
           <textarea
             className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5"
             type="text"
-            defaultValue={description}
+            rows={5}
             placeholder="Product Name"
             {...register("description", { required: true })}
           />
@@ -150,7 +155,6 @@ const EditProduct = () => {
         >
           Description is required!
         </label>
-        {/* <img height="100" width="100" src={image} alt="" /> */}
         <div>
           <label htmlFor="image mb-">Product Image</label>
           <div className="flex flex-col items-start">
@@ -171,7 +175,7 @@ const EditProduct = () => {
         </div>
         <div className="text-center">
           <input
-            className="bg-[#07174e] py-3 w-[200px] text-white mt-5 cursor-pointer mx-auto"
+            className="bg-[#07174e] py-3 w-[200px] text-white mt-3 cursor-pointer mx-auto"
             type="submit"
           />
         </div>

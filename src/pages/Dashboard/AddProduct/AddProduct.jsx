@@ -128,6 +128,7 @@ const AddProduct = () => {
             className="border-2 border-gray-400 focus:border-[#2b4190] w-full outline-none py-3 px-5"
             type="text"
             defaultValue=""
+            rows={5}
             placeholder="Product Name"
             {...register("description", { required: true })}
           />
@@ -169,7 +170,7 @@ const AddProduct = () => {
         </div>
         <div className="text-center">
           <input
-            className="bg-[#07174e] py-3 w-[200px] text-white mt-5 cursor-pointer mx-auto"
+            className="bg-[#07174e] py-3 w-[200px] text-white mt-3 cursor-pointer mx-auto"
             type="submit"
           />
         </div>

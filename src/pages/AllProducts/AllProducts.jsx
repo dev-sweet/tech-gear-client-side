@@ -27,7 +27,7 @@ const AllProducts = () => {
   const handleSearch = () => {
     setLoading(true);
     axios
-      .get("http://localhost:5050/products", {
+      .get("https://tech-gear-server.onrender.com/products", {
         params: { searchText },
       })
       .then((res) => {
