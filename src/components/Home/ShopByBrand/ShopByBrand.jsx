@@ -11,6 +11,8 @@ import brand10 from "../../../assets/home/brand-10.png";
 import brand11 from "../../../assets/home/brand-11.png";
 import brand12 from "../../../assets/home/brand-12.png";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const ShopByBrand = () => {
   const brands = [
@@ -27,17 +29,56 @@ const ShopByBrand = () => {
     brand11,
     brand12,
   ];
+
+  const settings = {
+    infinite: true,
+    slidesToShow: 6,
+    slidesToScroll: 3,
+    autoplay: true,
+    speed: 500,
+    autoplaySpeed: 3000,
+    cssEase: "linear",
+    prevArrow: <FaChevronLeft />,
+    nextArrow: <FaChevronRight />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 5,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
   return (
     <div className="lg:px-20 px-10 py-5">
       <h2 className="text-2xl font-bold mb-5">Shop By Brand</h2>
-      <div className="grid lg:grid-cols-6 md:grid-cols-4 gap-1  shadow-xsm">
-        {brands.map((brand) => (
-          <Link key={brand} to="">
-            <div className="p-10 border-1 border-gray-100 flex items-center justify-center h-full">
-              <img src={brand} alt="" />
-            </div>
-          </Link>
-        ))}
+      <div className="px-10">
+        <Slider {...settings}>
+          {brands.map((brand, i) => (
+            <Link to="/" key={i}>
+              <div className="h-[150px] p-10 shadow shadow-lg border-1 border-gray-100 flex items-center justify-center h-full">
+                <img src={brand} alt="" />
+              </div>
+            </Link>
+          ))}
+        </Slider>
       </div>
     </div>
   );

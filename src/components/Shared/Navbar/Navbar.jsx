@@ -10,7 +10,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import { PiSignOutBold } from "react-icons/pi";
 import Swal from "sweetalert2";
 import useCart from "../../../hooks/useCart";
-
+import "./Navbar.css";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, logOut } = useAuth();
@@ -116,7 +116,7 @@ const Navbar = () => {
     </Box>
   );
   return (
-    <div className="flex items-center justify-between bg-[#dfe0ff] lg:px-20 px-10">
+    <div className="flex items-center justify-between nav-bg lg:px-20 px-10">
       {
         <Drawer open={open} onClose={toggleDrawer(false)}>
           {DrawerList}

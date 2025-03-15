@@ -13,6 +13,7 @@ const FeaturedBlogs = () => {
       return res.data;
     },
   });
+
   return (
     <div className="lg:px-20 p-10">
       <div>

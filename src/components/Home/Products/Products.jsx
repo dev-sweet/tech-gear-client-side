@@ -14,11 +14,11 @@ const tabs = [
 ];
 const Products = () => {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
-  const [query, setQuery] = useState({ category: "", limit: 12 });
+  const [category, setCategory] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const handleClick = async (id) => {
-    setQuery({ ...query, category: id });
+    setCategory(id);
     setActiveTab(id);
   };
 
@@ -26,14 +26,14 @@ const Products = () => {
     setLoading(true);
 
     axios
-      .get("https://tech-gear-server.onrender.com/products", {
-        params: query,
+      .get("http://localhost:5050/products", {
+        params: { category },
       })
       .then((res) => {
         setProducts(res.data);
         setLoading(false);
       });
-  }, [query]);
+  }, [category]);
 
   return (
     <div className="mx-auto lg:px-20 px-10 mt-5">

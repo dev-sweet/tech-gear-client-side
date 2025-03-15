@@ -206,10 +206,13 @@ const AddBlog = () => {
           </div>
         </div>
         <div className="text-center">
-          <input
-            className="bg-[#07174e] py-3 w-[200px] text-white mt-3 cursor-pointer mx-auto"
+          <button
             type="submit"
-          />
+            className="bg-[#07174e] py-3 w-[200px] text-white mt-3 cursor-pointer mx-auto"
+          >
+            {" "}
+            Create
+          </button>
         </div>
       </form>
     </div>

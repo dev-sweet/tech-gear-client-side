@@ -16,9 +16,7 @@ const Reviews = () => {
       return res.data;
     },
   });
-
-  // console.log(reviews.length);
-  //   slider settings
+  console.log(reviews);
   const settings = {
     dots: true,
     lazyLoad: true,
@@ -32,15 +30,15 @@ const Reviews = () => {
     nextArrow: <FaChevronRight />,
   };
   return (
-    <div className="lg:mx-20 mx-10 py-10">
+    <div className="bg-[#efedeb] lg:px-20 px-10 py-10">
       <h1 className="text-2xl font-bold mb-10">Testimonials</h1>
 
-      <div className="max-w-[800px] mx-auto">
+      <div className="max-w-[1000px] mx-auto">
         <Slider {...settings}>
           {reviews?.map((review) => (
             <div key={review._id}>
               <div className="text-center">
-                {review.createdBy.userPhoto ? (
+                {review.createdBy?.userPhoto ? (
                   <img
                     className="mx-auto rounded-full border-2 border-gray-300 shadow-md"
                     src={review.createdBy.userPhoto}
@@ -59,7 +57,7 @@ const Reviews = () => {
                 <Rating
                   name="half-rating-read"
                   sx={{ fontSize: "45px" }}
-                  defaultValue={3.5}
+                  defaultValue={review.rating}
                   precision={0.5}
                   readOnly
                 />
@@ -68,12 +66,7 @@ const Reviews = () => {
                   <RiDoubleQuotesL />
                 </h3>
               </div>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Nostrum, neque odit possimus, quia ullam architecto totam
-                veritatis explicabo recusandae asperiores accusamus pariatur
-                aperiam magni, qui alias dolor reprehenderit? Maxime, suscipit!
-              </p>
+              <p className="text-center">{review.review}</p>
             </div>
           ))}
         </Slider>

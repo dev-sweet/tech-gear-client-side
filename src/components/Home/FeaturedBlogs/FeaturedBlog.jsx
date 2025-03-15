@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   Card,
   CardActions,
@@ -11,27 +10,35 @@ import {
 } from "@mui/material";
 
 const FeaturedBlog = ({ blogItem }) => {
-  const { title, image, description } = blogItem;
+  const { title, image, createdBy, createdAt } = blogItem;
+  const postedDate = new Date(createdAt).toLocaleDateString({
+    year: "numaric",
+    month: "short",
+    day: "numaric",
+  });
   return (
     <div>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345, height: "100%" }}>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: "red"[500] }} aria-label="recipe">
-              R
-            </Avatar>
+            <CardMedia
+              style={{ width: "50px", borderRadius: 50 }}
+              component="img"
+              image={
+                createdBy?.userPhoto
+                  ? createdBy.userPhoto
+                  : `https://ui-avatars.com/api/?length=1&name=${createdBy.userName}&bold=true&background=random`
+              }
+              alt="User Image"
+            />
           }
-          action={
-            <IconButton aria-label="settings">
-              {/* <MoreVertIcon /> */}
-            </IconButton>
-          }
-          title={"name"}
-          subheader="September 14, 2016"
+          action={<IconButton aria-label="settings"></IconButton>}
+          title={createdBy?.userName}
+          subheader={postedDate}
         />
         <CardMedia
+          style={{ height: 200 }}
           component="img"
-          height="194"
           image={image}
           alt="Paella dish"
         />
