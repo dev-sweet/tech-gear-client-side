@@ -6,7 +6,6 @@ import useProducts from "../../../hooks/useProducts";
 
 const TrendingProducts = () => {
   const [products] = useProducts();
-  console.log(products);
   const diplayProducts = products?.slice(0, 4);
   return (
     <div className="lg:p-20 p-10">
@@ -37,7 +36,7 @@ const TrendingProducts = () => {
           </div>
           <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-3 mt-5">
             {diplayProducts?.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product._id} product={product} />
             ))}
           </div>
         </div>

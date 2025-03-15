@@ -11,8 +11,7 @@ import {
 } from "@mui/material";
 
 const FeaturedBlog = ({ blogItem }) => {
-  console.log(blogItem);
-  const { name, title, img, description } = blogItem;
+  const { title, image, description } = blogItem;
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
@@ -27,10 +26,15 @@ const FeaturedBlog = ({ blogItem }) => {
               {/* <MoreVertIcon /> */}
             </IconButton>
           }
-          title={name}
+          title={"name"}
           subheader="September 14, 2016"
         />
-        <CardMedia component="img" height="194" image={img} alt="Paella dish" />
+        <CardMedia
+          component="img"
+          height="194"
+          image={image}
+          alt="Paella dish"
+        />
         <CardContent>
           <Typography
             gutterBottom

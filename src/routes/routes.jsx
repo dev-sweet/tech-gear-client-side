@@ -28,6 +28,7 @@ import ProductsDetails from "../pages/ProductDetails/ProductsDetails";
 import AddBlog from "../pages/Dashboard/AddBlog/AddBlog";
 import ManageBlogs from "../pages/Dashboard/ManageBlogs/ManageBlogs";
 import EditBlog from "../pages/Dashboard/EditBlog/EditBlog";
+import ManageOrders from "../pages/Dashboard/ManageOrders/ManageOrders";
 export const routes = createBrowserRouter([
   {
     path: "/",
@@ -109,7 +110,7 @@ export const routes = createBrowserRouter([
         path: "manageOrders",
         element: (
           <AdminRoute>
-            <ManageUsers />
+            <ManageOrders />
           </AdminRoute>
         ),
       },

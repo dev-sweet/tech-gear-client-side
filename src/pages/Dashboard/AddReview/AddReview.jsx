@@ -23,9 +23,11 @@ const AddReview = () => {
     const reviewItem = {
       ...data,
       rating,
-      userEmail: user?.email,
-      userName: user?.displayName,
-      userPhoto: user?.photoURL,
+      createdBy: {
+        email: user?.email,
+        userName: user?.displayName,
+        userPhoto: user?.photoURL,
+      },
     };
     const res = await axiosSecure.post("/reviews", reviewItem);
     if (res.data.insertedId) {
@@ -66,7 +68,7 @@ const AddReview = () => {
           <input
             type="text"
             className="w-full  p-3 border-2 border-gray-400 focus:border-[#2b4190] rounded outline-0"
-            {...register("suggetion", { required: true })}
+            {...register("suggetion")}
           />
         </div>
 

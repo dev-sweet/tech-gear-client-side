@@ -32,7 +32,7 @@ function DashboardLayout() {
   const [isAdmin] = useAdmin();
 
   const { user } = useAuth();
-  console.log(user);
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const handleDrawerClose = () => {

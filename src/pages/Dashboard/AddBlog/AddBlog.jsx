@@ -19,7 +19,6 @@ const AddBlog = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
-    console.log(data);
     const imgFile = { image: data.image[0] };
 
     const res = await axiosPublic.post(img_hosting_api, imgFile, {
@@ -33,8 +32,12 @@ const AddBlog = () => {
         ...data,
         tags,
         image: res.data.data.display_url,
-        date: new Date(),
-        createdBy: user?.email,
+        createdAt: new Date(),
+        createdBy: {
+          email: user.email,
+          userName: user.displayName,
+          userPhoto: user.photoURL,
+        },
       };
 
       console.log(blogItem);

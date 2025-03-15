@@ -1,0 +1,5 @@
+.slick-prev,
+.slick-next {
+  color: rgb(60, 60, 60) !important; /* Change arrow color */
+  font-size: 30px !important; /* Adjust size */
+}
