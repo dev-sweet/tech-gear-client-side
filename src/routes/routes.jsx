@@ -20,8 +20,7 @@ import axios from "axios";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
-// import UserHome from "../pages/Dashboard/UserHome/UserHome";
-import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import UserHome from "../pages/Dashboard/UserHome/UserHome";
 import Wishlist from "../pages/Dashboard/WishList/Wishlist";
 import AddReview from "../pages/Dashboard/AddReview/AddReview";
 import ProductsDetails from "../pages/ProductDetails/ProductsDetails";
@@ -56,8 +55,10 @@ export const routes = createBrowserRouter([
       {
         path: "/products/:id",
         element: <ProductsDetails />,
-        loader: async (params) => {
-          const res = await axios.get(`/products/${params.id}`);
+        loader: async ({ params }) => {
+          const res = await axios.get(
+            `https://tech-gear-server.onrender.com/products/${params.id}`
+          );
           console.log(res.data);
           return res.data;
         },
@@ -73,8 +74,8 @@ export const routes = createBrowserRouter([
     ),
     children: [
       {
-        path: "",
-        element: <DashboardHome />,
+        path: "userHome",
+        element: <UserHome />,
       },
       {
         path: "cart",
@@ -98,6 +99,7 @@ export const routes = createBrowserRouter([
         element: <PaymentHistory />,
       },
       // admin routes
+
       {
         path: "adminHome",
         element: (

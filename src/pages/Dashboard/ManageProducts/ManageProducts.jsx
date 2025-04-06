@@ -22,6 +22,7 @@ const ManageProducts = () => {
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
 
+  // const [data:products,isLoading  ]
   //   handle edit
   const handleEditProduct = (id) => {
     navigate(`/dashboard/manageProducts/edit/${id}`);
@@ -80,9 +81,11 @@ const ManageProducts = () => {
       <div className="flex items-center justify-between py-5">
         <h3 className="text-3xl">All Products: {products?.length}</h3>
         <div className="text-xl flex items-center gap-3">
-          <label htmlFor="">Category:</label>
+          <label className="text-sm" htmlFor="">
+            Category:
+          </label>
 
-          <NativeSelect defaultValue={30}>
+          <NativeSelect>
             <option value="laptop">Laptop</option>
             <option value="phone">Phone</option>
             <option value="music">Music</option>
@@ -90,8 +93,9 @@ const ManageProducts = () => {
           </NativeSelect>
         </div>
       </div>
+
       <TableContainer component={"Paper"}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <Table sx={{ minWidth: "492px" }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell></StyledTableCell>
@@ -118,12 +122,12 @@ const ManageProducts = () => {
                 <StyledTableCell align="left">{product.price}</StyledTableCell>
                 <button
                   onClick={() => handleEditProduct(product._id)}
-                  className="text-xl bg-[gray-300] border border-[#07174e] text-[#07174e] p-2 cursor-pointer rounded mr-5 mt-5"
+                  className="text-xl bg-[gray-300] border border-[#07174e] text-[#07174e] p-2 cursor-pointer rounded md:mr-5 mr-2 mt-5"
                 >
                   <FaRegEdit />
                 </button>
                 <button
-                  className="text-2xl bg-red-700 text-white p-2 cursor-pointer rounded"
+                  className="text-lg bg-red-700 text-white p-2 cursor-pointer rounded mt-5"
                   onClick={() => handleDeleteProduct(product._id)}
                 >
                   <MdOutlineDelete className="text-xl" />

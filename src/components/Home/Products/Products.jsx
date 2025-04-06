@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const tabs = [
   { id: "", label: "All" },
@@ -13,10 +14,10 @@ const tabs = [
   { id: "music", label: "Music" },
 ];
 const Products = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const [category, setCategory] = useState("");
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const handleClick = async (id) => {
     setCategory(id);
     setActiveTab(id);
@@ -24,9 +25,8 @@ const Products = () => {
 
   useEffect(() => {
     setLoading(true);
-
     axios
-      .get("http://localhost:5050/products", {
+      .get("https://tech-gear-server.onrender.com/products", {
         params: { category },
       })
       .then((res) => {
@@ -42,7 +42,7 @@ const Products = () => {
           <button
             key={tab.id}
             onClick={() => handleClick(tab.id)}
-            className={`py-2 px-4 transition-all hover:cursor-pointer text-sm xsm:text-xsm font-semibold ${
+            className={`py-2 md:px-4 px-2 transition-all hover:cursor-pointer text-sm xsm:text-xsm font-semibold ${
               activeTab === tab.id
                 ? "bg-gray-800 border-b-2 text-white font-semibold"
                 : "text-gray-500 hover:text-gray-900"
@@ -63,6 +63,10 @@ const Products = () => {
               product={product}
             />
           ))}
+        </div>
+
+        <div className="flex justify-center text-blue-700 text-xl pt-5">
+          <Link to="/products/">See More</Link>
         </div>
       </div>
     </div>

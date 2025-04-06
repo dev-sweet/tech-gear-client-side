@@ -92,11 +92,11 @@ const AdminHome = () => {
   };
   return (
     <div>
-      <h2 className="text-3xl">
-        Hello, Welcome {user.displayName ? user.displayName : "Back"}.
+      <h2 className="md:text-3xl text-2xl">
+        Hello, {user.displayName ? user.displayName : " Welcome Back"}.
       </h2>
 
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 mt-10">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 mt-5">
         <div className="flex items-center justify-evenly gap-5 bg-gradient-to-r from-[#731a4a] to-[#07174e] py-10 px-5 rounded text-white">
           <span>
             <FaMoneyBillTrendUp className="text-5xl" />
@@ -134,19 +134,9 @@ const AdminHome = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-evenly mt-10 lg:flex-row flex-col gap-5">
-        <div className="">
-          <BarChart
-            width={500}
-            height={400}
-            data={chartData}
-            margin={{
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
+      <div className="flex items-center justify-evenly mt-2 lg:flex-row flex-col gap-2">
+        <div className="flex items-center justify-center lg:w-1/2 w-full bg-[#271212] p-10 rounded-lg">
+          <BarChart width={350} height={350} data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="_id" />
             <YAxis />
@@ -162,9 +152,8 @@ const AdminHome = () => {
             </Bar>
           </BarChart>
         </div>
-        <div className="">
-          {/* <ResponsiveContainer width="100%" height="100%"> */}
-          <PieChart width={400} height={400}>
+        <div className="flex items-center justify-center lg:w-1/2 w-full bg-[#0a0a31] py-10 rounded-lg">
+          <PieChart width={350} height={350}>
             <Legend> </Legend>
             <Pie
               data={pieChartdata}

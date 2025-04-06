@@ -40,13 +40,13 @@ const Reviews = () => {
               <div className="text-center">
                 {review.createdBy?.userPhoto ? (
                   <img
-                    className="mx-auto rounded-full border-2 border-gray-300 shadow-md"
+                    className="mx-auto w-25 rounded-full border-2 border-gray-300 shadow-md"
                     src={review.createdBy.userPhoto}
                     alt=""
                   />
                 ) : (
                   <img
-                    className="mx-auto rounded-full border-2 border-gray-300 shadow-md"
+                    className="mx-auto w-25 rounded-full border-2 border-gray-300 shadow-md"
                     src={`https://ui-avatars.com/api/?length=1&name=${review.createdBy.userName}&bold=true&background=random`}
                   />
                 )}

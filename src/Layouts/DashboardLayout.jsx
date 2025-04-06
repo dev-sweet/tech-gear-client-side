@@ -1,6 +1,5 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -10,8 +9,13 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import { Link, Outlet } from "react-router-dom";
-import { IoBagCheckOutline, IoHomeOutline } from "react-icons/io5";
-import { IoIosMenu, IoMdAdd } from "react-icons/io";
+import {
+  IoBagCheckOutline,
+  IoHomeOutline,
+  IoNotificationsOutline,
+  IoSearch,
+} from "react-icons/io5";
+import { IoMdAdd } from "react-icons/io";
 import { AiFillProduct, AiOutlineShoppingCart } from "react-icons/ai";
 import { FaRegEnvelope, FaUsers } from "react-icons/fa";
 import {
@@ -19,6 +23,7 @@ import {
   MdEditNote,
   MdMovieEdit,
   MdOutlineCreate,
+  MdOutlineDarkMode,
   MdOutlineRateReview,
 } from "react-icons/md";
 import { ImList } from "react-icons/im";
@@ -26,6 +31,9 @@ import { useState } from "react";
 import logo from "../assets/logo.png";
 import useAdmin from "../hooks/useAdmin";
 import { useAuth } from "../hooks/useAuth";
+import { Badge } from "@mui/material";
+import { FaRegMessage } from "react-icons/fa6";
+
 const drawerWidth = 240;
 
 function DashboardLayout() {
@@ -34,20 +42,12 @@ function DashboardLayout() {
   const { user } = useAuth();
 
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
   const handleDrawerClose = () => {
-    setIsClosing(true);
     setMobileOpen(false);
   };
 
-  const handleDrawerTransitionEnd = () => {
-    setIsClosing(false);
-  };
-
   const handleDrawerToggle = () => {
-    if (!isClosing) {
-      setMobileOpen(!mobileOpen);
-    }
+    setMobileOpen(!mobileOpen);
   };
 
   const drawer = (
@@ -60,7 +60,11 @@ function DashboardLayout() {
       {isAdmin ? (
         <List>
           <ListItem disablePadding>
-            <Link className="w-full px-5 mb-3" to="/dashboard">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 mb-3"
+              to="/dashboard/adminHome"
+            >
               <div className="flex items-center gap-3">
                 <IoHomeOutline className="text-xl" />
                 <ListItemText>Admin Home</ListItemText>
@@ -68,7 +72,11 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 mb-3" to="/dashboard/manageOrders">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 mb-3"
+              to="/dashboard/manageOrders"
+            >
               <div className="flex items-center gap-3">
                 <ImList className="text-lg" />
 
@@ -77,7 +85,11 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 mb-3" to="/dashboard/addProduct">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 mb-3"
+              to="/dashboard/addProduct"
+            >
               <div className="flex items-center gap-3">
                 <IoMdAdd className="text-xl" />
                 <ListItemText>Add Product</ListItemText>
@@ -85,7 +97,11 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 mb-3" to="/dashboard/manageProducts">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 mb-3"
+              to="/dashboard/manageProducts"
+            >
               <div className="flex items-center gap-2">
                 <MdEditNote className="text-2xl" />
 
@@ -95,7 +111,11 @@ function DashboardLayout() {
           </ListItem>
 
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/manageUsers">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 my-1"
+              to="/dashboard/manageUsers"
+            >
               <div className="flex items-center gap-3">
                 <FaUsers className="text-xl" />
 
@@ -104,7 +124,11 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/createBlog">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 my-1"
+              to="/dashboard/createBlog"
+            >
               <div className="flex items-center gap-3">
                 <MdOutlineCreate className="text-xl" />
 
@@ -113,7 +137,11 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/manageBlogs">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 my-1"
+              to="/dashboard/manageBlogs"
+            >
               <div className="flex items-center gap-3">
                 <MdMovieEdit className="text-xl" />
 
@@ -125,7 +153,11 @@ function DashboardLayout() {
       ) : (
         <List>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 my-1"
+              to="/dashboard/userHome"
+            >
               <div className="flex items-center gap-3">
                 <IoHomeOutline className="text-xl" />
                 <ListItemText>User Home</ListItemText>
@@ -133,7 +165,11 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/cart">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 my-1"
+              to="/dashboard/cart"
+            >
               <div className="flex items-center gap-3">
                 <IoBagCheckOutline className="text-xl" />
 
@@ -142,7 +178,11 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/wishlist">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 my-1"
+              to="/dashboard/wishlist"
+            >
               <div className="flex items-center gap-3">
                 <MdChecklistRtl className="text-xl" />
 
@@ -151,7 +191,11 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/paymentHistory">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 my-1"
+              to="/dashboard/paymentHistory"
+            >
               <div className="flex items-center gap-3">
                 <AiOutlineShoppingCart className="text-xl" />
 
@@ -160,7 +204,11 @@ function DashboardLayout() {
             </Link>
           </ListItem>
           <ListItem disablePadding>
-            <Link className="w-full px-5 my-1" to="/dashboard/addReview">
+            <Link
+              onClick={handleDrawerClose}
+              className="w-full px-5 my-1"
+              to="/dashboard/addReview"
+            >
               <div className="flex items-center gap-3">
                 <MdOutlineRateReview className="text-xl" />
 
@@ -181,15 +229,6 @@ function DashboardLayout() {
               <IoHomeOutline className="text-xl" />
 
               <ListItemText>Home</ListItemText>
-            </div>
-          </Link>
-        </ListItem>{" "}
-        <ListItem disablePadding>
-          <Link className="w-full px-5 mb-3" to="/products">
-            <div className="flex items-center gap-3">
-              <IoIosMenu className="text-xl" />
-
-              <ListItemText>Menu</ListItemText>
             </div>
           </Link>
         </ListItem>
@@ -217,20 +256,20 @@ function DashboardLayout() {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
+
           ml: { sm: `${drawerWidth}px` },
+          background: "rgba(227, 227, 227, 0.77)!important",
+          boxShadow: "1px 1px 1px 1px rgb(241 241 241)",
         }}
       >
         <Toolbar
           sx={{
-            background: "white",
-            boxShadow: "none",
-
-            display: { lg: "none", md: "none", sm: "none" },
+            border: 0,
+            width: "100%",
           }}
         >
           <IconButton
@@ -242,6 +281,55 @@ function DashboardLayout() {
           >
             <MenuIcon />
           </IconButton>
+          <div className="flex items-center justify-between w-full gap-5">
+            <div className="flex items-center rounded w-3/4 border-1 border-[#000551] px-2">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="w-full text-gray-600 placeholder:text-gray-700 py-1 md:py-2 px-8  focus:outline-none"
+              />
+              <button className="text-[#07174e] cursor-pointer">
+                <IoSearch className="text-2xl" />
+              </button>
+            </div>
+            <div className="flex items-center justify-end md:gap-3 gap-1">
+              <Badge
+                sx={{
+                  background: "#dfdfdf",
+                  padding: "8px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+              >
+                <MdOutlineDarkMode className="text-gray-700 text-xl" />
+              </Badge>
+              <Badge
+                sx={{
+                  background: "#dfdfdf",
+                  padding: "8px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+                badgeContent={"0"}
+                color="success"
+              >
+                <FaRegMessage className="text-gray-700 text-xl" />
+              </Badge>
+
+              <Badge
+                sx={{
+                  background: "#dfdfdf",
+                  padding: "8px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+                badgeContent={"0"}
+                color="primary"
+              >
+                <IoNotificationsOutline className="text-gray-700 text-xl" />
+              </Badge>
+            </div>
+          </div>
         </Toolbar>
       </AppBar>
       <Box
@@ -252,7 +340,6 @@ function DashboardLayout() {
         <Drawer
           variant="temporary"
           open={mobileOpen}
-          onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
             keepMounted: true,
@@ -291,7 +378,9 @@ function DashboardLayout() {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <Outlet />
+        <div className="md:mt-16 mt-10">
+          <Outlet />
+        </div>
       </Box>
     </Box>
   );

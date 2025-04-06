@@ -8,7 +8,7 @@ const AdminRoute = ({ children }) => {
   const [isAdmin, isAdminLoading] = useAdmin();
 
   if (isLoading || isAdminLoading) {
-    return <Loading />;
+    return;
   }
 
   if (user && isAdmin) {

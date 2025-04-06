@@ -1,20 +1,24 @@
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../../assets/logo.png";
-import { CiUser } from "react-icons/ci";
 import { IoMdMenu } from "react-icons/io";
 import { useState } from "react";
-import { Badge, Box, Drawer } from "@mui/material";
+import { Avatar, Badge, Box, Drawer } from "@mui/material";
 import { FaRegHeart } from "react-icons/fa";
+
 import { RiShoppingBagLine } from "react-icons/ri";
 import { useAuth } from "../../../hooks/useAuth";
 import { PiSignOutBold } from "react-icons/pi";
-import Swal from "sweetalert2";
 import useCart from "../../../hooks/useCart";
+import useAdmin from "../../../hooks/useAdmin";
+import person from "../../../assets/man-avatar.avif";
+import Swal from "sweetalert2";
 import "./Navbar.css";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, logOut } = useAuth();
   const [cart] = useCart();
+  const [isAdmin] = useAdmin();
+  console.log(user);
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -40,7 +44,7 @@ const Navbar = () => {
       role="presentation"
       onClick={toggleDrawer(false)}
     >
-      <ul className="mt-1 px-5 text-center">
+      <ul className="mt-1 px-2">
         <li>
           <Link className="text-right" to="/">
             <img className="w-24" src={logo} alt="" />
@@ -48,7 +52,7 @@ const Navbar = () => {
         </li>
         <li>
           <Link
-            className={`mt-2 w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
+            className={`mt-2 w-full block px-8 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
               path === "/" && "bg-[#07174e] text-gray-100"
             }`}
             to="/"
@@ -58,7 +62,7 @@ const Navbar = () => {
         </li>
         <li>
           <Link
-            className={`w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
+            className={`w-full block px-8 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
               path === "/products" && "bg-[#07174e] text-gray-100"
             }`}
             to="/products"
@@ -68,7 +72,7 @@ const Navbar = () => {
         </li>
         <li>
           <Link
-            className={`w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
+            className={`w-full block px-8 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
               path === "/about" && "bg-[#07174e] text-gray-100"
             }`}
             to="/about"
@@ -78,7 +82,7 @@ const Navbar = () => {
         </li>
         <li>
           <Link
-            className={`w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
+            className={`w-full block px-8 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 ${
               path === "/contact" && "bg-[#07174e] text-gray-100"
             }`}
             to="/contact"
@@ -90,7 +94,7 @@ const Navbar = () => {
           <>
             <li>
               <Link
-                className={`w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100`}
+                className={`w-full block px-8 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100`}
                 to="/dashboard"
               >
                 Dashboard
@@ -99,7 +103,7 @@ const Navbar = () => {
             <li>
               <button
                 onClick={handleLogOut}
-                className="w-full block px-15 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 flex items-center gap-1 font-smibold cursor-pointer"
+                className="w-full block px-8 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 flex items-center gap-1 font-smibold cursor-pointer"
               >
                 <PiSignOutBold />
 
@@ -109,7 +113,12 @@ const Navbar = () => {
           </>
         ) : (
           <li>
-            <Link to="/login">Login</Link>
+            <Link
+              className="w-full block px-8 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 flex items-center gap-1 font-smibold cursor-pointer"
+              to="/login"
+            >
+              Login
+            </Link>
           </li>
         )}
       </ul>
@@ -152,7 +161,7 @@ const Navbar = () => {
           <li>
             <Link
               className={`hover:text hover:border-b-2 hover:border-[#0027af] hover:text-[#0027af] ${
-                path === "/products" &&
+                path.includes("/products") &&
                 "border-b-2 border-[#0027af] text-[#0027af] font-bold"
               }`}
               to="/products"
@@ -185,7 +194,9 @@ const Navbar = () => {
           {user ? (
             <>
               <li>
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to={`/dashboard/${isAdmin ? "adminHome" : "userHome"}`}>
+                  Dashboard
+                </Link>
               </li>
               <li>
                 <button
@@ -216,9 +227,12 @@ const Navbar = () => {
             <RiShoppingBagLine />
           </Badge>
         </Link>
-        <Link to="/profile">
-          <CiUser />
-        </Link>
+        <div>
+          <Avatar
+            alt="Profile Avatar"
+            src={user?.photoURL ? user?.photoURL : person}
+          />
+        </div>
       </div>
     </div>
   );

@@ -19,13 +19,13 @@ const FeaturedBlogs = () => {
       <div>
         <div className="flex items-center justify-between">
           <div className="py-5">
-            <h3 className="text-2xl font-bold">Featured Articles</h3>
+            <h3 className="md:text-2xl text-xl font-bold">Featured Articles</h3>
           </div>
 
           <div>
             <Link
               to="/blogs"
-              className="text-blue-600 font-semibold text-l flex items-center gap-1"
+              className="text-blue-600 font-semibold text-md flex items-center gap-1"
             >
               VIEW ALL
               <FaChevronRight />

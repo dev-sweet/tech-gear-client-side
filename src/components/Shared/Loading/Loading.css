@@ -1,3 +1,17 @@
+/* HTML: <div class="loader"></div> */
+.loader {
+  font-size: 30px;
+  background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
+  animation: l2 2s linear infinite;
+}
+.loader:after {
+  content: "";
+}
+@keyframes l2 {
+  to {
+    background-size: 100% 3px;
+  }
+}
 .loader {
   display: inline-block;
   font-size: 48px;

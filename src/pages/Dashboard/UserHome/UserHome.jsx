@@ -16,7 +16,7 @@ const UserHome = () => {
         <h2 className="text-3xl">
           Hello, Welcome {user?.displayName ? user?.displayName : "Back"}
         </h2>
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 mt-10">
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-3 mt-5">
           <div className="flex items-center justify-evenly gap-5 bg-gradient-to-r from-[#731a4a] to-[#07174e] py-10 px-5 rounded text-white">
             <span>
               <FcShipped className="text-5xl" />
@@ -56,8 +56,8 @@ const UserHome = () => {
           </div>
         </div>
       </div>
-      <div className="flex pt-10 gap-5">
-        <div className="w-[50%] p-10 bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg rounded-xl">
+      <div className="flex lg:flex-row flex-col pt-3 gap-3">
+        <div className="lg:w-[50%] w-full p-10 bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg rounded-xl">
           <div className="text-right">
             <button className="text-3xl hover:cursor-pointer">
               <FaRegEdit />
@@ -97,7 +97,7 @@ const UserHome = () => {
             </p>
           </div>
         </div>
-        <div className="w-[50%] p-10  bg-gradient-to-r bg-gradient-to-r from-[#07174e] to-[#731a4a]	 shadow shadow-lg rounded-lg">
+        <div className="lg:w-[50%] w-full p-10  bg-gradient-to-r bg-gradient-to-r from-[#07174e] to-[#731a4a]	 shadow shadow-lg rounded-lg">
           <h2 className="text-3xl text-white">Your Activities</h2>
           <div className="pt-5">
             <h3 className="text-2xl text-[#22c55e] font-bold flex gap-3 my-3">

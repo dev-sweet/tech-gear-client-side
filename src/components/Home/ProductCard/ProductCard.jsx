@@ -2,16 +2,30 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Box, Rating, Skeleton } from "@mui/material";
+import { Rating } from "@mui/material";
 import "./ProductCard.css";
 import { useAuth } from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCart from "../../../hooks/useCart";
+import { IoBagAddOutline } from "react-icons/io5";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { MdOutlineGridView } from "react-icons/md";
+import ProductLoadingSkeleton from "../../Shared/ProductLoadingSkeleton/ProductLoadingSkeleton";
 
 const ProductCard = ({ product, loading }) => {
-  const { _id, name, price, image, ratings, discountPrice } = product;
+  const {
+    _id,
+    name,
+    basePrice,
+    sellPrice,
+    image,
+    isNew,
+    isTrending,
+    discount,
+    ratings = 0,
+  } = product;
   const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,7 +38,7 @@ const ProductCard = ({ product, loading }) => {
         email: user.email,
         name,
         image,
-        price,
+        price: sellPrice,
       };
 
       axiosSecure.post("/carts", cartItem).then((res) => {
@@ -56,20 +70,8 @@ const ProductCard = ({ product, loading }) => {
     }
   };
 
-  if (loading) {
-    return (
-      <Box>
-        <Skeleton
-          animation="wave"
-          variant="rectangular"
-          width="full"
-          height={180}
-        />
-        <Skeleton height={50} animation="wave" />
-        <Skeleton height={40} width={200} animation="wave" />
-        <Skeleton height={30} width={150} animation="wave" />
-      </Box>
-    );
+  if (!product || loading) {
+    return <ProductLoadingSkeleton />;
   }
   return (
     <div className="product-card">
@@ -83,47 +85,76 @@ const ProductCard = ({ product, loading }) => {
         }}
       >
         <div className="relative overflow-none img-container">
-          <CardMedia
-            className="h-50 p-5 "
-            component="img"
-            alt="green iguana"
-            image={image}
-          />
-
-          <Link className="see-details-btn" to={`/products/${_id}`}>
-            Vew Details
+          <Link to={`/products/${_id}`}>
+            <CardMedia
+              className="h-50 p-5 "
+              component="img"
+              alt="green iguana"
+              image={image}
+            />
           </Link>
+          <div className="labels absolute top-10 left-[-60px] text-white text-[10px] font-semibold">
+            {isNew && (
+              <sapn className="bg-[#006e19] p-1 flex item-center justify-center block my-1">
+                New
+              </sapn>
+            )}
+            {discount && (
+              <span className="bg-[#e50016] p-1 flex item-center justify-center block my-1">
+                10% off
+              </span>
+            )}
+            {isTrending && (
+              <sapn className="bg-[#00065a] p-1 flex item-center justify-center block my-1">
+                Trending
+              </sapn>
+            )}
+          </div>
+
+          <div className="cart-heart flex flex-col absolute top-15 right-[-50px]">
+            <button className="bg-gray-900 p-3 cursor-pointer mt-2  text-white">
+              <FaRegHeart />
+            </button>
+            <button className="bg-gray-900 p-3 cursor-pointer mt-2 text-red-600">
+              <FaHeart />
+            </button>
+            <button className="bg-gray-900 p-3 cursor-pointer mt-2 text-white">
+              <MdOutlineGridView />
+            </button>
+          </div>
         </div>
-        {/*  background: "rgb(245, 245, 245)",  */}
+
         <CardContent sx={{ background: "rgb(245, 245, 245)", height: "100%" }}>
           <div className="relative lg:pb-10">
             <div>
-              <Typography
-                gutterBottom
-                variant="p"
-                className="font-semibold"
-                component="div"
-                sx={{ textOverflow: "ellipsis", display: "block" }}
-              >
-                {name}
-              </Typography>
+              <Link className="text-blue-500" to={`/products/${_id}`}>
+                <Typography
+                  gutterBottom
+                  variant="p"
+                  className="font-semibold"
+                  component="div"
+                  sx={{ textOverflow: "ellipsis", display: "block" }}
+                >
+                  {name}
+                </Typography>
+              </Link>
 
               <Rating
                 name="size-small"
                 size="small"
-                defaultValue="3"
+                defaultValue={ratings ? ratings : 0}
                 precision={0.5}
                 readOnly
               />
               <h2 className="flex items-center gap-2 text-center">
                 {" "}
-                {discountPrice && (
+                {basePrice && (
                   <del className="text-md font-semibold text-gray-500">
-                    ${discountPrice}
+                    ${basePrice}
                   </del>
                 )}
                 <span className="text-lg font-bold text-gray-700">
-                  ${price}
+                  ${sellPrice}
                 </span>
               </h2>
             </div>

@@ -21,13 +21,15 @@ const TrendingProducts = () => {
         <div className="w-full py-5 pl-5">
           <div className="flex items-center justify-between w-full">
             <div>
-              <h3 className="text-2xl font-bold">Trending Products</h3>
+              <h3 className="md:text-2xl text-xl font-bold">
+                Trending Products
+              </h3>
             </div>
 
             <div>
               <Link
                 to="products"
-                className="text-blue-600 font-semibold text-l flex items-center gap-1"
+                className="text-blue-600 font-semibold md:text-lg text-sm flex items-center gap-1"
               >
                 VIEW ALL
                 <FaChevronRight />

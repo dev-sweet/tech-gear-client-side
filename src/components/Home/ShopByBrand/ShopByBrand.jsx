@@ -36,8 +36,9 @@ const ShopByBrand = () => {
     slidesToScroll: 3,
     autoplay: true,
     speed: 500,
-    autoplaySpeed: 3000,
-    cssEase: "linear",
+    autoplaySpeed: 1000,
+    rtl: true,
+    cssEase: "smooth",
     prevArrow: <FaChevronLeft />,
     nextArrow: <FaChevronRight />,
     responsive: [

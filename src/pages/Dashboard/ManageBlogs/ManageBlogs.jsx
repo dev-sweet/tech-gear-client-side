@@ -101,7 +101,7 @@ const ManageBlogs = () => {
         </div>
       </div>
       <TableContainer component={"Paper"}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <Table sx={{ minWidth: 392 }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell></StyledTableCell>
