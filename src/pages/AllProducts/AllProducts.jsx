@@ -41,7 +41,7 @@ const AllProducts = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5050/products", {
+      .get("https://tech-gear-server.onrender.com/products", {
         params: query,
       })
       .then((res) => {
