@@ -54,12 +54,14 @@ const Register = () => {
       });
   };
   return (
-    <div className="lg:px-20 px-10 lg:flex md:flex items-center justify-center py-10 gap-10">
-      <img className="lg:max-w-[500px]" src={loginImg} alt="" />
+    <div className="lg:px-20 px-10 flex lg:flex-row flex-col items-center justify-center gap-5">
+      <img className="lg:max-w-[500px] order-2" src={loginImg} alt="" />
 
-      <div className="min-w-[400px] p-8 shadow shadow-lg">
+      <div className="min-w-[400px] p-8 shadow shadow-lg order-1">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="text-3xl text-center font-semibold">Register </h1>
+          <h1 className="text-3xl text-center font-semibold text-gray-700">
+            Register
+          </h1>
 
           <div className="pt-3 flex flex-col justify-center gap-3">
             <label htmlFor="email"> Name *</label>
@@ -115,7 +117,7 @@ const Register = () => {
           )}
 
           <input
-            className="bg-[#2b4190] py-3 w-full text-white mt-5 cursor-pointer"
+            className="bg-[#07174e] py-3 w-full text-white font-semibold mt-5 cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#050f33]"
             type="submit"
           />
         </form>
@@ -124,7 +126,10 @@ const Register = () => {
           <GoogleLogin />
           <p className="pt-5">
             Already have an account?{" "}
-            <Link className="text-blue-600 font-semibold" to="/login">
+            <Link
+              className="text-blue-600 font-semibold transition-all duration-200 ease-in-out hover:text-blue-400"
+              to="/login"
+            >
               Login here
             </Link>
           </p>

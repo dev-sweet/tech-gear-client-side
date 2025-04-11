@@ -13,12 +13,13 @@ import useAdmin from "../../../hooks/useAdmin";
 import person from "../../../assets/man-avatar.avif";
 import Swal from "sweetalert2";
 import "./Navbar.css";
+import useWishlist from "../../../hooks/useWishlist";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, logOut } = useAuth();
   const [cart] = useCart();
+  const [wishlist] = useWishlist();
   const [isAdmin] = useAdmin();
-  console.log(user);
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -218,12 +219,12 @@ const Navbar = () => {
       </div>
       <div className="flex items-center gap-5 text-2xl font-bold">
         <Link to="/dashboard/wishlist" className="cursor-pointer">
-          <Badge badgeContent={3} color="primary">
+          <Badge badgeContent={wishlist?.length} color="error">
             <FaRegHeart />
           </Badge>
         </Link>
         <Link to="/dashboard/cart" className="cursor-pointer">
-          <Badge badgeContent={cart?.length} color="primary">
+          <Badge badgeContent={cart?.length} color="info">
             <RiShoppingBagLine />
           </Badge>
         </Link>

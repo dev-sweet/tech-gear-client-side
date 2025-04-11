@@ -8,7 +8,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import {
   IoBagCheckOutline,
   IoHomeOutline,
@@ -40,6 +40,8 @@ function DashboardLayout() {
   const [isAdmin] = useAdmin();
 
   const { user } = useAuth();
+  const location = useLocation();
+  const path = location.pathname;
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerClose = () => {
@@ -62,7 +64,10 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 mb-3"
+              className={`w-full mx-1 px-5 py-2 rounded-sm hover:bg-gray-500${
+                path.includes("adminHome") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/adminHome"
             >
               <div className="flex items-center gap-3">
@@ -74,7 +79,10 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 mb-3"
+              className={`w-full mx-1 px-5 py-2 rounded-sm hover:bg-gray-500${
+                path.includes("manageOrders") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/manageOrders"
             >
               <div className="flex items-center gap-3">
@@ -87,7 +95,10 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 mb-3"
+              className={`w-full mx-1 px-5 py-2 rounded-sm hover:bg-gray-500${
+                path.includes("addProduct") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/addProduct"
             >
               <div className="flex items-center gap-3">
@@ -99,7 +110,10 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 mb-3"
+              className={`w-full mx-1 px-5 py-2 rounded-sm hover:bg-gray-500${
+                path.includes("manageProducts") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/manageProducts"
             >
               <div className="flex items-center gap-2">
@@ -113,7 +127,10 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 my-1"
+              className={`w-full mx-1 px-5 py-2 rounded-sm hover:bg-gray-500${
+                path.includes("manageUsers") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/manageUsers"
             >
               <div className="flex items-center gap-3">
@@ -126,7 +143,10 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 my-1"
+              className={`w-full mx-1 px-5 py-2 rounded-sm hover:bg-gray-500${
+                path.includes("createBlog") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/createBlog"
             >
               <div className="flex items-center gap-3">
@@ -139,7 +159,10 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 my-1"
+              className={`w-full mx-1 px-5 py-2 rounded-sm hover:bg-gray-500${
+                path.includes("manageBlogs") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/manageBlogs"
             >
               <div className="flex items-center gap-3">
@@ -155,7 +178,10 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 my-1"
+              className={`w-full mx-1 px-5 py-2 rounded-sm ${
+                path.includes("userHome") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/userHome"
             >
               <div className="flex items-center gap-3">
@@ -167,7 +193,10 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 my-1"
+              className={`w-full mx-1 px-5 py-2 rounded-sm ${
+                path.includes("cart") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/cart"
             >
               <div className="flex items-center gap-3">
@@ -180,7 +209,10 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 my-1"
+              className={`w-full mx-1 px-5 py-2 rounded-sm ${
+                path.includes("wishlist") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/wishlist"
             >
               <div className="flex items-center gap-3">
@@ -193,7 +225,10 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 my-1"
+              className={`w-full mx-1 px-5 py-2 rounded-sm ${
+                path.includes("paymentHistory") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/paymentHistory"
             >
               <div className="flex items-center gap-3">
@@ -206,13 +241,16 @@ function DashboardLayout() {
           <ListItem disablePadding>
             <Link
               onClick={handleDrawerClose}
-              className="w-full px-5 my-1"
+              className={`w-full mx-1 px-5 py-2 rounded-sm ${
+                path.includes("addReview") &&
+                "bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] border border-[#002c9b]"
+              }`}
               to="/dashboard/addReview"
             >
               <div className="flex items-center gap-3">
                 <MdOutlineRateReview className="text-xl" />
 
-                <ListItemText>Add a Review</ListItemText>
+                <ListItemText>Review Us</ListItemText>
               </div>
             </Link>
           </ListItem>

@@ -11,13 +11,13 @@ const ErrorPage = () => {
         </p>
         <div className="mt-10">
           <Link
-            className="text-white bg-[#2b4190] py-3 px-4 font-semibold"
+            className="text-gray-300 bg-[#07174e] py-3 px-4 font-semibold hover:bg-gray-700 text-sm"
             to="/"
           >
             Go Home
           </Link>
           <Link
-            className="text-white bg-[#2b4190] py-3 px-4 font-semibold mx-3 rounded"
+            className="text-gray-300 bg-[#07174e] py-3 px-4 font-semibold hover:bg-gray-700 text-sm ms-2"
             to="/contact"
           >
             Contact Us

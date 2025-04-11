@@ -7,6 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
 import useCart from "../../../hooks/useCart";
 import { MdOutlineDelete } from "react-icons/md";
@@ -14,15 +15,21 @@ import { FaArrowRight } from "react-icons/fa6";
 
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+
   const [cart, , refetch] = useCart();
   const totalPrice = cart.reduce(
     (total, currentItem) => total + currentItem.price,
     0
   );
+
+  const handleRowCLick = (id) => {
+    navigate(`/products/${id}`);
+  };
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -76,8 +83,8 @@ const Cart = () => {
         <h3 className="text-3xl">My cart: {cart.length}</h3>
         <h3 className="text-3xl">Total Prices: ${totalPrice}</h3>
         <Link
-          to="/dashboard/checkout"
-          className="bg-yellow-600 text-white font-bold p-3 rounded cursor-pointer "
+          to="/dashboard/cart/checkout"
+          className="bg-[#00081c] text-gray-400 shadow shadow-[#002c9b] font-bold p-3 rounded cursor-pointer "
         >
           <div className="flex items-center gap-4">
             <span>Checkout</span>
@@ -101,28 +108,39 @@ const Cart = () => {
           </TableHead>
           <TableBody>
             {cart.map((item, i) => (
-              <StyledTableRow key={item._id}>
+              <StyledTableRow
+                key={item._id}
+                sx={{
+                  "&:hover": {
+                    boxShadow: "0px 0px 4px 4px rgba(0, 0, 0, 0.15)",
+                    cursor: "pointer",
+                  },
+                  transition: "box-shadow 0.3s ease-in-out",
+                }}
+                onClick={() => handleRowCLick(item.id)}
+              >
                 <StyledTableCell component="th" scope="row">
                   {i + 1}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  <img
-                    className="w-[50px] h-[50px]"
-                    src={
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL6_CFHvfQ-ejBLt7AJLrlaUzR44ASJe8rog&s"
-                    }
-                    alt=""
-                  />
+                  <img className="w-[50px] h-[50px]" src={item.image} alt="" />
                 </StyledTableCell>
                 <StyledTableCell align="left">{item.name}</StyledTableCell>
-                <StyledTableCell align="left">{item.price}</StyledTableCell>
                 <StyledTableCell align="left">
-                  <button
-                    className="text-2xl bg-red-700 text-white p-2 cursor-pointer rounded"
-                    onClick={() => handleDelete(item._id)}
-                  >
-                    <MdOutlineDelete />
-                  </button>
+                  <span className="text-gray-800 font-bold">${item.price}</span>
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  <Tooltip title="Delete cart item">
+                    <button
+                      className="text-2xl bg-red-700 text-white p-2 cursor-pointer rounded hover:bg-gray-600 transition duration-2"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleDelete(item._id);
+                      }}
+                    >
+                      <MdOutlineDelete />
+                    </button>
+                  </Tooltip>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -147,7 +165,7 @@ const Cart = () => {
 
       <Link
         to="/products"
-        className="mt-6 px-6 py-3 bg-[#07174e] text-white text-lg font-medium rounded-lg cursor-pointer hover:bg-[#242283]"
+        className="mt-6 px-4 text-sm text-gray-900 bg-[#07174e] py-3 hover:bg-gray-700 text-white font-medium rounded shadow-md  transition cursor-pointer"
       >
         Continue Shopping
       </Link>

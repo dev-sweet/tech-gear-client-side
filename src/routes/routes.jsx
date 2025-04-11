@@ -59,7 +59,6 @@ export const routes = createBrowserRouter([
           const res = await axios.get(
             `https://tech-gear-server.onrender.com/products/${params.id}`
           );
-          console.log(res.data);
           return res.data;
         },
       },
@@ -77,9 +76,14 @@ export const routes = createBrowserRouter([
         path: "userHome",
         element: <UserHome />,
       },
+
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "cart/checkout",
+        element: <Payment />,
       },
       {
         path: "wishlist",
@@ -90,10 +94,6 @@ export const routes = createBrowserRouter([
         element: <AddReview />,
       },
 
-      {
-        path: "checkout",
-        element: <Payment />,
-      },
       {
         path: "paymentHistory",
         element: <PaymentHistory />,

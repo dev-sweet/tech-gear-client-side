@@ -35,7 +35,7 @@ const GoogleLogin = ({ from }) => {
   return (
     <button
       onClick={handleClick}
-      className="border-1 border-[#2b4190] py-3 w-full text-[#2b4190] mt-5 cursor-pointer text-center"
+      className="border-1 border-[#2b4190] py-3 w-full text-[#2b4190] mt-5 cursor-pointer text-center transition-all duration-200 ease-in-out hover:bg-gray-300"
     >
       <span className="flex items-center justify-center">
         <FcGoogle className="text-3xl " />

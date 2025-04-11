@@ -3,17 +3,19 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Rating } from "@mui/material";
-import "./ProductCard.css";
 import { useAuth } from "../../../hooks/useAuth";
-import Swal from "sweetalert2";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCart from "../../../hooks/useCart";
-import { IoBagAddOutline } from "react-icons/io5";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdOutlineGridView } from "react-icons/md";
 import ProductLoadingSkeleton from "../../Shared/ProductLoadingSkeleton/ProductLoadingSkeleton";
-
+import Tooltip from "@mui/material/Tooltip";
+import useWishlist from "../../../hooks/useWishlist";
+import { IoCheckmarkDone } from "react-icons/io5";
+import { TiShoppingCart } from "react-icons/ti";
+import "./ProductCard.css";
+import Swal from "sweetalert2";
 const ProductCard = ({ product, loading }) => {
   const {
     _id,
@@ -30,12 +32,68 @@ const ProductCard = ({ product, loading }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  const [, , refetch] = useCart();
+  const [cart, , refetch] = useCart();
+  const [wishlist, , refetchWishlist] = useWishlist();
+  const isWishlisted = wishlist.some((item) => item.id === _id);
+  const isCarted = cart.some((item) => item.id === _id);
+
+  const handleAddToWishlist = () => {
+    if (user && user?.email) {
+      const wishlistItem = {
+        id: _id,
+        email: user?.email,
+        name,
+        image,
+        price: sellPrice,
+      };
+
+      axiosSecure.post("/wishlist", wishlistItem).then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            icon: "success",
+            title: `${name} added to wishlist.`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+
+          refetchWishlist();
+        }
+      });
+    } else {
+      Swal.fire({
+        title: "You are not logged in!",
+        text: "Please login first and then add to Wishlist.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#07174e",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Login!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login", { state: { from: location } });
+        }
+      });
+    }
+  };
+  const handleRemoveWishlist = () => {
+    axiosSecure.delete(`/wishlist/${_id}`).then((res) => {
+      if (res.data.deletedCount > 0) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Deleted from wishlist",
+          icon: "success",
+          timer: "1500",
+          showConfirmButton: false,
+        });
+        refetchWishlist();
+      }
+    });
+  };
   const handleClick = () => {
-    if (user && user.email) {
+    if (user && user?.email) {
       const cartItem = {
         id: _id,
-        email: user.email,
+        email: user?.email,
         name,
         image,
         price: sellPrice,
@@ -55,7 +113,7 @@ const ProductCard = ({ product, loading }) => {
       });
     } else {
       Swal.fire({
-        title: "Are you are not logged in!",
+        title: "You are not logged in!",
         text: "Please login first and then add to cartItem.",
         icon: "warning",
         showCancelButton: true,
@@ -70,7 +128,7 @@ const ProductCard = ({ product, loading }) => {
     }
   };
 
-  if (!product || loading) {
+  if (loading) {
     return <ProductLoadingSkeleton />;
   }
   return (
@@ -93,7 +151,7 @@ const ProductCard = ({ product, loading }) => {
               image={image}
             />
           </Link>
-          <div className="labels absolute top-10 left-[-60px] text-white text-[10px] font-semibold">
+          <div className="labels">
             {isNew && (
               <sapn className="bg-[#006e19] p-1 flex item-center justify-center block my-1">
                 New
@@ -111,16 +169,34 @@ const ProductCard = ({ product, loading }) => {
             )}
           </div>
 
-          <div className="cart-heart flex flex-col absolute top-15 right-[-50px]">
-            <button className="bg-gray-900 p-3 cursor-pointer mt-2  text-white">
-              <FaRegHeart />
-            </button>
-            <button className="bg-gray-900 p-3 cursor-pointer mt-2 text-red-600">
-              <FaHeart />
-            </button>
-            <button className="bg-gray-900 p-3 cursor-pointer mt-2 text-white">
-              <MdOutlineGridView />
-            </button>
+          <div className="cart-heart">
+            {isWishlisted ? (
+              <Tooltip title="Remove from Wishlist" placement="left">
+                <button
+                  onClick={handleRemoveWishlist}
+                  className="bg-gray-900 p-3 cursor-pointer mt-2 text-red-600 hover:bg-red-700 hover:text-white"
+                >
+                  <FaHeart />
+                </button>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Add to Wishlist" placement="left">
+                <button
+                  onClick={handleAddToWishlist}
+                  className="bg-gray-900 p-3 cursor-pointer mt-2 text-white rounded hover:bg-red-700"
+                >
+                  <FaRegHeart />
+                </button>
+              </Tooltip>
+            )}
+            <Tooltip title="See Details" placement="left">
+              <Link
+                to={`/products/${_id}`}
+                className="bg-gray-900 p-3 cursor-pointer mt-2 text-white hover:bg-[#07174e]"
+              >
+                <MdOutlineGridView />
+              </Link>
+            </Tooltip>
           </div>
         </div>
 
@@ -147,7 +223,6 @@ const ProductCard = ({ product, loading }) => {
                 readOnly
               />
               <h2 className="flex items-center gap-2 text-center">
-                {" "}
                 {basePrice && (
                   <del className="text-md font-semibold text-gray-500">
                     ${basePrice}
@@ -159,9 +234,22 @@ const ProductCard = ({ product, loading }) => {
               </h2>
             </div>
             <div className="text-center lg:absolute bottom-0 left-0 right-0">
-              <button onClick={handleClick} className="product-cart-btn ">
-                Add to cart
-              </button>
+              {isCarted ? (
+                <button disabled className="product-cart-btn-disabled">
+                  <div className="flex items-center gap-2">
+                    <TiShoppingCart className="text-xl" />
+                    Added
+                    <IoCheckmarkDone className="text-xl text-yellow-600" />
+                  </div>
+                </button>
+              ) : (
+                <button onClick={handleClick} className="product-cart-btn ">
+                  <div className="flex items-center gap-1">
+                    <TiShoppingCart className="text-xl" />
+                    Add to cart
+                  </div>
+                </button>
+              )}
             </div>
           </div>
         </CardContent>

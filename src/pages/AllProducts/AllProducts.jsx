@@ -11,22 +11,20 @@ const AllProducts = () => {
   const [query, setQuery] = useState({});
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
+
   const handleSort = (e) => {
     const sortItem = e.target.value.split(",");
     setQuery({ ...query, sortBy: sortItem[0], order: sortItem[1] });
   };
 
   const handleMinPrice = (e) => {
-    console.log(e.target.value);
     setQuery({ ...query, minPrice: e.target.value });
   };
   const handleMaxPrice = (e) => {
-    console.log(e.target.value);
     setQuery({ ...query, maxPrice: e.target.value });
   };
 
   const handleCategory = (e) => {
-    console.log(e.target.value);
     setQuery({ ...query, category: e.target.value });
   };
 
@@ -43,7 +41,7 @@ const AllProducts = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://tech-gear-server.onrender.com/products", {
+      .get("http://localhost:5050/products", {
         params: query,
       })
       .then((res) => {
@@ -68,8 +66,8 @@ const AllProducts = () => {
               </option>
               <option value="name,asc">Name (A-Z)</option>
               <option value="name,desc">Name (Z-A)</option>
-              <option value="price,asc">Price (Low &gt; High) </option>
-              <option value="price,desc">Price (High &gt; Low) </option>
+              <option value="sellPrice,asc">Price (Low &gt; High) </option>
+              <option value="sellPrice,desc">Price (High &gt; Low) </option>
             </select>
           </div>
           <div>
@@ -176,7 +174,7 @@ const AllProducts = () => {
           </p>
         )}
         <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-5 h-full mt-10">
-          {loading && products.length < 1 ? (
+          {loading ? (
             <>
               <ProductLoadingSkeleton />
               <ProductLoadingSkeleton />
@@ -190,6 +188,7 @@ const AllProducts = () => {
                 key={product._id}
                 product={product}
                 loading={loading}
+                isWishlisted={true}
               />
             ))
           )}

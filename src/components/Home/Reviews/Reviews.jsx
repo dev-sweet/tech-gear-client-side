@@ -16,7 +16,6 @@ const Reviews = () => {
       return res.data;
     },
   });
-  console.log(reviews);
   const settings = {
     dots: true,
     lazyLoad: true,
