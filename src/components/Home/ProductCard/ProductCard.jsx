@@ -26,7 +26,7 @@ const ProductCard = ({ product, loading }) => {
     isNew,
     isTrending,
     discount,
-    ratings = 0,
+    avgRating,
   } = product;
   const { user } = useAuth();
   const location = useLocation();
@@ -218,7 +218,7 @@ const ProductCard = ({ product, loading }) => {
               <Rating
                 name="size-small"
                 size="small"
-                defaultValue={ratings ? ratings : 0}
+                value={avgRating}
                 precision={0.5}
                 readOnly
               />

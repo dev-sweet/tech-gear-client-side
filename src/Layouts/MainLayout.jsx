@@ -8,9 +8,9 @@ const MainLayout = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 0);
   }, []);
-  //
+
   if (loading) {
     return <Loading />;
   }

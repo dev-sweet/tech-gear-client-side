@@ -1,5 +1,5 @@
 import { Rating, Tooltip } from "@mui/material";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { CiHeart } from "react-icons/ci";
 import { TbShip } from "react-icons/tb";
 import { GiReturnArrow } from "react-icons/gi";
@@ -17,8 +17,14 @@ import { TiShoppingCart } from "react-icons/ti";
 import useCart from "../../hooks/useCart";
 import { IoCheckmarkDone } from "react-icons/io5";
 
+import ReactImageMagnify from "react-image-magnify";
+import { MdRateReview } from "react-icons/md";
+
 const ProductDetails = () => {
   const [reletedProducts, setReletedProducts] = useState([]);
+  const [rating, setRating] = useState(0);
+  const [reviewText, setReviewText] = useState();
+  const [fieldError, setFieldError] = useState();
   const product = useLoaderData();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
@@ -36,15 +42,11 @@ const ProductDetails = () => {
     description,
     ratings,
     category,
+    avgRating,
   } = product;
+  console.log(product);
   const isWishlted = wishlist.some((item) => item.id === _id);
   const isCarted = cart.some((item) => item.id === _id);
-
-  useEffect(() => {
-    axiosPublic
-      .get("/products", { params: { category } })
-      .then((res) => setReletedProducts(res.data));
-  });
 
   const handleAddToCart = () => {
     if (user && user?.email) {
@@ -135,14 +137,87 @@ const ProductDetails = () => {
       }
     });
   };
+
+  // handle onhchange event of ratings
+  const handleChangeRating = (event, value) => {
+    setRating(value);
+    setFieldError("");
+  };
+
+  const handleChangeReview = (e) => {
+    setReviewText(e.target.value);
+    setFieldError("");
+  };
+
+  const handleSubmitReview = () => {
+    if (!rating || !reviewText) {
+      if (!rating && !reviewText) {
+        setFieldError("Please select rating and write review");
+      } else if (!rating) {
+        setFieldError("Please select your rating");
+      } else if (!reviewText) {
+        setFieldError("Please write your review");
+      }
+    } else {
+      const reviewItem = {
+        rating,
+        reviewText,
+        reviewedBy: {
+          name: user.displayName,
+          image: user.photoURL,
+        },
+      };
+
+      axiosSecure.post(`/products/${_id}/reviews`, reviewItem).then((res) => {
+        if (res.data.modifiedCount > 0) {
+          Swal.fire({
+            icon: "success",
+            title: `Review added to this product.`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+    }
+  };
+
+  // load related products
+  axiosPublic
+    .get("/products", { params: { category } })
+    .then((res) => setReletedProducts(res.data));
   return (
     <div className="md:p-20 p-10">
       <div className="grid lg:grid-cols-2 gap-10 items-center">
         <div className="flex justify-center">
-          <img
-            src={image}
-            alt={product.name}
-            className="w-full max-w-md rounded-lg shadow-lg"
+          <ReactImageMagnify
+            {...{
+              smallImage: {
+                alt: "Product Image",
+                isFluidWidth: true,
+                src: image,
+              },
+              largeImage: {
+                src: image,
+                width: 1200,
+                height: 800,
+              },
+              enlargedImagePosition: "beside",
+              enlargedImageContainerDimensions: {
+                width: "200%",
+                height: "100%",
+              },
+              enlargedImageContainerStyle: {
+                backgroundColor: "#fff",
+                boxShadow: "0 0 10px rgba(241, 241, 241, 0.3)",
+                zIndex: 999,
+              },
+              lensStyle: {
+                backgroundColor: "rgba(255, 255, 255, 0.06)",
+              },
+
+              isHintEnabled: true,
+              shouldUsePositiveSpaceLens: true,
+            }}
           />
         </div>
         <div>
@@ -161,7 +236,7 @@ const ProductDetails = () => {
           <Rating
             name="size-large"
             size="large"
-            defaultValue={ratings ? ratings : 4.5}
+            defaultValue={avgRating}
             precision={0.5}
             readOnly
           />
@@ -288,27 +363,42 @@ const ProductDetails = () => {
         </div>
         <div className="pt-10">
           <h2 className="text-xl font-bold">Review This Product</h2>
-
-          <div className="mt-5">
-            <Rating
-              name="size-large"
-              size="large"
-              defaultValue={2.5}
-              precision={0.5}
-            />
-            <br />
-            <br />
-            <textarea
-              className="w-full p-2 border-2 border-gray-400 focus:border-[#2b4190] outline-0 rounded"
-              rows="6"
-            />
-            <button
+          {!user?.email && (
+            <Link
+              to="/login"
               type="submit"
-              className="px-10 py-3 bg-[#07174e] text-white rounded cursor-pointer hover:bg-gray-500 mt-5"
+              className="w-50 py-3 bg-[#07174e] text-white rounded cursor-pointer transition duration-300 ease-in hover:bg-[#000721] mt-5 flex items-center justify-center gap-2"
             >
-              Submit Review
-            </button>
-          </div>
+              <MdRateReview />
+              Add your review
+            </Link>
+          )}
+
+          {user?.email && (
+            <div className="mt-5">
+              <Rating
+                name="size-large"
+                size="large"
+                value={rating}
+                onChange={handleChangeRating}
+                precision={0.5}
+              />
+              <br />
+              <br />
+              <textarea
+                onChange={handleChangeReview}
+                className="w-full p-2 border-2 border-gray-400 focus:border-[#2b4190] outline-0 rounded"
+                rows="6"
+              />
+              {fieldError && <p className="text-red-500">{fieldError}</p>}
+              <button
+                onClick={handleSubmitReview}
+                className="px-10 py-3 bg-[#07174e] text-white rounded cursor-pointer transition duration-300 ease-in hover:bg-[#000721] mt-5"
+              >
+                Submit Review
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
