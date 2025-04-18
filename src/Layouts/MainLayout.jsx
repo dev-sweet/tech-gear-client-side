@@ -1,19 +1,15 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../components/Shared/Navbar/Navbar";
 import Footer from "../components/Shared/Footer/Footer";
-import { useEffect, useState } from "react";
-import Loading from "../components/Shared/Loading/Loading";
+import { useEffect } from "react";
 const MainLayout = () => {
-  const [loading, setLoading] = useState(true);
+  const { pathname } = useLocation();
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 0);
-  }, []);
-
-  if (loading) {
-    return <Loading />;
-  }
+    scrollTo({
+      top: 0,
+      left: 0,
+    });
+  }, [pathname]);
   return (
     <>
       <div className="fixed top-0 left-0 right-0 z-1000">

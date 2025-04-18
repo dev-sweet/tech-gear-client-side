@@ -11,7 +11,7 @@ const useWishlist = () => {
     refetch: refetchWishlist,
   } = useQuery({
     queryKey: ["wishlist"],
-    enabled: !!user?.email,
+    enabled: user?.email ? true : false,
     queryFn: async () => {
       const res = await axiosSecure.get(`/wishlist?email=${user?.email}`);
       return res.data;

@@ -11,6 +11,8 @@
   background: linear-gradient(135deg, #111827, #374151);
 }
 .banner-bg2 {
-  background: linear-gradient(135deg, #1e3a8a, #4c4d4f);
-  /* background: linear-gradient(135deg, #1f2848, #4a515f); */
+  background: linear-gradient(135deg, #1f2848, #4a515f);
+}
+.banner-bg3 {
+  background: linear-gradient(135deg, #1e588a, #000000);
 }

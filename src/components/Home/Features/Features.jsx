@@ -2,7 +2,8 @@ import { GrDeliver } from "react-icons/gr";
 import { IoIosSync } from "react-icons/io";
 import { IoGiftOutline } from "react-icons/io5";
 import { MdOutlineMessage, MdOutlinePayment } from "react-icons/md";
-
+import { motion } from "framer-motion";
+import { useRef } from "react";
 const Features = () => {
   const items = [
     {
@@ -31,24 +32,34 @@ const Features = () => {
       icon: <IoGiftOutline />,
     },
   ];
-
+  const scrollRef = useRef(null);
   return (
-    <div className="lg:px-20 px-10 py-8">
-      <div className="lg:border border-gray-300 shadow-lg py-10 mt-1 lg:px-8">
+    <div
+      ref={scrollRef}
+      style={{ overflow: "scroll" }}
+      className="lg:px-20 px-10"
+    >
+      <div className="lg:border border-gray-300 md:shadow-lg py-10 mt-1 lg:px-8">
         <div className="grid lg:grid-cols-5 md:grid-cols-2 gap-4">
           {items.map((item, i) => (
-            <div
+            <motion.div
               key={`banner-feature${i}`}
-              className="lg:shadow-none md:shadow-0 shadow-sm lg:p-0 p-8 xs:p-5 flex items-center gap-5"
+              initial={{ opacity: 0, scale: 0.5 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ root: scrollRef }}
+              transition={{ duration: 1 }}
+              // className="text-[40px] font-bold capitalize"
             >
-              <div className="text-5xl text-[#2b4190] font-bold">
-                {item.icon}
+              <div className="lg:shadow-none md:shadow-0 shadow-sm lg:p-0 p-8 xs:p-5 flex items-center gap-5">
+                <div className="text-5xl text-[#2b4190] font-bold">
+                  {item.icon}
+                </div>
+                <div>
+                  <h3 className="lg:text-2xl text-lg">{item.title}</h3>
+                  <p className="text-gray-500">{item.desc}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="lg:text-2xl text-lg">{item.title}</h3>
-                <p className="text-gray-500">{item.desc}</p>
-              </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
