@@ -16,7 +16,9 @@ import { IoCheckmarkDone } from "react-icons/io5";
 import { TiShoppingCart } from "react-icons/ti";
 import "./ProductCard.css";
 import Swal from "sweetalert2";
-const ProductCard = ({ product, loading }) => {
+import { useRef } from "react";
+import { motion } from "framer-motion";
+const ProductCard = ({ product, loading, index }) => {
   const {
     _id,
     name,
@@ -28,6 +30,8 @@ const ProductCard = ({ product, loading }) => {
     discount,
     avgRating,
   } = product;
+
+  const scrollRef = useRef(null);
   const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -132,7 +136,14 @@ const ProductCard = ({ product, loading }) => {
     return <ProductLoadingSkeleton />;
   }
   return (
-    <div className="product-card">
+    <motion.div
+      className="product-card"
+      initial={{ opacity: 0, scale: 0.5, y: 60 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ root: scrollRef }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.1 * index }}
+    >
       <Card
         sx={{
           boxShadow: "none",
@@ -254,7 +265,7 @@ const ProductCard = ({ product, loading }) => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </motion.div>
   );
 };
 

@@ -55,12 +55,13 @@ const Products = () => {
 
       <div className="mt-4 p-2">
         <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-5 h-full">
-          {products?.map((product) => (
+          {products?.map((product, i) => (
             <ProductCard
               loading={loading}
               className="h-full "
               key={product._id}
               product={product}
+              index={i}
             />
           ))}
         </div>

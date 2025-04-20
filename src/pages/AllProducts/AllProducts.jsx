@@ -183,12 +183,13 @@ const AllProducts = () => {
               <ProductLoadingSkeleton />
             </>
           ) : (
-            products?.map((product) => (
+            products?.map((product, i) => (
               <ProductCard
                 key={product._id}
                 product={product}
                 loading={loading}
                 isWishlisted={true}
+                index={i}
               />
             ))
           )}

@@ -1,4 +1,3 @@
-import { TextField } from "@mui/material";
 import "./Newsletter.css";
 import { MdOutlineMail } from "react-icons/md";
 const Newsletter = () => {

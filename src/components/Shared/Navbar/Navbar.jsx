@@ -10,7 +10,6 @@ import { useAuth } from "../../../hooks/useAuth";
 import { PiSignOutBold } from "react-icons/pi";
 import useCart from "../../../hooks/useCart";
 import useAdmin from "../../../hooks/useAdmin";
-import person from "../../../assets/man-avatar.avif";
 import Swal from "sweetalert2";
 import "./Navbar.css";
 import useWishlist from "../../../hooks/useWishlist";
@@ -24,6 +23,7 @@ const Navbar = () => {
     setOpen(newOpen);
   };
 
+  // console.log(user.photoURL);
   const location = useLocation();
   const path = location.pathname;
 
@@ -115,7 +115,7 @@ const Navbar = () => {
         ) : (
           <li>
             <Link
-              className="w-full block px-8 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 flex items-center gap-1 font-smibold cursor-pointer"
+              className="w-full block px-8 py-2 rounded-sm hover:bg-[#07174e] hover:text-gray-100 flex items-center gap-1 font-smibold cursor-pointer"
               to="/login"
             >
               Login
@@ -138,7 +138,7 @@ const Navbar = () => {
           onClick={toggleDrawer(true)}
         >
           <span>
-            <IoMdMenu />
+            <IoMdMenu className="text-white" />
           </span>
         </button>
 
@@ -147,12 +147,12 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="hidden lg:block">
-        <ul className="flex gap-5 font-semibold text-gray-600">
+        <ul className="flex gap-5 font-semibold text-gray-400">
           <li>
             <Link
-              className={`hover:text hover:border-b-2 hover:border-[#0027af] hover:text-[#0027af] ${
+              className={`hover:text hover:border-b-2 hover:border-[#00b6ef] hover:text-[#00b6ef] ${
                 path === "/" &&
-                "border-b-2 border-[#0027af] text-[#0027af] font-bold"
+                "border-b-2 border-[#00b6ef] text-[#00b6ef] font-bold"
               }`}
               to="/"
             >
@@ -161,9 +161,9 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              className={`hover:text hover:border-b-2 hover:border-[#0027af] hover:text-[#0027af] ${
+              className={`hover:text hover:border-b-2 hover:border-[#00b6ef] hover:text-[#00b6ef] ${
                 path.includes("/products") &&
-                "border-b-2 border-[#0027af] text-[#0027af] font-bold"
+                "border-b-2 border-[#00b6ef] text-[#00b6ef] font-bold"
               }`}
               to="/products"
             >
@@ -172,9 +172,9 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              className={`hover:text hover:border-b-2 hover:border-[#0027af] hover:text-[#0027af] ${
+              className={`hover:text hover:border-b-2  hover:border-[#00b6ef] hover:text-[#00b6ef] ${
                 path === "/about" &&
-                "border-b-2 border-[#0027af] text-[#0027af] font-bold"
+                "border-b-2 border-[#00b6ef] text-[#00b6ef] font-bold"
               }`}
               to="/about"
             >
@@ -183,9 +183,9 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              className={`hover:text hover:border-b-2 hover:border-[#0027af] hover:text-[#0027af] ${
+              className={`hover:text hover:border-b-2 hover:border-[#00b6ef] hover:text-[#00b6ef] ${
                 path === "/contact" &&
-                "border-b-2 border-[#0027af] text-[#0027af] font-bold"
+                "border-b-2 border-[#00b6ef] text-[#00b6ef] font-bold"
               }`}
               to="/contact"
             >
@@ -195,7 +195,10 @@ const Navbar = () => {
           {user ? (
             <>
               <li>
-                <Link to={`/dashboard/${isAdmin ? "adminHome" : "userHome"}`}>
+                <Link
+                  className="hover:text hover:border-b-2 hover:border-[#00b6ef] hover:text-[#00b6ef]"
+                  to={`/dashboard/${isAdmin ? "adminHome" : "userHome"}`}
+                >
                   Dashboard
                 </Link>
               </li>
@@ -217,7 +220,7 @@ const Navbar = () => {
           )}
         </ul>
       </div>
-      <div className="flex items-center gap-5 text-2xl font-bold">
+      <div className="flex items-center gap-5 text-2xl font-semibold text-gray-200">
         <Link to="/dashboard/wishlist" className="cursor-pointer">
           <Badge badgeContent={wishlist?.length} color="error">
             <FaRegHeart />
@@ -229,11 +232,9 @@ const Navbar = () => {
           </Badge>
         </Link>
         <div>
-          <Avatar
-            alt="Profile Avatar"
-            src={user?.photoURL ? user?.photoURL : person}
-          />
+          <Avatar alt="Profile Avatar" src={user?.photoURL || ""} />
         </div>
+        s
       </div>
     </div>
   );

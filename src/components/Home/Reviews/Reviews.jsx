@@ -6,7 +6,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { motion } from "framer-motion";
 import "./Reviews.css";
+import { useRef } from "react";
 const Reviews = () => {
   const axiosSecure = useAxiosSecure();
   const { data: reviews } = useQuery({
@@ -28,11 +30,19 @@ const Reviews = () => {
     prevArrow: <FaChevronLeft />,
     nextArrow: <FaChevronRight />,
   };
+
+  const scrollRef = useRef(null);
   return (
     <div className="bg-[#efedeb] lg:px-20 px-10 py-10">
       <h1 className="text-2xl font-bold mb-10">Testimonials</h1>
 
-      <div className="max-w-[1000px] mx-auto">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ root: scrollRef }}
+        transition={{ duration: 1 }}
+        className="max-w-[1000px] mx-auto"
+      >
         <Slider {...settings}>
           {reviews?.map((review) => (
             <div key={review._id}>
@@ -69,7 +79,7 @@ const Reviews = () => {
             </div>
           ))}
         </Slider>
-      </div>
+      </motion.div>
     </div>
   );
 };

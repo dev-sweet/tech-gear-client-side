@@ -13,7 +13,8 @@ import brand12 from "../../../assets/home/brand-12.png";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-
+import { motion } from "framer-motion";
+import { useRef } from "react";
 const ShopByBrand = () => {
   const brands = [
     brand1,
@@ -67,10 +68,18 @@ const ShopByBrand = () => {
       },
     ],
   };
+
+  const scrollRef = useRef(null);
   return (
     <div className="lg:px-20 px-10 py-5">
       <h2 className="text-2xl font-bold mb-5">Shop By Brand</h2>
-      <div className="px-10">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ root: scrollRef }}
+        transition={{ duration: 0.8 }}
+        className="px-10"
+      >
         <Slider {...settings}>
           {brands.map((brand, i) => (
             <Link to="/" key={i}>
@@ -80,7 +89,7 @@ const ShopByBrand = () => {
             </Link>
           ))}
         </Slider>
-      </div>
+      </motion.div>
     </div>
   );
 };

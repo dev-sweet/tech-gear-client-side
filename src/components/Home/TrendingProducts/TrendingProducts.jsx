@@ -37,8 +37,8 @@ const TrendingProducts = () => {
             </div>
           </div>
           <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-3 mt-5">
-            {diplayProducts?.map((product) => (
-              <ProductCard key={product._id} product={product} />
+            {diplayProducts?.map((product, i) => (
+              <ProductCard key={product._id} product={product} index={i} />
             ))}
           </div>
         </div>

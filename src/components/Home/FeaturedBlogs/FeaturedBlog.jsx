@@ -8,16 +8,25 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-
-const FeaturedBlog = ({ blogItem }) => {
+import { motion } from "framer-motion";
+import { useRef } from "react";
+const FeaturedBlog = ({ blogItem, index }) => {
+  const scrollRef = useRef();
   const { title, image, createdBy, createdAt } = blogItem;
   const postedDate = new Date(createdAt).toLocaleDateString({
     year: "numaric",
     month: "short",
     day: "numaric",
   });
+
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5, y: 60 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ root: scrollRef }}
+      transition={{ duration: 0.8, delay: 0.3 * index }}
+      animate={{ opacity: 1, y: 0 }}
+    >
       <Card sx={{ maxWidth: 345, height: "100%" }}>
         <CardHeader
           avatar={
@@ -59,7 +68,7 @@ const FeaturedBlog = ({ blogItem }) => {
           <Button size="small">Learn More</Button>
         </CardActions>
       </Card>
-    </div>
+    </motion.div>
   );
 };
 

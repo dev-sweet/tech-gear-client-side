@@ -33,8 +33,8 @@ const FeaturedBlogs = () => {
           </div>
         </div>
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-5">
-          {blogs?.map((blogItem) => (
-            <FeaturedBlog key={blogItem._id} blogItem={blogItem} />
+          {blogs?.map((blogItem, i) => (
+            <FeaturedBlog key={blogItem._id} blogItem={blogItem} index={i} />
           ))}
         </div>
       </div>
