@@ -1,24 +1,30 @@
 import { Rating, Tooltip } from "@mui/material";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { CiHeart } from "react-icons/ci";
 import { TbShip } from "react-icons/tb";
 import { GiReturnArrow } from "react-icons/gi";
 import { AiOutlineSafetyCertificate } from "react-icons/ai";
 import payments from "../../assets/payment-getways.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import ProductCard from "../../components/Home/ProductCard/ProductCard";
 import { useAuth } from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useWishlist from "../../hooks/useWishlist";
 import Swal from "sweetalert2";
-import { FaHeart } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaHeart } from "react-icons/fa";
 import { TiShoppingCart } from "react-icons/ti";
 import useCart from "../../hooks/useCart";
 import { IoCheckmarkDone } from "react-icons/io5";
 
 import ReactImageMagnify from "react-image-magnify";
 import { MdRateReview } from "react-icons/md";
+import Slider from "react-slick";
 
 const ProductDetails = () => {
   const [reletedProducts, setReletedProducts] = useState([]);
@@ -32,7 +38,7 @@ const ProductDetails = () => {
   const { user } = useAuth();
   const [wishlist, , refetchWishlist] = useWishlist();
   const [cart, , refetch] = useCart();
-
+  const location = useLocation();
   const {
     _id,
     name,
@@ -40,11 +46,11 @@ const ProductDetails = () => {
     sellPrice,
     image,
     description,
-    ratings,
     category,
     avgRating,
+    reviews,
   } = product;
-  console.log(product);
+
   const isWishlted = wishlist.some((item) => item.id === _id);
   const isCarted = cart.some((item) => item.id === _id);
 
@@ -72,13 +78,14 @@ const ProductDetails = () => {
     } else {
       Swal.fire({
         title: "You are not logged in!",
-        text: "Please login first and then add to Wishlist.",
+        text: "Please login first and then add to Cart.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#07174e",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, Login!",
       }).then((result) => {
+        navigate("/login");
         if (result.isConfirmed) {
           navigate("/login", { state: { from: location } });
         }
@@ -138,6 +145,44 @@ const ProductDetails = () => {
     });
   };
 
+  // slider settings
+  const settings = {
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    autoplay: true,
+    speed: 1000,
+    autoplaySpeed: 3000,
+    rtl: true,
+    cssEase: "smooth",
+    prevArrow: <FaChevronLeft />,
+    nextArrow: <FaChevronRight />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
   // handle onhchange event of ratings
   const handleChangeRating = (event, value) => {
     setRating(value);
@@ -318,48 +363,67 @@ const ProductDetails = () => {
 
       {/* customer review for this product */}
       <div className="mt-10">
-        <h3 className="text-3xl font-semibold mb-5">Reviews(0)</h3>
-        <div className="md:flex items-center gap-2 justify-between">
-          <div className="flex gap-2 shadow-lg p-5">
-            <div>
-              <img src="" alt="person image" />
-              <p className="text-xl">Name</p>
+        <h3 className="text-3xl font-semibold mb-5">
+          Reviews({reviews?.length || 0})
+        </h3>
+        <div className="">
+          {!reviews?.length && (
+            <h1 className="text-center text-2xl font-semibold text-gray-700 py-5">
+              This Product has no Reviews
+            </h1>
+          )}
+          {reviews.length < 2 && (
+            <div className="max-w-[350px]" key={reviews[0].rating}>
+              <div className="flex items-center justify-evenly gap-5 shadow-lg border border-1 border-gray-200 p-5">
+                <div>
+                  <img
+                    className="rounded-full w-10 h-10"
+                    src={`${reviews[0]?.reviewedBy?.image}`}
+                    alt="person image"
+                  />
+                  <p className="text-xl">{reviews[0]?.reviewedBy?.name}</p>
+                </div>
+                <div>
+                  <Rating
+                    name="size-large"
+                    size="large"
+                    defaultValue={reviews[0].rating}
+                    precision={0.5}
+                    readOnly
+                  />
+                  <p>{reviews[0].reviewText}</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <Rating
-                name="size-large"
-                size="large"
-                defaultValue={ratings ? ratings : 4}
-                precision={0.5}
-                readOnly
-              />
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-                cum dolores obcaecati quaerat consequatur reiciendis similique
-                alias minus officiis delectus?
-              </p>
-            </div>
-          </div>
-          <div className="flex gap-2 shadow-lg p-5">
-            <div>
-              <img src="" alt="person image" />
-              <p className="text-xl">Name</p>
-            </div>
-            <div>
-              <Rating
-                name="size-large"
-                size="large"
-                defaultValue={ratings ? ratings : 4}
-                precision={0.5}
-                readOnly
-              />
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-                cum dolores obcaecati quaerat consequatur reiciendis similique
-                alias minus officiis delectus?
-              </p>
-            </div>
-          </div>
+          )}
+          {reviews?.length > 1 && (
+            <Slider {...settings}>
+              {reviews?.map((review) => (
+                <div className="px-2" key={review.rating}>
+                  <div className="flex items-center justify-evenly gap-5 shadow-lg border border-1 border-gray-200 p-5">
+                    <div>
+                      <img
+                        className="rounded-full w-10 h-10"
+                        src={`${review?.reviewedBy?.image}`}
+                        alt="person image"
+                      />
+                      <p className="text-xl">{review?.reviewedBy?.name}</p>
+                    </div>
+                    <div>
+                      <Rating
+                        name="size-large"
+                        size="large"
+                        defaultValue={review.rating}
+                        precision={0.5}
+                        readOnly
+                      />
+                      <p>{review.reviewText}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          )}
         </div>
         <div className="pt-10">
           <h2 className="text-xl font-bold">Review This Product</h2>

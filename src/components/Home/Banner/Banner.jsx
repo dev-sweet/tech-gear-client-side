@@ -23,7 +23,7 @@ const Banner = () => {
       <div className="lg:py-0 md:py-0 py-10 lg:px-20 px-10 banner-bg3  min-h-full">
         <div className="lg:pt-10 flex md:flex-row flex-col items-center justify-between">
           <motion.div
-            initial={{ translateX: -400, rotate: -90, scale: 0.1 }}
+            initial={{ translateX: -400, rotate: -25, scale: 0.1 }}
             animate={{ opacity: 1, translateX: 0, scale: 1, rotate: 0 }}
             transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
           >
@@ -33,13 +33,14 @@ const Banner = () => {
             />
           </motion.div>
           <motion.div
+            className="lg:w-[45%] w-full"
             initial={{ opacity: 0, translateX: 400, scale: 0.1 }}
             animate={{ opacity: 1, translateX: 0, scale: 1 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <div className="text-left lg:w-[45%] w-full">
+            <div className="text-left">
               <h1 className="text-gray-100 lg:text-5xl md:text-4xl text-2xl font-semibold">
-                Your Next Upgrade Starts Here <br /> – Apple Collection
+                Your Next Upgrade Here <br /> – Apple Collection
               </h1>
               <button className="md:mt-5 mt-3 lg:text-xl border-b-1 border-gray-100 text-gray-100 font-semibold hover:border-gray-500 hover:text-gray-500 transition cursor-pointer flex-start">
                 Shop Apples
@@ -49,7 +50,7 @@ const Banner = () => {
         </div>
       </div>
       <div className="banner-bg lg:py-0 md:py-0 py-10 min-h-full">
-        <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between min-h-full">
+        <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between">
           <div className="lg:pl-20 pl-10 text-left lg:w-[40%] w-full">
             <h1 className="text-gray-100 lg:text-5xl md:text-4xl text-2xl font-semibold">
               Unleash Power with the <br className="" /> New MacBook!

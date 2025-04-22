@@ -3,8 +3,8 @@ import logo from "../../../assets/logo.png";
 import { IoMdMenu } from "react-icons/io";
 import { useState } from "react";
 import { Avatar, Badge, Box, Drawer } from "@mui/material";
-import { FaRegHeart } from "react-icons/fa";
-
+import { FaRegHeart, FaRegUser } from "react-icons/fa";
+import { IoChevronDown } from "react-icons/io5";
 import { RiShoppingBagLine } from "react-icons/ri";
 import { useAuth } from "../../../hooks/useAuth";
 import { PiSignOutBold } from "react-icons/pi";
@@ -13,12 +13,17 @@ import useAdmin from "../../../hooks/useAdmin";
 import Swal from "sweetalert2";
 import "./Navbar.css";
 import useWishlist from "../../../hooks/useWishlist";
+import { CgProfile } from "react-icons/cg";
+import { MdLogout } from "react-icons/md";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, logOut } = useAuth();
   const [cart] = useCart();
   const [wishlist] = useWishlist();
   const [isAdmin] = useAdmin();
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -196,7 +201,7 @@ const Navbar = () => {
             <>
               <li>
                 <Link
-                  className="hover:text hover:border-b-2 hover:border-[#00b6ef] hover:text-[#00b6ef]"
+                  className="hover:text-blue-500 hover:border-b-2 hover:border-[#00b6ef] hover:text-[#00b6ef]"
                   to={`/dashboard/${isAdmin ? "adminHome" : "userHome"}`}
                 >
                   Dashboard
@@ -231,10 +236,68 @@ const Navbar = () => {
             <RiShoppingBagLine />
           </Badge>
         </Link>
-        <div>
+        <button
+          onClick={() => setIsOpenProfile(!isOpenProfile)}
+          onMouseEnter={() => setIsOpenProfile(true)}
+          onMouseLeave={() => setIsOpenProfile(false)}
+          className={"user-icon flex gap-1 items-center cursor-pointer"}
+        >
           <Avatar alt="Profile Avatar" src={user?.photoURL || ""} />
-        </div>
-        s
+          <span className="flex items-center text-lg">
+            {user?.displayName.split(" ")[0]} <IoChevronDown />{" "}
+          </span>
+
+          <div className={`user-menu  ${isOpenProfile && "user-icon-active"}`}>
+            <p className="text-lg">
+              Hello
+              {user?.displayName ? "," + user?.displayName.split(" ")[0] : ""}
+            </p>
+
+            <ul className="mt-5">
+              {user?.email ? (
+                <>
+                  <li>
+                    <Link
+                      className="flex items-center gap-2 w-full text-gray-600 text-lg hover:bg-gray-300 px-2 py-1"
+                      to="/dashboard"
+                    >
+                      <CgProfile className="text-2xl" />
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="flex items-center gap-2 w-full text-gray-600 text-lg hover:bg-gray-300 px-2 py-1"
+                      to="/dashboard"
+                    >
+                      <AiOutlineShoppingCart className="text-2xl" />
+                      My Orders
+                    </Link>
+                  </li>
+                  <li className="mt-2">
+                    <Link
+                      className="flex items-center gap-2 w-full text-gray-600 text-lg hover:bg-gray-300 px-2 py-1"
+                      to="/login"
+                    >
+                      <MdLogout className="text-2xl" />
+                      Logout
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <Link
+                    className="flex items-center gap-2 w-full text-gray-600 text-lg hover:bg-gray-300 px-2 py-1"
+                    to="/login"
+                  >
+                    <FaRegUser />
+                    Login
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </div>
+        </button>
       </div>
     </div>
   );

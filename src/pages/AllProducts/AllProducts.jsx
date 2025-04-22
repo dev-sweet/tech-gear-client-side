@@ -8,7 +8,7 @@ import ProductLoadingSkeleton from "../../components/Shared/ProductLoadingSkelet
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
-  const [query, setQuery] = useState({});
+  const [query, setQuery] = useState({ search: "" });
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
 

@@ -11,7 +11,9 @@ const useProducts = () => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/products");
+      const res = await axiosPublic.get("/products", {
+        params: { search: "" },
+      });
       return res.data;
     },
   });

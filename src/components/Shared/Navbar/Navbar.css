@@ -3,3 +3,21 @@
   background: linear-gradient(135deg, #1e588a, #0d2840);
   /* border-bottom: 1px solid #31313189; */
 }
+
+.user-menu {
+  width: 150px;
+  background-color: rgb(255, 255, 255);
+  color: black;
+  padding: 20px 10px;
+  border-radius: 3px;
+  position: absolute;
+  opacity: 0;
+  top: 70px;
+  right: 60px;
+  transform: scale(0.1);
+  transition: 0.3s ease-in-out;
+}
+.user-icon-active {
+  opacity: 1;
+  transform: scale(1);
+}

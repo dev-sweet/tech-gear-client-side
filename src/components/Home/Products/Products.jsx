@@ -17,7 +17,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(tabs[0].id);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState();
   const handleClick = async (id) => {
     setCategory(id);
     setActiveTab(id);
@@ -27,7 +27,7 @@ const Products = () => {
     setLoading(true);
     axios
       .get("https://tech-gear-server.onrender.com/products", {
-        params: { category },
+        params: { category: category || "" },
       })
       .then((res) => {
         setProducts(res.data);
