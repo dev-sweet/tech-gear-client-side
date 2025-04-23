@@ -138,11 +138,10 @@ const ProductCard = ({ product, loading, index }) => {
   return (
     <motion.div
       className="product-card"
-      initial={{ opacity: 0, scale: 0.5, y: 60 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 80 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ root: scrollRef }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.1 * index }}
+      transition={{ duration: 0.8, delay: 0.1 * index }}
     >
       <Card
         sx={{

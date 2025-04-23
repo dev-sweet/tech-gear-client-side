@@ -3,12 +3,13 @@ import PageTitle from "../../components/Shared/PageTitle/PageTitle";
 import { MdOutlineEmail } from "react-icons/md";
 import { SlLocationPin } from "react-icons/sl";
 import { useForm } from "react-hook-form";
-
+import { useRef } from "react";
+import { motion } from "framer-motion";
 const Contact = () => {
+  const scrollRef = useRef(null);
   const {
     register,
     handleSubmit,
-    // watch,
     formState: { errors },
   } = useForm();
 
@@ -18,15 +19,21 @@ const Contact = () => {
       <PageTitle pageName="Contact" />
       <div className="lg:px-20 px-10 bg-gray-50 py-10">
         <div className="lg:flex items-center gap-5">
-          <div className="min-w-[50%]">
+          <div className="min-w-[49%]">
             <h3 className="text-2xl font-semibold">Contact Information</h3>
             <p>
               Fill the form below or write us .We will help you as soon as
               possible.
             </p>
 
-            <div className="lg:flex md:flex items-center justify-between py-10 gap-5">
-              <div className="bg-[#FFEAE5] p-10 text-center min-w-[50%] my-5">
+            <div className="lg:flex md:flex items-center justify-between gap-5">
+              <motion.div
+                initial={{ opacity: 0, x: -80 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ root: scrollRef }}
+                transition={{ duration: 0.8 }}
+                className="bg-[#FFEAE5] p-10 text-center min-w-[50%] my-5"
+              >
                 <div className="flex items-center justify-center">
                   <span className="h-[50px] w-[50px] border border-[#2b4190] flex items-center justify-center text-3xl rounded rounded-full text-[#2b4190]">
                     <LiaPhoneVolumeSolid className="font-bold" />
@@ -34,8 +41,14 @@ const Contact = () => {
                 </div>
                 <p>+(323) 9847 3847 383</p>
                 <p>+(434) 5466 5467 443</p>
-              </div>
-              <div className="bg-[#D3EFFF] p-10 text-center min-w-[50%] my-5">
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 80 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ root: scrollRef }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="bg-[#D3EFFF] p-10 text-center min-w-[50%] my-5"
+              >
                 <div className="flex items-center justify-center">
                   <span className="h-[50px] w-[50px] border border-[#2b4190] flex items-center justify-center text-3xl rounded rounded-full text-[#2b4190]">
                     <MdOutlineEmail />
@@ -44,16 +57,22 @@ const Contact = () => {
 
                 <p>sweetali0520@gmail.com</p>
                 <p>admin@tech-gear.com</p>
-              </div>
+              </motion.div>
             </div>
-            <div className="bg-[#E7F2EC] w-full">
+            <motion.div
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ root: scrollRef }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="bg-[#E7F2EC] w-full"
+            >
               <div className="flex gap-5 p-10">
                 <div className="flex items-center justify-center">
                   <span className="h-[50px] w-[50px] border border-[#2b4190] flex items-center justify-center text-3xl rounded rounded-full text-[#2b4190]">
                     <SlLocationPin />
                   </span>
                 </div>
-                <div className="p-10">
+                <div className="">
                   <h3 className="text-2xl font-semibold">Address</h3>
                   <p>
                     4517 Washington Ave. Manchester, Road 2342, <br />
@@ -66,13 +85,18 @@ const Contact = () => {
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387196.0766974763!2d-74.30915211195304!3d40.696672688891866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sbd!4v1740240148833!5m2!1sen!2sbd"
                   width="100%"
                   height="250"
-                  // style="border:0;"
                   loading="lazy"
                 ></iframe>
               </div>
-            </div>
+            </motion.div>
           </div>
-          <div className="min-w-[50%] px-10 bg-white py-10">
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ root: scrollRef }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="min-w-[49%] px-10 bg-white py-10 md:ms-5"
+          >
             <form onSubmit={handleSubmit(onSubmit)}>
               <h2 className="text-3xl font-semibold mb-5 text-center">
                 Get In Touch
@@ -121,7 +145,7 @@ const Contact = () => {
                 type="submit"
               />
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </>

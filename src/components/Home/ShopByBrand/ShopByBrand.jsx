@@ -34,10 +34,10 @@ const ShopByBrand = () => {
   const settings = {
     infinite: true,
     slidesToShow: 6,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
     autoplay: true,
     speed: 500,
-    autoplaySpeed: 1000,
+    autoplaySpeed: 1500,
     rtl: true,
     cssEase: "smooth",
     prevArrow: <FaChevronLeft />,
@@ -71,25 +71,27 @@ const ShopByBrand = () => {
 
   const scrollRef = useRef(null);
   return (
-    <div className="lg:px-20 px-10 py-5">
-      <h2 className="text-2xl font-bold mb-5">Shop By Brand</h2>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ root: scrollRef }}
-        transition={{ duration: 0.8 }}
-        className="px-10"
-      >
-        <Slider {...settings}>
-          {brands.map((brand, i) => (
-            <Link to="/" key={i}>
-              <div className="h-[150px] p-10 shadow shadow-lg border-1 border-gray-100 flex items-center justify-center h-full">
+    <div className="py-5 px-10">
+      <h2 className="text-2xl font-bold mb-5">Sponsored</h2>
+
+      <Slider {...settings}>
+        {brands.map((brand, i) => (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.3 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ root: scrollRef }}
+            transition={{ duration: 0.5 }}
+            key={i}
+            className="ps-1"
+          >
+            <Link to="/">
+              <div className="h-[150px] py-10 shadow shadow-lg border-1 border-gray-100 flex items-center justify-center h-full">
                 <img src={brand} alt="" />
               </div>
             </Link>
-          ))}
-        </Slider>
-      </motion.div>
+          </motion.div>
+        ))}
+      </Slider>
     </div>
   );
 };

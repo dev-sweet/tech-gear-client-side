@@ -2,16 +2,33 @@ import Newsletter from "../../components/Home/Newsletter/Newsletter";
 import PageTitle from "../../components/Shared/PageTitle/PageTitle";
 import aboutBanner from "../../assets/about/about-banner.jpeg";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
+import { motion } from "framer-motion";
 const About = () => {
+  const scrollRef = useRef(null);
+
   return (
     <>
       <PageTitle pageName="About" />
       <div className="lg:px-20 px-10 py-10 flex lg:flex-row flex-col items-center jusify-center gap-5">
         <div className="min-w-[50%] lg:pr-10 md:pr-10 pr-0">
-          <img className="max-h-[600px] w-full" src={aboutBanner} alt="" />
+          <motion.div
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ root: scrollRef }}
+            transition={{ duration: 0.8 }}
+          >
+            <img className="max-h-[600px] w-full" src={aboutBanner} alt="" />
+          </motion.div>
         </div>
 
-        <div className="">
+        <motion.div
+          initial={{ opacity: 0, y: 80 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ root: scrollRef }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className=""
+        >
           <h3 className="text-2xl font-semibold mb-5">
             Tech Gear – Powering Your Digital Lifestyle
           </h3>
@@ -47,13 +64,13 @@ const About = () => {
           </ul>
           <div className="pt-10">
             <Link
-              className="bg-[#2b4190] cursor-pointer mt-5 p-3 text-white font-semibold"
+              className="bg-[#07174e] cursor-pointer mt-5 px-4 py-3 text-white font-semibold hover:bg-[#020a24] transition"
               to="/contact"
             >
               Contact Us
             </Link>
           </div>
-        </div>
+        </motion.div>
       </div>
       <Newsletter />
     </>

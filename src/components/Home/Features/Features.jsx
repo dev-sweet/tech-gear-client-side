@@ -44,11 +44,10 @@ const Features = () => {
           {items.map((item, i) => (
             <motion.div
               key={`banner-feature${i}`}
-              initial={{ opacity: 0, scale: 0.5 }}
+              initial={{ opacity: 0, scale: 0.1 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ root: scrollRef }}
-              transition={{ duration: 1 }}
-              // className="text-[40px] font-bold capitalize"
+              transition={{ duration: 0.8 }}
             >
               <div className="lg:shadow-none md:shadow-0 shadow-sm lg:p-0 p-8 xs:p-5 flex items-center gap-5">
                 <div className="text-5xl text-[#2b4190] font-bold">

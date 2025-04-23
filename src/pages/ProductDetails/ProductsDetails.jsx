@@ -21,7 +21,6 @@ import { FaChevronLeft, FaChevronRight, FaHeart } from "react-icons/fa";
 import { TiShoppingCart } from "react-icons/ti";
 import useCart from "../../hooks/useCart";
 import { IoCheckmarkDone } from "react-icons/io5";
-
 import ReactImageMagnify from "react-image-magnify";
 import { MdRateReview } from "react-icons/md";
 import Slider from "react-slick";
@@ -229,7 +228,9 @@ const ProductDetails = () => {
   // load related products
   axiosPublic
     .get("/products", { params: { category } })
-    .then((res) => setReletedProducts(res.data));
+    .then((res) =>
+      setReletedProducts(res.data.filter((product) => product._id !== _id))
+    );
   return (
     <div className="md:p-20 p-10">
       <div className="grid lg:grid-cols-2 gap-10 items-center">
@@ -369,10 +370,10 @@ const ProductDetails = () => {
         <div className="">
           {!reviews?.length && (
             <h1 className="text-center text-2xl font-semibold text-gray-700 py-5">
-              This Product has no Reviews
+              No Reviews
             </h1>
           )}
-          {reviews.length < 2 && (
+          {reviews?.length < 2 && (
             <div className="max-w-[350px]" key={reviews[0].rating}>
               <div className="flex items-center justify-evenly gap-5 shadow-lg border border-1 border-gray-200 p-5">
                 <div>

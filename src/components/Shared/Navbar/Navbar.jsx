@@ -249,7 +249,7 @@ const Navbar = () => {
 
           <div className={`user-menu  ${isOpenProfile && "user-icon-active"}`}>
             <p className="text-lg">
-              Hello
+              Welcome
               {user?.displayName ? "," + user?.displayName.split(" ")[0] : ""}
             </p>
 
