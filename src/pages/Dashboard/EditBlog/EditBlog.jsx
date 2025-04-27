@@ -39,13 +39,10 @@ const EditBlog = () => {
       }
     }
 
-    console.log(newBlog);
     const blogRes = await axiosSecure.patch(`/blogs/${_id}`, newBlog);
-    console.log("productRes", blogRes.data);
 
     if (blogRes.data.modifiedCount > 0) {
       reset();
-      setTags([]);
       Swal.fire({
         title: "Updated successfully!",
         text: "Blog has been updated.",

@@ -10,11 +10,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const PaymentHistory = () => {
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const { data: payments, refech } = useQuery({
     queryKey: ["payments"],
@@ -25,13 +27,16 @@ const PaymentHistory = () => {
   });
 
   //   styled tablecell for cart
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "black",
-      color: theme.palette.common.white,
+      backgroundColor: "#d7d1ff",
+      color: "#5d5d5d",
+      fontWeight: 700,
+      // padding: "20px 0",
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
+      // padding: "15px 0",
     },
   }));
 
@@ -39,16 +44,21 @@ const PaymentHistory = () => {
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
       backgroundColor: theme.palette.action.hover,
+      padding: "20px 0",
     },
     // hide last border
     "&:last-child td, &:last-child th": {
       border: 0,
+      padding: "20px 10px",
     },
   }));
   return payments?.length > 0 ? (
     <div>
-      <h2 className="text-3xl text-center">Payment History</h2>
-      <div>
+      <div className="lg:px-20 px-10 py-3 bg-gray-100 text-gray-700">
+        <p className="font-bold">/cart /checkout</p>
+        <h3 className="text-center text-2xl font-bold">Order History</h3>
+      </div>
+      <div className="mt-5">
         <TableContainer component={"Paper"}>
           <Table
             sx={{ minWidth: 700, overflowX: "scroll" }}
@@ -57,27 +67,75 @@ const PaymentHistory = () => {
             <TableHead>
               <TableRow>
                 <StyledTableCell></StyledTableCell>
-                <StyledTableCell align="left">TRANSACTION ID </StyledTableCell>
-                <StyledTableCell align="left">EMAIL</StyledTableCell>
-                <StyledTableCell align="left">NAME</StyledTableCell>
-                <StyledTableCell align="left">PRICE</StyledTableCell>
-                <StyledTableCell align="left">STATUS</StyledTableCell>
+                <StyledTableCell align="center">#ORDER ID</StyledTableCell>
+                <StyledTableCell align="center">TRANSACTION ID</StyledTableCell>
+                <StyledTableCell align="center">ITEMS</StyledTableCell>
+                <StyledTableCell align="center">TOTAL PRICE</StyledTableCell>
+                <StyledTableCell align="center">DATE</StyledTableCell>
+                <StyledTableCell align="center">STATUS</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {payments?.map((item, i) => (
-                <StyledTableRow key={item._id}>
-                  <StyledTableCell component="th" scope="row">
-                    {i + 1}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    {item.transactionId}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">{item.email}</StyledTableCell>
-                  <StyledTableCell align="left">{item.name}</StyledTableCell>
-                  <StyledTableCell align="left">{item.price}</StyledTableCell>
-                  <StyledTableCell align="left">{item.status}</StyledTableCell>
-                </StyledTableRow>
+                <Tooltip title="Click to view details" arrow key={item._id}>
+                  <StyledTableRow
+                    onClick={() =>
+                      navigate(`/dashboard/paymentHistory/${item._id}`)
+                    }
+                    sx={{
+                      "&:hover": {
+                        boxShadow: "0px 0px 4px 4px rgba(0, 0, 0, 0.15)",
+                        cursor: "pointer",
+                      },
+                      transition: "box-shadow 0.3s ease-in-out",
+                    }}
+                  >
+                    <StyledTableCell component="th" scope="row">
+                      {i + 1}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <span className="text-[12px]"># {item._id}</span>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <span className="text-[12px]">
+                        # {item.transactionId}
+                      </span>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {item.productIds?.length}
+                      {item.productIds?.length > 1 ? "items" : "item"}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      $ {item.price}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {new Date(item.date).toLocaleDateString("en-GB")}
+                    </StyledTableCell>
+
+                    <StyledTableCell align="center">
+                      {item.status === "pending" && (
+                        <div className="bg-[#f39c12] py-2 rounded rounded-[20px] text-gray-200 font-bold">
+                          Pending
+                        </div>
+                      )}
+                      {item.status === "shipped" && (
+                        <div className="bg-[#3498db] py-2 rounded rounded-[20px] text-gray-200 font-bold">
+                          Shipped
+                        </div>
+                      )}
+                      {item.status === "delivered" && (
+                        <div className="bg-[#2ecc71] py-2 rounded rounded-[20px] text-gray-200 font-bold">
+                          Delivered
+                        </div>
+                      )}
+                      {item.status === "cancelled" && (
+                        <div className="bg-[#e74c3c] py-2 rounded rounded-[20px] text-gray-200 font-bold">
+                          Canceled
+                        </div>
+                      )}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                </Tooltip>
               ))}
             </TableBody>
           </Table>

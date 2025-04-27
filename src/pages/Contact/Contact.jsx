@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 const Contact = () => {
   const scrollRef = useRef(null);
+  console.log(scrollRef);
   const {
     register,
     handleSubmit,

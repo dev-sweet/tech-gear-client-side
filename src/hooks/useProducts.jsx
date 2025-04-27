@@ -6,7 +6,7 @@ const useProducts = () => {
 
   const {
     data: products,
-    isProductLoading,
+    isLoading: isProductLoading,
     refetch,
   } = useQuery({
     queryKey: ["products"],

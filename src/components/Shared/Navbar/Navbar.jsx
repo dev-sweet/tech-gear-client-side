@@ -106,16 +106,6 @@ const Navbar = () => {
                 Dashboard
               </Link>
             </li>
-            <li>
-              <button
-                onClick={handleLogOut}
-                className="w-full block px-8 py-2 rounded-sm hover:bg-[#07174e]  hover:text-gray-100 flex items-center gap-1 font-smibold cursor-pointer"
-              >
-                <PiSignOutBold />
-
-                <span>Logout</span>
-              </button>
-            </li>
           </>
         ) : (
           <li>
@@ -207,16 +197,6 @@ const Navbar = () => {
                   Dashboard
                 </Link>
               </li>
-              <li>
-                <button
-                  onClick={handleLogOut}
-                  className="flex items-center gap-1 font-smibold cursor-pointer"
-                >
-                  <PiSignOutBold />
-
-                  <span>Logout</span>
-                </button>
-              </li>
             </>
           ) : (
             <li>
@@ -243,22 +223,22 @@ const Navbar = () => {
           className={"user-icon flex gap-1 items-center cursor-pointer"}
         >
           <Avatar alt="Profile Avatar" src={user?.photoURL || ""} />
-          <span className="flex items-center text-lg">
+          <span className="flex items-center text-sm">
             {user?.displayName.split(" ")[0]} <IoChevronDown />{" "}
           </span>
 
           <div className={`user-menu  ${isOpenProfile && "user-icon-active"}`}>
-            <p className="text-lg">
+            <p className="text-sm">
               Welcome
               {user?.displayName ? "," + user?.displayName.split(" ")[0] : ""}
             </p>
 
-            <ul className="mt-5">
+            <ul className="mt-5 text-[16px]">
               {user?.email ? (
                 <>
                   <li>
                     <Link
-                      className="flex items-center gap-2 w-full text-gray-600 text-lg hover:bg-gray-300 px-2 py-1"
+                      className="flex items-center gap-2 w-full text-gray-600 hover:bg-gray-300 px-2 py-1"
                       to="/dashboard"
                     >
                       <CgProfile className="text-2xl" />
@@ -267,7 +247,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link
-                      className="flex items-center gap-2 w-full text-gray-600 text-lg hover:bg-gray-300 px-2 py-1"
+                      className="flex items-center gap-2 w-full text-gray-600 hover:bg-gray-300 px-2 py-1"
                       to="/dashboard"
                     >
                       <AiOutlineShoppingCart className="text-2xl" />
@@ -275,19 +255,19 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li className="mt-2">
-                    <Link
-                      className="flex items-center gap-2 w-full text-gray-600 text-lg hover:bg-gray-300 px-2 py-1"
-                      to="/login"
+                    <button
+                      onClick={handleLogOut}
+                      className="flex items-center gap-2 w-full text-gray-600 hover:bg-gray-300 px-2 py-1 cursor-pointer"
                     >
                       <MdLogout className="text-2xl" />
                       Logout
-                    </Link>
+                    </button>
                   </li>
                 </>
               ) : (
                 <li>
                   <Link
-                    className="flex items-center gap-2 w-full text-gray-600 text-lg hover:bg-gray-300 px-2 py-1"
+                    className="flex items-center gap-2 w-full text-gray-600 hover:bg-gray-300 px-2 py-1"
                     to="/login"
                   >
                     <FaRegUser />

@@ -132,9 +132,6 @@ const ProductCard = ({ product, loading, index }) => {
     }
   };
 
-  if (loading) {
-    return <ProductLoadingSkeleton />;
-  }
   return (
     <motion.div
       className="product-card"

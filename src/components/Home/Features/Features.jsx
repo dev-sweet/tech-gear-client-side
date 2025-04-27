@@ -34,11 +34,7 @@ const Features = () => {
   ];
   const scrollRef = useRef(null);
   return (
-    <div
-      ref={scrollRef}
-      style={{ overflow: "scroll" }}
-      className="lg:px-20 px-10"
-    >
+    <div ref={scrollRef} className="lg:px-20 px-10">
       <div className="lg:border border-gray-300 md:shadow-lg py-10 mt-1 lg:px-8">
         <div className="grid lg:grid-cols-5 md:grid-cols-2 gap-4">
           {items.map((item, i) => (

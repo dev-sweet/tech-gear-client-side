@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ProductLoadingSkeleton from "../../Shared/ProductLoadingSkeleton/ProductLoadingSkeleton";
 
 const tabs = [
   { id: "", label: "All" },
@@ -55,15 +56,25 @@ const Products = () => {
 
       <div className="mt-4 p-2">
         <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-5 h-full">
-          {products?.map((product, i) => (
-            <ProductCard
-              loading={loading}
-              className="h-full "
-              key={product._id}
-              product={product}
-              index={i}
-            />
-          ))}
+          {loading ? (
+            <>
+              <ProductLoadingSkeleton />
+              <ProductLoadingSkeleton />
+              <ProductLoadingSkeleton />
+              <ProductLoadingSkeleton />
+              <ProductLoadingSkeleton />
+            </>
+          ) : (
+            products.map((product, i) => (
+              <ProductCard
+                loading={loading}
+                className="h-full "
+                key={product._id}
+                product={product}
+                index={i}
+              />
+            ))
+          )}
         </div>
 
         <div className="flex justify-center text-blue-700 text-xl pt-5">

@@ -77,7 +77,7 @@ const Wishlist = () => {
   };
   return wishlist.length > 0 ? (
     <div>
-      <div className="pb-5 text-gray-700 text-center">
+      <div className="pb-5 text-gray-700">
         <h3 className="text-3xl">My Wishlist: {wishlist.length}</h3>
       </div>
       <TableContainer component={"Paper"}>
@@ -118,7 +118,7 @@ const Wishlist = () => {
                   <span className="text-gray-800 font-bold">${item.price}</span>
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  <Tooltip title="Move to cart">
+                  <Tooltip arrow title="Move to cart">
                     <button
                       className="text-2xl mr-5 bg-green-800 text-white p-2 cursor-pointer rounded hover:bg-gray-600 transition duration-2"
                       onClick={(event) => {
@@ -129,7 +129,7 @@ const Wishlist = () => {
                       <TiShoppingCart />
                     </button>
                   </Tooltip>
-                  <Tooltip title="Delete">
+                  <Tooltip arrow title="Delete">
                     <button
                       className="text-2xl bg-red-700 text-white p-2 cursor-pointer rounded hover:bg-gray-600 transition duration-2"
                       onClick={(event) => {
