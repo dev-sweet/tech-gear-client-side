@@ -3,6 +3,7 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import { useAuth } from "../../../hooks/useAuth";
 
 const img_hosting_key = import.meta.env.VITE_IMG_UPLOAD_KEY;
 const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
@@ -15,6 +16,7 @@ const AddProduct = () => {
     formState: { errors },
   } = useForm();
 
+  const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const onSubmit = async (data) => {
@@ -35,6 +37,7 @@ const AddProduct = () => {
         sellPrice,
         discount: Math.round(((basePrice - sellPrice) / basePrice) * 100),
         image: res.data.data.display_url,
+        createdBy: user.email,
       };
 
       const productRes = await axiosSecure.post("/products", product);
@@ -220,7 +223,7 @@ const AddProduct = () => {
             </button>
           ) : (
             <input
-              className="bg-[#07174e] py-3 w-[200px] text-white mt-1 cursor-pointer mx-auto transition duration-150 ease-in-out hover:bg-gray-600"
+              className="bg-[#07174e] py-3 w-[200px] text-gray-50 font-semibold mt-1 cursor-pointer mx-auto transition duration-150 ease-in-out hover:bg-[#000721]"
               type="submit"
             />
           )}

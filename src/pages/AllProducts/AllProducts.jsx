@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductCard from "../../components/Home/ProductCard/ProductCard";
 import { IoSearch } from "react-icons/io5";
 import TrendingProducts from "../../components/Home/TrendingProducts/TrendingProducts";
 import Newsletter from "../../components/Home/Newsletter/Newsletter";
-import axios from "axios";
 import ProductLoadingSkeleton from "../../components/Shared/ProductLoadingSkeleton/ProductLoadingSkeleton";
+import useProducts from "../../hooks/useProducts";
 
 const AllProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [query, setQuery] = useState({ search: "" });
+  // search text and query state
+  const [query, setQuery] = useState({});
   const [searchText, setSearchText] = useState("");
-  const [loading, setLoading] = useState(true);
 
+  // events for search and filter query
   const handleSort = (e) => {
     const sortItem = e.target.value.split(",");
     setQuery({ ...query, sortBy: sortItem[0], order: sortItem[1] });
@@ -38,28 +38,18 @@ const AllProducts = () => {
     setQuery({ ...query, search: e.target.value });
   };
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get("https://tech-gear-server.onrender.com/products", {
-        params: query,
-      })
-      .then((res) => {
-        setProducts(res.data);
-        setLoading(false);
-      });
-  }, [query]);
+  const [products, isProductLoading] = useProducts(query);
 
   return (
-    <div className="">
-      <div className="flex md:flex-row flex-col items-center justify-between bg-gray-200 py-5 md:px-20 px-10 gap-5">
-        <div className="order-2 md:order-1 flex justify-s md:gap-5 gap-1 flex-wrap">
-          <div>
+    <>
+      <div className="flex md:flex-row flex-col md:items-center md:justify-between md:py-5 py-3 md:px-20 px-10 gap-5">
+        <div className="order-2 md:order-1 flex lg:gap-5 md:gap-3 gap-2 flex-wrap sm:text-sm">
+          <div className="">
             <label htmlFor="">Sort By</label> <br />
             <select
               onChange={handleSort}
               defaultValue=""
-              className="border-2 border-[#000f444f]  focus:outline-none focus:border-[#000f4480] md:py-3 md:px-5 p-1"
+              className="border-2 border-[#000f444f]  focus:outline-none focus:border-[#000f4480] md:p-1"
             >
               <option value="" disabled={true}>
                 Select
@@ -75,11 +65,12 @@ const AllProducts = () => {
             <select
               onChange={handleMinPrice}
               defaultValue=""
-              className="border-2 border-[#000f444f]  focus:outline-none focus:border-[#000f4480] md:py-3 md:px-5 p-1"
+              className="border-2 border-[#000f444f]  focus:outline-none focus:border-[#000f4480] md:p-1"
             >
               <option value="" disabled={true}>
                 Select
               </option>
+              <option value={0}>0</option>
               <option value={100}>100</option>
               <option value={500}>500</option>
               <option value={1000}>1000</option>
@@ -96,7 +87,7 @@ const AllProducts = () => {
             <select
               onChange={handleMaxPrice}
               defaultValue=""
-              className="border-2 border-[#000f444f]  focus:outline-none focus:border-[#000f4480] md:py-3 md:px-5 p-1"
+              className="border-2 border-[#000f444f]  focus:outline-none focus:border-[#000f4480] md:p-1"
             >
               <option value="" disabled={true}>
                 Select
@@ -116,12 +107,13 @@ const AllProducts = () => {
             <label htmlFor="">Category:</label> <br />
             <select
               onChange={handleCategory}
-              className="select border-2 border-gray-400 focus:border-[#2b4190]  outline-none md:py-3 md:px-5 p-1 focus:border-2"
+              className="select border-2 border-gray-400 focus:border-[#2b4190]  outline-none md:p-1 focus:border-2"
               defaultValue=""
+              order
             >
               <option value="">All</option>
               <option value="laptop">Laptop</option>
-              <option value="phone">phone</option>
+              <option value="phone">Phone</option>
               <option value="earbuds">Earbuds</option>
               <option value="music">Music</option>
               <option value="gaming">Gaming</option>
@@ -134,20 +126,20 @@ const AllProducts = () => {
           </div>
         </div>
         <form
-          className="order-1 md:order-2 w-full md:w-80"
+          className="order-1 md:-2 w-full md:w-80"
           onSubmit={(e) => e.preventDefault()}
         >
-          <div className="relative flex items-center rounded-lg  w-full max-w-md">
+          <div className="relative flex items-center rounded-lg w-full max-w-md">
             <input
               type="text"
               placeholder="Search..."
               onChange={handleSearchInput}
               // value={searchText}
-              className="w-full py-3 px-8 border-2 border-[#000f444f]  focus:outline-none focus:border-[#000f4480]"
+              className="w-full border-2 border-[#000f444f] py-2 px-3  focus:outline-none focus:border-[#000f4480]"
             />
             <button
               onClick={handleSearch}
-              className="flex items-center gap-2 px-4 py-3 bg-[#07174e] border-2 border-[#07174e] text-white cursor-pointer hover:text-gray-200"
+              className="flex items-center gap-2 p-2 bg-[#07174e] border-2 border-[#07174e] text-white cursor-pointer hover:text-gray-200"
             >
               <IoSearch className="text-2xl" />
             </button>
@@ -155,26 +147,29 @@ const AllProducts = () => {
         </form>
       </div>
       <div className="md:px-20 px-10">
-        <h2 className="text-3xl pt-5 font-semibold">
-          {!searchText && "All Products"}
-        </h2>
-        {searchText ? (
-          <p className="text-lg font-bold">Showing result for {searchText}</p>
-        ) : (
-          ""
+        {!searchText && (
+          <h2 className="md:text-3xl md:pt-5 font-semibold">All Products</h2>
         )}
-        {Object.keys(query).length > 0 && products.length > 0 && (
-          <p className="text-lg mt-2 font-semibold">
-            Total Found Products: {products.length}
-          </p>
+        {searchText && (
+          <>
+            <p className="md:text-lg font-bold">
+              Showing result for {searchText}
+            </p>
+          </>
         )}
-        {products.length < 1 && !loading && (
+        {(query.maxPrice || query.minPrice || query.category || searchText) &&
+          products?.length > 0 && (
+            <p className="text-lg mt-2 font-semibold">
+              Total Matches Products: {products?.length}
+            </p>
+          )}
+        {products?.length < 1 && !isProductLoading && (
           <p className="text-lg mt-2 font-semibold">
             Do not matches any products
           </p>
         )}
         <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-5 h-full mt-10">
-          {loading ? (
+          {isProductLoading ? (
             <>
               <ProductLoadingSkeleton />
               <ProductLoadingSkeleton />
@@ -187,7 +182,7 @@ const AllProducts = () => {
               <ProductCard
                 key={product._id}
                 product={product}
-                loading={loading}
+                loading={isProductLoading}
                 isWishlisted={true}
                 index={i}
               />
@@ -197,7 +192,7 @@ const AllProducts = () => {
       </div>
       <TrendingProducts />
       <Newsletter />
-    </div>
+    </>
   );
 };
 

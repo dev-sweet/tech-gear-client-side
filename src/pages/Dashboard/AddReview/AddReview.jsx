@@ -95,7 +95,7 @@ const AddReview = () => {
         <div className="text-center">
           <button
             type="submit"
-            className="px-10 py-3 bg-[#07174e] text-white rounded cursor-pointer hover:bg-gray-500"
+            className="px-10 py-3 bg-[#07174e] font-semibold text-white rounded cursor-pointer hover:bg-[#000721] transition duration-150"
           >
             Submit Review
           </button>

@@ -57,8 +57,8 @@ const EditProduct = () => {
         newProduct.image = res.data.data.display_url;
       }
     }
-    const productRes = await axiosSecure.patch(`products/${_id}`, newProduct);
     setIsLoading(false);
+    const productRes = await axiosSecure.patch(`products/${_id}`, newProduct);
     if (productRes.data.modifiedCount > 0) {
       Swal.fire({
         title: "Updated successfully!",
@@ -231,7 +231,7 @@ const EditProduct = () => {
             </button>
           ) : (
             <input
-              className="bg-[#07174e] py-3 w-[200px] text-white mt-1 cursor-pointer mx-auto transition duration-150 ease-in-out hover:bg-gray-600"
+              className="bg-[#07174e] py-3 w-[200px] font-semibold text-gray-50 mt-1 cursor-pointer mx-auto transition duration-150 ease-in-out hover:bg-[#000721]"
               type="submit"
             />
           )}

@@ -40,7 +40,6 @@ const AddBlog = () => {
         },
       };
 
-      console.log(blogItem);
       const blogRes = await axiosSecure.post("/blogs", blogItem);
       if (blogRes.data.insertedId) {
         reset();
@@ -208,7 +207,7 @@ const AddBlog = () => {
         <div className="text-center">
           <button
             type="submit"
-            className="bg-[#07174e] py-3 w-[200px] text-white mt-3 cursor-pointer mx-auto"
+            className="bg-[#07174e] py-3 w-[200px] font-semibold text-white mt-3 cursor-pointer mx-auto hover:bg-[#000721] transition duration-150"
           >
             {" "}
             Create

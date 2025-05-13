@@ -34,11 +34,11 @@ const Login = () => {
         }
       })
       .catch((err) => {
-        if (err) {
+        if (err.message === "Firebase: Error (auth/invalid-credential).") {
           Swal.fire({
             // position: "top-end",
             icon: "error",
-            title: "Something went wrong!.",
+            title: "Invalid email or password.",
             showConfirmButton: false,
             timer: 1500,
           });

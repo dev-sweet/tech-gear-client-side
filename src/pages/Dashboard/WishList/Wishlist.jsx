@@ -163,7 +163,7 @@ const Wishlist = () => {
 
         <Link
           to="/products"
-          className="mt-6 px-4 text-sm text-gray-900 bg-[#07174e] py-3 hover:bg-gray-700 text-white font-medium rounded shadow-md  transition cursor-pointer"
+          className="mt-6 px-4 text-sm text-gray-900 bg-[#07174e] py-3 text-white font-medium rounded shadow-md  transition duration-2 cursor-pointer hover:bg-[#000721]"
         >
           Browse Products
         </Link>

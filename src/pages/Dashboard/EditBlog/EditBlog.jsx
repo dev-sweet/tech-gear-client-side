@@ -193,7 +193,7 @@ const EditBlog = () => {
         </div>
         <div className="text-center">
           <input
-            className="bg-[#07174e] py-3 w-[200px] text-white mt-3 cursor-pointer mx-auto"
+            className="bg-[#07174e] py-3 w-[200px] text-white mt-3 cursor-pointer mx-auto hover:bg-[#000721] transition duration-150"
             type="submit"
           />
         </div>

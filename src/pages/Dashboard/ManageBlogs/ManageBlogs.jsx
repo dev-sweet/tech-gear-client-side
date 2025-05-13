@@ -23,7 +23,7 @@ const ManageBlogs = () => {
   const axiosSecure = useAxiosSecure();
   const {
     data: blogs,
-    isLoading,
+    // isLoading,
     refetch,
   } = useQuery({
     queryKey: ["blog"],

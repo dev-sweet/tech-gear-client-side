@@ -1,6 +1,6 @@
 import useAdmin from "../hooks/useAdmin";
 import { useAuth } from "../hooks/useAuth";
-import Loading from "../components/Shared/Loading/Loading";
+// import Loading from "../components/Shared/Loading/Loading";
 import { Navigate } from "react-router-dom";
 
 const AdminRoute = ({ children }) => {

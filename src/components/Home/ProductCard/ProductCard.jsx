@@ -9,7 +9,6 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCart from "../../../hooks/useCart";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdOutlineGridView } from "react-icons/md";
-import ProductLoadingSkeleton from "../../Shared/ProductLoadingSkeleton/ProductLoadingSkeleton";
 import Tooltip from "@mui/material/Tooltip";
 import useWishlist from "../../../hooks/useWishlist";
 import { IoCheckmarkDone } from "react-icons/io5";
@@ -18,7 +17,7 @@ import "./ProductCard.css";
 import Swal from "sweetalert2";
 import { useRef } from "react";
 import { motion } from "framer-motion";
-const ProductCard = ({ product, loading, index }) => {
+const ProductCard = ({ product, index }) => {
   const {
     _id,
     name,
@@ -160,9 +159,9 @@ const ProductCard = ({ product, loading, index }) => {
           </Link>
           <div className="labels">
             {isNew && (
-              <sapn className="bg-[#006e19] p-1 flex item-center justify-center block my-1">
+              <span className="bg-[#006e19] p-1 flex item-center justify-center block my-1">
                 New
-              </sapn>
+              </span>
             )}
             {discount && (
               <span className="bg-[#e50016] p-1 flex item-center justify-center block my-1">
@@ -170,9 +169,9 @@ const ProductCard = ({ product, loading, index }) => {
               </span>
             )}
             {isTrending && (
-              <sapn className="bg-[#00065a] p-1 flex item-center justify-center block my-1">
+              <span className="bg-[#00065a] p-1 flex item-center justify-center block my-1">
                 Trending
-              </sapn>
+              </span>
             )}
           </div>
 

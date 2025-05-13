@@ -15,7 +15,7 @@ const MainLayout = () => {
       <div className="fixed top-0 left-0 right-0 z-1000">
         <Navbar />
       </div>
-      <div className="mt-[96px]">
+      <div className="mt-[81px]">
         <Outlet />
       </div>
       <Footer />

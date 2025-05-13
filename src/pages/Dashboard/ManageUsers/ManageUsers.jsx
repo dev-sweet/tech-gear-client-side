@@ -14,24 +14,21 @@ import {
 import { MdOutlineDelete } from "react-icons/md";
 import { FaUserCheck, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
-import useAdmin from "../../../hooks/useAdmin";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
   const {
     data: users = [],
-    isLoading,
+    // isLoading,
     refetch,
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
-
       return res.data;
     },
   });
-  const [isAdmin] = useAdmin();
-  console.log(isAdmin);
+  // const [isAdmin] = useAdmin();
   //   handle make admin
   const handleMakeAdmin = (id, name) => {
     Swal.fire({
@@ -39,7 +36,7 @@ const ManageUsers = () => {
       text: `Do you want to make ${name} as admin ?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#07174e",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Make Admin!",
     }).then((result) => {

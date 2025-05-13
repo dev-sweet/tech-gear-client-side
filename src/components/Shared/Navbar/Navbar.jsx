@@ -7,7 +7,6 @@ import { FaRegHeart, FaRegUser } from "react-icons/fa";
 import { IoChevronDown } from "react-icons/io5";
 import { RiShoppingBagLine } from "react-icons/ri";
 import { useAuth } from "../../../hooks/useAuth";
-import { PiSignOutBold } from "react-icons/pi";
 import useCart from "../../../hooks/useCart";
 import useAdmin from "../../../hooks/useAdmin";
 import Swal from "sweetalert2";
@@ -35,7 +34,6 @@ const Navbar = () => {
   const handleLogOut = () => {
     logOut().then(() => {
       Swal.fire({
-        // position: "top-end",
         icon: "success",
         title: "User logout successfully.",
         showConfirmButton: false,
@@ -212,11 +210,11 @@ const Navbar = () => {
           </Badge>
         </Link>
         <Link to="/dashboard/cart" className="cursor-pointer">
-          <Badge badgeContent={cart?.length} color="info">
+          <Badge badgeContent={cart?.length && cart.length} color="info">
             <RiShoppingBagLine />
           </Badge>
         </Link>
-        <button
+        <div
           onClick={() => setIsOpenProfile(!isOpenProfile)}
           onMouseEnter={() => setIsOpenProfile(true)}
           onMouseLeave={() => setIsOpenProfile(false)}
@@ -239,7 +237,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       className="flex items-center gap-2 w-full text-gray-600 hover:bg-gray-300 px-2 py-1"
-                      to="/dashboard"
+                      to="/dashboard/userHome"
                     >
                       <CgProfile className="text-2xl" />
                       Profile
@@ -248,7 +246,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       className="flex items-center gap-2 w-full text-gray-600 hover:bg-gray-300 px-2 py-1"
-                      to="/dashboard"
+                      to="/dashboard/paymentHistory"
                     >
                       <AiOutlineShoppingCart className="text-2xl" />
                       My Orders
@@ -277,7 +275,7 @@ const Navbar = () => {
               )}
             </ul>
           </div>
-        </button>
+        </div>
       </div>
     </div>
   );

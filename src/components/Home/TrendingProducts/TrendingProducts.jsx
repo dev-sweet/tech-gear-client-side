@@ -5,7 +5,7 @@ import ProductCard from "../ProductCard/ProductCard";
 import useProducts from "../../../hooks/useProducts";
 
 const TrendingProducts = () => {
-  const [products] = useProducts();
+  const [products] = useProducts({});
   const diplayProducts = products?.slice(0, 4);
   return (
     <div className="lg:p-20 p-10">

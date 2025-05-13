@@ -2,7 +2,6 @@ import { MdOutlineDelete } from "react-icons/md";
 import useProducts from "../../../hooks/useProducts";
 import { FaRegEdit } from "react-icons/fa";
 import {
-  NativeSelect,
   styled,
   Table,
   TableBody,
@@ -19,12 +18,47 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import TableLoading from "../../../components/Shared/TableLoading/TableLoading";
 import { useState } from "react";
+import { IoSearch } from "react-icons/io5";
 
 const ManageProducts = () => {
   const [currentRowIndex, setCurrentRowIndex] = useState(null);
-  const [products, isProductLoading, refetch] = useProducts();
+  const [query, setQuery] = useState({ search: "" });
+  const [searchText, setSearchText] = useState("");
+
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+
+  // products search and filter query
+
+  const handleSort = (e) => {
+    const sortItem = e.target.value.split(",");
+    setQuery({ ...query, sortBy: sortItem[0], order: sortItem[1] });
+  };
+
+  const handleMinPrice = (e) => {
+    setQuery({ ...query, minPrice: e.target.value });
+  };
+  const handleMaxPrice = (e) => {
+    setQuery({ ...query, maxPrice: e.target.value });
+  };
+
+  const handleCategory = (e) => {
+    setQuery({ ...query, category: e.target.value });
+  };
+
+  const handleSearch = () => {
+    setQuery({ ...query, search: searchText });
+  };
+
+  const handleSearchInput = (e) => {
+    e.preventDefault();
+    setSearchText(e.target.value);
+    setQuery({ ...query, search: e.target.value });
+  };
+
+  // load products form server using custom hook
+  const [products, isProductLoading, refetch] = useProducts(query);
+
   // handle row click
   const handleRowCLick = (id) => {
     navigate(`/products/${id}`);
@@ -85,20 +119,100 @@ const ManageProducts = () => {
 
   return (
     <div>
-      {/* <PageTitle /> */}
-      <div className="flex items-center justify-between py-5">
-        <h3 className="text-3xl">All Products: {products?.length}</h3>
-        <div className="text-xl flex items-center gap-3">
-          <label className="text-sm" htmlFor="">
-            Category:
-          </label>
-
-          <NativeSelect>
-            <option value="laptop">Laptop</option>
-            <option value="phone">Phone</option>
-            <option value="music">Music</option>
-            <option value="gaming">Gaming</option>
-          </NativeSelect>
+      <div className="flex lg:flex-row flex-col items-center justify-between mb-5">
+        <div className="order-2 lg:order-1 flex items-center justify-start lg:gap-5 gap-1 flex-wrap w-full">
+          <div>
+            <label htmlFor="">Sort By</label> <br />
+            <select
+              onChange={handleSort}
+              defaultValue=""
+              className="border-2 border-[#000f444f]  focus:outline-none focus:border-[#000f4480] p-1"
+            >
+              <option value="" disabled={true}>
+                Select
+              </option>
+              <option value="name,asc">Name (A-Z)</option>
+              <option value="name,desc">Name (Z-A)</option>
+              <option value="sellPrice,asc">Price (Low &gt; High) </option>
+              <option value="sellPrice,desc">Price (High &gt; Low) </option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="">Min Price</label> <br />
+            <select
+              onChange={handleMinPrice}
+              defaultValue=""
+              className="border-2 border-[#000f444f]  focus:outline-none focus:border-[#000f4480] p-1"
+            >
+              <option value="" disabled={true}>
+                Select
+              </option>
+              <option value={100}>100</option>
+              <option value={500}>500</option>
+              <option value={1000}>1000</option>
+              <option value={2000}>2000</option>
+              <option value={5000}>5000</option>
+              <option value={10000}>10000</option>
+              <option value={20000}>20000</option>
+              <option value={50000}>50000</option>
+              <option value={100000}>100000</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="">Max Price</label> <br />
+            <select
+              onChange={handleMaxPrice}
+              defaultValue=""
+              className="border-2 border-[#000f444f]  focus:outline-none focus:border-[#000f4480] p-1"
+            >
+              <option value="" disabled={true}>
+                Select
+              </option>
+              <option value={100}>100</option>
+              <option value={500}>500</option>
+              <option value={1000}>1000</option>
+              <option value={2000}>2000</option>
+              <option value={5000}>5000</option>
+              <option value={10000}>10000</option>
+              <option value={20000}>20000</option>
+              <option value={50000}>50000</option>
+              <option value={100000}>100000</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="">Category:</label> <br />
+            <select
+              onChange={handleCategory}
+              className="select border-2 border-gray-400 focus:border-[#2b4190]  outline-none focus:border-2 p-1"
+              defaultValue=""
+            >
+              <option value="">All</option>
+              <option value="laptop">Laptop</option>
+              <option value="phone">phone</option>
+              <option value="earbuds">Earbuds</option>
+              <option value="music">Music</option>
+              <option value="gaming">Gaming</option>
+              <option value="camera">Camera</option>
+              <option value="smartwatch">Smartwatch</option>
+              <option value="tablet">Tablet</option>
+              <option value="drone">Drone</option>
+              <option value="speaker">Speaker</option>
+            </select>
+          </div>
+        </div>
+        <div className="order-1 lg:order-1 relative flex items-center rounded-lg md:my-5 my-2 w-full md:w-80">
+          <input
+            type="text"
+            placeholder="Search..."
+            onChange={handleSearchInput}
+            className="py-1 px-5 border-2 border-[#000f444f]  focus:outline-none focus:border-[#000f4480] p-1 w-full"
+          />
+          <button
+            onClick={handleSearch}
+            className="flex items-center px-2 py-1 bg-[#07174e] border-2 border-[#07174e] text-white cursor-pointer hover:text-gray-200"
+          >
+            <IoSearch className="text-2xl" />
+          </button>
         </div>
       </div>
 
@@ -113,7 +227,7 @@ const ManageProducts = () => {
               <StyledTableCell align="center">ACTIONS</StyledTableCell>
             </TableRow>
           </TableHead>
-
+          {isProductLoading && <TableLoading />}
           <TableBody>
             {products?.map((product, i) => (
               <Tooltip
@@ -190,7 +304,6 @@ const ManageProducts = () => {
             ))}
           </TableBody>
         </Table>
-        {isProductLoading && <TableLoading />}
       </TableContainer>
     </div>
   );

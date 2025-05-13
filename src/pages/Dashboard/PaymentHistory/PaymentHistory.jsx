@@ -18,7 +18,7 @@ const PaymentHistory = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { data: payments, refech } = useQuery({
+  const { data: payments } = useQuery({
     queryKey: ["payments"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/payments/${user?.email}`);
@@ -26,6 +26,7 @@ const PaymentHistory = () => {
     },
   });
 
+  console.log(payments);
   //   styled tablecell for cart
   const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
@@ -114,22 +115,22 @@ const PaymentHistory = () => {
 
                     <StyledTableCell align="center">
                       {item.status === "pending" && (
-                        <div className="bg-[#f39c12] py-2 rounded rounded-[20px] text-gray-200 font-bold">
+                        <div className="max-w-25 bg-[#f39c12] py-2 rounded rounded-[20px] text-gray-200 font-bold">
                           Pending
                         </div>
                       )}
                       {item.status === "shipped" && (
-                        <div className="bg-[#3498db] py-2 rounded rounded-[20px] text-gray-200 font-bold">
+                        <div className="max-w-25 bg-[#3498db] py-2 rounded rounded-[20px] text-gray-200 font-bold">
                           Shipped
                         </div>
                       )}
                       {item.status === "delivered" && (
-                        <div className="bg-[#2ecc71] py-2 rounded rounded-[20px] text-gray-200 font-bold">
+                        <div className="max-w-25 bg-[#2ecc71] py-2 rounded rounded-[20px] text-gray-200 font-bold">
                           Delivered
                         </div>
                       )}
                       {item.status === "cancelled" && (
-                        <div className="bg-[#e74c3c] py-2 rounded rounded-[20px] text-gray-200 font-bold">
+                        <div className="max-w-25 bg-[#e74c3c] py-2 rounded rounded-[20px] text-gray-200 font-bold">
                           Canceled
                         </div>
                       )}
@@ -155,7 +156,7 @@ const PaymentHistory = () => {
       </h2>
       <p className="text-gray-500 mt-2">You haven't placed any orders yet.</p>
 
-      <Link className="mt-6 px-6 py-3 bg-[#07174e] text-white text-lg font-medium rounded-lg shadow-md hover:bg-[#242283] transition">
+      <Link className="mt-6 px-6 py-2 bg-[#07174e] text-white text-lg font-medium rounded-lg shadow-md hover:bg-[#000721] transition duration-2">
         Shop Now
       </Link>
     </div>

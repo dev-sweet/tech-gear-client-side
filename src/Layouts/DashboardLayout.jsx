@@ -30,7 +30,6 @@ import { ImList } from "react-icons/im";
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import useAdmin from "../hooks/useAdmin";
-import { useAuth } from "../hooks/useAuth";
 import { Badge } from "@mui/material";
 import { FaRegMessage } from "react-icons/fa6";
 
@@ -38,8 +37,6 @@ const drawerWidth = 240;
 
 function DashboardLayout() {
   const [isAdmin] = useAdmin();
-
-  const { user } = useAuth();
   const location = useLocation();
   const path = location.pathname;
 
@@ -54,9 +51,10 @@ function DashboardLayout() {
 
   const drawer = (
     <div className="text-white">
-      {/* <Toolbar /> */}
       <div className="text-right">
-        <img className="h-[100px] w-[100px] ml-2" src={logo} alt="" />
+        <Link to="/">
+          <img className="h-[100px] w-[100px] ml-2" src={logo} alt="" />
+        </Link>
         <Divider className="bg-gray-500"></Divider>
       </div>
       {isAdmin ? (

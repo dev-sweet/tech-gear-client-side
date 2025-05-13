@@ -1,33 +1,18 @@
-import { Box, Skeleton } from "@mui/material";
+import { Skeleton, TableBody, TableCell, TableRow } from "@mui/material";
 
-const TableLoading = () => {
+const TableLoading = ({ rows = 5, columns = 5 }) => {
   return (
-    <Box display="flex" flexDirection="column" gap={10}>
-      <Skeleton
-        variant="rectangular"
-        sx={{ margin: 0 }}
-        height={80}
-        animation="wave"
-      />
-      <Skeleton
-        variant="rectangular"
-        sx={{ margin: 0 }}
-        height={80}
-        // animation="wave"
-      />
-      <Skeleton
-        variant="rectangular"
-        sx={{ margin: 0 }}
-        height={80}
-        animation="wave"
-      />
-      <Skeleton
-        variant="rectangular"
-        sx={{ margin: 0 }}
-        height={80}
-        animation="wave"
-      />
-    </Box>
+    <TableBody>
+      {Array.from({ length: rows }).map((_, rowIndex) => (
+        <TableRow key={rowIndex}>
+          {Array.from({ length: columns }).map((col, colIndex) => (
+            <TableCell key={colIndex}>
+              <Skeleton height={40} width="100%" />
+            </TableCell>
+          ))}
+        </TableRow>
+      ))}
+    </TableBody>
   );
 };
 
