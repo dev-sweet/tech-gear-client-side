@@ -3,57 +3,108 @@ import { GrDeliver } from "react-icons/gr";
 import { ImCancelCircle } from "react-icons/im";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { FcShipped } from "react-icons/fc";
-import { FaRegEdit, FaRegUser, FaStar } from "react-icons/fa";
+import { FaRegEdit, FaStar } from "react-icons/fa";
 import { BsCartCheck } from "react-icons/bs";
 import { IoMdWallet } from "react-icons/io";
 import { IoBagCheck } from "react-icons/io5";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import DashboardCardLoading from "../../../components/Shared/DashboardCardLoading/DashboardCardLoading";
 
 const UserHome = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  // get all payments of a user
+  const { data: payments, isLoading: isLoadingPayments } = useQuery({
+    queryKey: ["payments"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/payments/${user?.email}`);
+      return res.data;
+    },
+  });
+
+  console.log(payments);
+  // filtered payments by status
+  const delivered = payments?.filter(
+    (payment) => payment.status === "delivered"
+  );
+  const shippped = payments?.filter((payment) => payment.status === "shipped");
+  const pending = payments?.filter((payment) => payment.status === "pending");
+  const canceled = payments?.filter(
+    (payment) => payment.status === "cancelled"
+  );
+
+  console.log(shippped, pending, canceled, delivered);
+  const { data: userActivities } = useQuery({
+    queryKey: ["userActivities"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user-activities/${user.email}`);
+      return res.data;
+    },
+  });
+
   return (
     <div>
       <div>
         <h2 className="text-3xl">
           Hello, Welcome {user?.displayName ? user?.displayName : "Back"}
         </h2>
+        {/* payments */}
         <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-3 mt-5">
-          <div className="flex items-center justify-evenly gap-5 bg-gradient-to-r from-[#731a4a] to-[#07174e] py-10 px-5 rounded text-white">
-            <span>
-              <FcShipped className="text-5xl" />
-            </span>
-            <div className="font-bold">
-              <h2 className="text-3xl">0</h2>
-              <p className="text-xl">Delivered</p>
+          {isLoadingPayments ? (
+            <DashboardCardLoading />
+          ) : (
+            <div className="flex items-center justify-evenly gap-5 bg-gradient-to-r from-[#731a4a] to-[#07174e] py-10 px-5 rounded text-white">
+              <span>
+                <FcShipped className="text-5xl" />
+              </span>
+              <div className="font-bold">
+                <h2 className="text-3xl">{delivered?.length}</h2>
+                <p className="text-xl">Delivered</p>
+              </div>
             </div>
-          </div>
+          )}
 
-          <div className="flex items-center justify-evenly gap-5 bg-gradient-to-r from-purple-500 to-indigo-700 py-10 px-5 rounded text-white">
-            <span>
-              <GrDeliver className="text-5xl" />
-            </span>
-            <div className="font-bold">
-              <h2 className="text-3xl">0</h2>
-              <p className="text-xl">Shipped</p>
+          {isLoadingPayments ? (
+            <DashboardCardLoading />
+          ) : (
+            <div className="flex items-center justify-evenly gap-5 bg-gradient-to-r from-purple-500 to-indigo-700 py-10 px-5 rounded text-white">
+              <span>
+                <GrDeliver className="text-5xl" />
+              </span>
+              <div className="font-bold">
+                <h2 className="text-3xl">{shippped?.length}</h2>
+                <p className="text-xl">Shipped</p>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center justify-evenly gap-5 bg-gradient-to-r   from-teal-400 to-cyan-500 py-10 px-5 rounded text-white">
-            <span>
-              <MdOutlinePendingActions className="text-5xl" />
-            </span>
-            <div className="font-bold">
-              <h2 className="text-3xl">5</h2>
-              <p className="text-xl">Pending</p>
+          )}
+          {isLoadingPayments ? (
+            <DashboardCardLoading />
+          ) : (
+            <div className="flex items-center justify-evenly gap-5 bg-gradient-to-r   from-teal-400 to-cyan-500 py-10 px-5 rounded text-white">
+              <span>
+                <MdOutlinePendingActions className="text-5xl" />
+              </span>
+              <div className="font-bold">
+                <h2 className="text-3xl">{pending?.length}</h2>
+                <p className="text-xl">Pending</p>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center justify-evenly gap-5 bg-gradient-to-r  from-orange-500 to-red-600 py-10 px-5 rounded text-white">
-            <span>
-              <ImCancelCircle className="text-5xl" />
-            </span>
-            <div className="font-bold">
-              <h2 className="text-3xl">0</h2>
-              <p className="text-xl">Canceled</p>
+          )}
+          {isLoadingPayments ? (
+            <DashboardCardLoading />
+          ) : (
+            <div className="flex items-center justify-evenly gap-5 bg-gradient-to-r  from-orange-500 to-red-600 py-10 px-5 rounded text-white">
+              <span>
+                <ImCancelCircle className="text-5xl" />
+              </span>
+              <div className="font-bold">
+                <h2 className="text-3xl">{canceled?.length}</h2>
+                <p className="text-xl">Canceled</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <div className="flex lg:flex-row flex-col pt-3 gap-3">
@@ -102,27 +153,27 @@ const UserHome = () => {
           <div className="pt-5">
             <h3 className="text-2xl text-[#22c55e] font-bold flex gap-3 my-3">
               <BsCartCheck />
-              <span> Orders : 10</span>
+              <span> Orders : {userActivities?.orders}</span>
             </h3>
 
             <h3 className="text-2xl text-[#3b82f6] font-bold flex gap-3 my-3">
               <IoMdWallet />
 
-              <span> Payment : 10</span>
+              <span> Payment : {userActivities?.payments}</span>
             </h3>
             <h3 className="text-2xl text-[#f59e0b] font-bold flex gap-3 my-3">
               <FaStar />
 
-              <span> Reviews : 10</span>
+              <span> Reviews : {userActivities?.reviews}</span>
             </h3>
             <h3 className="text-2xl text-[#a855f7] font-bold flex gap-3 my-3">
               <IoBagCheck />
 
-              <span> Cart : 10</span>
+              <span> Cart : {userActivities?.carts}</span>
             </h3>
             <h3 className="text-2xl text-[#ef4444] font-bold flex gap-3 my-3">
               <BsCartCheck />
-              <span> Wishlist : 10</span>
+              <span> Wishlist : {userActivities?.wishlists}</span>
             </h3>
           </div>
         </div>

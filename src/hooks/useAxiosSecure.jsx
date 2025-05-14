@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5050",
-  // baseURL: "https://tech-gear-server.onrender.com",
+  // baseURL: "http://localhost:5050",
+  baseURL: "https://tech-gear-server.onrender.com",
 });
 const useAxiosSecure = () => {
   const { logOut } = useAuth();
